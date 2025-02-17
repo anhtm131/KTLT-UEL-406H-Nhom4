@@ -1,0 +1,1 @@
+print("ông cố ơi ghét môn chóa này quá")
