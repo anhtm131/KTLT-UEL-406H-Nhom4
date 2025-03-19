@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "RoomID": "P.101",
+        "RoomType": "Standard",
+        "Price": 1000000,
+        "Status": "Available"
+    },
+    {
+        "RoomID": "P.201",
+        "RoomType": "Deluxe",
+        "Price": 5000000,
+        "Status": "Occupied"
+    },
+    {
+        "RoomID": "P.301",
+        "RoomType": "President",
+        "Price": 10000000,
+        "Status": "Booked"
+    },
+    {
+        "RoomID": "P.401",
+        "RoomType": "Standard",
+        "Price": 1000000,
+        "Status": "Cleaning"
+    }
+]

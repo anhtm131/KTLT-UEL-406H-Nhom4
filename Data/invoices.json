@@ -1,1 +1,68 @@
-[]
+[
+  {
+    "InvoiceID": "INV001",
+    "Invoice_Date": "2025-03-15",
+    "Total": 3000000,
+    "Cart": [
+      {
+        "RoomID": "P.101",
+        "RoomType": "Standard",
+        "Days": 3,
+        "Price": 1000000
+      }
+    ],
+    "CustomerInfo": [
+      {
+        "Name": "Nguyễn Văn A",
+        "CCCD": "012345678901",
+        "PhoneNumber": "0901234567",
+        "DayIn": "2025-03-15",
+        "DayOut": "2025-03-18"
+      }
+    ]
+  },
+  {
+    "InvoiceID": "INV002",
+    "Invoice_Date": "2025-03-16",
+    "Total": 20000000,
+    "Cart": [
+      {
+        "RoomID": "P.201",
+        "RoomType": "Deluxe",
+        "Days": 4,
+        "Price": 5000000
+      }
+    ],
+    "CustomerInfo": [
+      {
+        "Name": "Trần Thị B",
+        "CCCD": "098765432109",
+        "PhoneNumber": "0987654321",
+        "DayIn": "2025-03-16",
+        "DayOut": "2025-03-20"
+      }
+    ]
+  },
+  {
+    "InvoiceID": "INV003",
+    "Invoice_Date": "2025-03-18",
+    "Total": 30000000,
+    "Cart": [
+      {
+        "RoomID": "P.301",
+        "RoomType": "President",
+        "Days": 3,
+        "Price": 10000000
+      }
+    ],
+    "CustomerInfo": [
+      {
+        "Name": "Lê Văn C",
+        "CCCD": "123456789012",
+        "PhoneNumber": "0912345678",
+        "DayIn": "2025-03-18",
+        "DayOut": "2025-03-21"
+      }
+    ]
+  }
+]
