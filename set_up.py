@@ -40,18 +40,18 @@ def import_user_data():
         data = f.read()
 
     for element in eval(data):
-        if element["Username"] not in db["users.json"].find({}).distinct("Username"):
-            db["users.json"].insert_one(element)
+        if element["Username"] not in db["users"].find({}).distinct("Username"):
+            db["users"].insert_one(element)
     print("Imported user data successfully")
 
 
-# Check if 'users.json' collection exists
-if "users.json" in db.list_collection_names():
-    print("Collection 'users.json' already exists")
+# Check if 'users' collection exists
+if "users" in db.list_collection_names():
+    print("Collection 'users' already exists")
     import_user_data()
 else:
-    db.create_collection("users.json")
-    print("Collection 'users.json' created")
+    db.create_collection("users")
+    print("Collection 'users' created")
     import_user_data()
 
 
@@ -61,18 +61,18 @@ def import_room_data():
         data = f.read()
 
     for element in eval(data):
-        if element["Room_ID"] not in db["rooms.json"].find({}).distinct("Room_ID"):
-            db["rooms.json"].insert_one(element)
+        if element["RoomID"] not in db["rooms"].find({}).distinct("RoomID"):
+            db["rooms"].insert_one(element)
     print("Imported room data successfully")
 
 
-# Check if 'rooms.json' collection exists
-if "rooms.json" in db.list_collection_names():
-    print("Collection 'rooms.json' already exists")
+# Check if 'rooms' collection exists
+if "rooms" in db.list_collection_names():
+    print("Collection 'rooms' already exists")
     import_room_data()
 else:
-    db.create_collection("rooms.json")
-    print("Collection 'rooms.json' created")
+    db.create_collection("rooms")
+    print("Collection 'rooms' created")
     import_room_data()
 
 
@@ -82,18 +82,18 @@ def import_invoice_data():
         data = f.read()
 
     for element in eval(data):
-        if element["Invoice_ID"] not in db["invoices.json"].find({}).distinct("Invoice_ID"):
-            db["invoices.json"].insert_one(element)
+        if element["InvoiceID"] not in db["invoices"].find({}).distinct("InvoiceID"):
+            db["invoices"].insert_one(element)
     print("Imported invoice data successfully")
 
 
-# Check if 'invoices.json' collection exists
-if "invoices.json" in db.list_collection_names():
-    print("Collection 'invoices.json' already exists")
+# Check if 'invoices' collection exists
+if "invoices" in db.list_collection_names():
+    print("Collection 'invoices' already exists")
     import_invoice_data()
 else:
-    db.create_collection("invoices.json")
-    print("Collection 'invoices.json' created")
+    db.create_collection("invoices")
+    print("Collection 'invoices' created")
     import_invoice_data()
 
 # Show a setup completion message

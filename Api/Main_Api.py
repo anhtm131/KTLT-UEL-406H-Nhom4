@@ -11,13 +11,10 @@ class Api:
         host = os.getenv("HOSTNAME")
         self.client = MongoClient(host)
 
-        # Chọn cơ sở dữ liệu
         self.db = self.client['HotelManagementDB']
-        # Chọn các collection
         self.users_collection = self.db['users']
         self.rooms_collection = self.db['rooms']
         self.invoices_collection = self.db['invoices']
-
 
     def get_all_rooms_data(self):
         rooms = self.rooms_collection.find()
@@ -38,7 +35,7 @@ class Api:
                     sub_invoice_data["Total"] = invoice["Total"]
                     # append item to sub_invoice_data
                     sub_invoice_data["RoomID"] = item["RoomID"]
-                    sub_invoice_data["Room_type"] = item["Room_type"]
+                    sub_invoice_data["RoomType"] = item["RoomType"]
                     sub_invoice_data["Days"] = item["Days"]
                     sub_invoice_data["Price"] = item["Price"]
                     sub_invoice_data["Name"] = CIF["Name"]
@@ -49,14 +46,6 @@ class Api:
                     invoices_data.append(sub_invoice_data)
         return invoices_data
 
-    # get all description data in rooms
-    def get_all_description_data(self):
-        rooms = self.rooms_collection.find()
-        description_data = []
-        for item in rooms:
-            description_data.append(item["Status"])
-        return description_data
-        pass
     def get_all_users_data(self):
         users = self.users_collection.find()
         users_data = []

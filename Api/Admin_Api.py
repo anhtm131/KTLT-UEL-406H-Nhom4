@@ -1,4 +1,3 @@
-import datetime
 import Api.Main_Api as main_api
 
 
@@ -8,71 +7,76 @@ class Admin_Api(main_api.Api):
         super().__init__()
         self.connect_mongodb()
 
-    def add_new_room(self, json_data):
-        # Get Film_ID from json_data
-        room_id = json_data["RoomID"]
-        # Get ticket information from Film_ID in the collection
-        ticket = self.rooms_collection.find_one({'RoomID': room_id})
-        if ticket is None:
-            # Check if the information in json_data is complete or not
-            S = 0
-            for key, value in json_data.items():
-                if self.rooms_collection.find_one({key: value}) is None:
-                    S += 1
-                else:
-                    continue
-            if S == 6:  # (Film_ID, Film, Genre, Showtime, Price)
-                # If all 6 pieces of information are available, add a new ticket to the database
-                self.rooms_collection.insert_one(json_data)
-                return 0  # Success
-            else:
-                # Error: missing information
-                return -1
-        else:
-            # Update the number of tickets in the database
-            current_quantity = ticket["Stock"]
-            if current_quantity < 30:
-                new_quantity = current_quantity + json_data["Stock"]
-                self.rooms_collection.update_one(
-                    {'Film_ID': film_id}, {'$set': {'Stock': new_quantity}})
-                return 0  # Success
-            else:
-                # Error: ticket quantity is full
-                return -2
+    def add_new_room(self, data):
+        room = self.rooms_collection.find_one({'RoomID':data["RoomID"]})
+        if room :
+            return -1 #Error: room already exist
+        if len(data) != 4:
+            return -2 #Error: information isn't complete
+        self.rooms_collection.insert_one(data)
+        return 0 #create successfully
 
-    def update_items(self, json_data, film_id):
-        # Get ticket information from json_data
-        ticket = self.rooms_collection.find_one({'Film_ID': film_id})
-        _id = ticket['_id']  # Get the ID of the ticket
-        if 'Film_ID' in json_data:
-            if self.rooms_collection.find_one({'Film_ID': json_data['Film_ID']}) is not None:
-                return -2  # Error: Film_ID already exists in the database
-        updated_fields = {}
-        if 'Showtime' in json_data:
-            try:
-                datetime.datetime.strptime(json_data['Showtime'], "%Y/%m/%d")
-                updated_fields['Showtime'] = json_data['Showtime']
-            except ValueError:
-                return -3  # Error: Showtime format is incorrect
-        if 'Film' in json_data:
-            updated_fields['Film'] = json_data['Film']
-        if 'Genre' in json_data:
-            updated_fields['Genre'] = json_data['Genre']
-        # Update the ticket information in the database
-        if updated_fields:
-            self.rooms_collection.update_one({'Film_ID': film_id}, {'$set': updated_fields})
-            return 0  # Update successful
+    def update_room(self, data, room_id):
+        room = self.rooms_collection.find_one({'RoomID': room_id})
+        if not room:
+            return -1  # Error: can not find RoomID in database
         else:
-            # No new information was updated
-            return -1
+            updated_fields = {} #create update field
+            _id = room['_id'] # documentID
+            if 'RoomType' in data != room['RoomType']:
+                updated_fields['RoomType'] = data['RoomType']
+            if 'Price' in data != room['Price']:
+                updated_fields['Price'] = data['Price']
+            if 'Status' in data != room['Status']:
+                updated_fields['Status'] = data['Status']
 
-    def remove_items(self, film_id):
-        # Get ticket information from json_data
-        ticket = self.rooms_collection.find_one({'Film_ID': film_id})
-        if ticket is None:
-            # Error: ticket not found
-            return -2
-        elif ticket is not None:
-            film_id = ticket['Film_ID']  # get id of ticket
-            self.rooms_collection.delete_one({'Film_ID': film_id})
-            return 0  # success
+            if updated_fields:
+                self.rooms_collection.update_one({'_id': _id}, {'$set': updated_fields})
+                return 0 #update successfully
+            else:
+                return -1 #Error: no new information was updated
+
+    def remove_room(self, room_id):
+        room = self.rooms_collection.find_one({'RoomID' : room_id})
+        if not room:
+            return -1 # Error: can not find room in database
+        else:
+            _id = room['_id']
+            self.rooms_collection.delete_one({'_id': _id})
+            return 0 #remove sucessfully
+    def add_new_user(self,data):
+        user = self.users_collection.find_one({'Username':data['Username']})
+        if user:
+            return -1 #Error: User already exist in database
+        else:
+            self.users_collection.update_one(data)
+            return 0 #add successfully
+    def update_user(self,data):
+        user = self.users_collection.find_one({'Username': data['Username']})
+        if not user:
+            return -1 #can't find user in database
+        else:
+            _id = user['_id']
+            updated_fields = {}
+            if 'Password' in data != user['Password']:
+                updated_fields['Password'] = data['Password']
+            if 'Role' in data != user['Role']:
+                updated_fields['Role'] = data['Role']
+            if updated_fields:
+                self.users_collection.update_one({'_id': _id}, {'$set': updated_fields})
+                return 0 #update successfully
+            else:
+                return -1 #Error: no new information was updated
+    def remove_user(self,data):
+        user = self.users_collection.find_one({'Username' : data['Username']})
+        if not user:
+            return -1 # Error: can not find user in database
+        else:
+            _id = user['_id']
+            self.users_collection.delete_one({'_id': _id})
+            return 0 #remove sucessfully
+
+
+
+
+
