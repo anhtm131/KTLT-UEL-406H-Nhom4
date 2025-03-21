@@ -1,5 +1,6 @@
 import subprocess
 import os
+import tkinter.messagebox as msgbox
 
 # Check if pip is installed and update it
 try:
@@ -17,7 +18,7 @@ subprocess.call(["pip", "install", "-r", "requirements.txt"])
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
-import ctypes
+
 
 # Load environment variables
 load_dotenv(find_dotenv())
@@ -97,4 +98,4 @@ else:
     import_invoice_data()
 
 # Show a setup completion message
-ctypes.windll.user32.MessageBoxW(0, "Setup successfully! Hotel Management System is ready!", "Hotel Management", 1)
+msgbox.showinfo("Hotel Management", "Setup successfully! Hotel Management System is ready!")
