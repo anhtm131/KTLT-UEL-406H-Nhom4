@@ -31,22 +31,19 @@ class Main_View:
         # Background
         self.canvas.create_image(548.0, 325.0, image=self.background_img)
 
-        # Entries
-        entry_positions = [(606.7, 43.6, 410.992, 21.498, 391.391, 42.261)]
+        # Load entry image
+        self.entry_image_1 = PhotoImage(file=self.relative_to_assets("entry_1.png"))
 
-        for i, (x_img, y_img, x_entry, y_entry, width, height) in enumerate(entry_positions, start=1):
-            entry_image = PhotoImage(file=self.relative_to_assets(f"entry_{i}.png"))
-            self.canvas.create_image(x_img, y_img, image=entry_image)
-
-            entry = Entry(
-                bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0, font=("Arial", 12))
-            entry.place(x=x_entry, y=y_entry, width=width, height=height)
+        # Entry
+        self.canvas.create_image(606.7, 43.6, image=self.entry_image_1)
+        self.entry_1 = Entry(bd=0,bg="#D9D9D9",fg="#000716",highlightthickness=0,font=("Arial", 12))
+        self.entry_1.place(x=410.992, y=21.498, width=391.391, height=42.261)
 
         # Buttons
         # Button Cleaning
-        self.button_image_1 = PhotoImage(file=self.relative_to_assets("button_cleaning.png"))
-        self.button_1 = Button(
-            image=self.button_image_1,
+        self.button_img_cleaning = PhotoImage(file=self.relative_to_assets("button_cleaning.png"))
+        self.button_cleaning = Button(
+            image=self.button_img_cleaning,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -54,12 +51,12 @@ class Main_View:
             command=lambda: print("button_cleaning clicked"),
             relief="flat"
         )
-        self.button_1.place(x=834.0, y=104.0, width=184.0, height=56.0)
+        self.button_cleaning.place(x=834.0, y=104.0, width=184.0, height=56.0)
 
         #Button book
-        self.button_image_2 = PhotoImage(file=self.relative_to_assets("button_book.png"))
-        self.button_2 = Button(
-            image=self.button_image_2,
+        self.button_img_book = PhotoImage(file=self.relative_to_assets("button_book.png"))
+        self.button_book = Button(
+            image=self.button_img_book,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -67,12 +64,12 @@ class Main_View:
             command=lambda: print("button_book clicked"),
             relief="flat"
         )
-        self.button_2.place(x=632.9, y=103.0, width=174.1, height=57.0)
+        self.button_book.place(x=632.9, y=103.0, width=174.1, height=57.0)
 
         #Button available
-        self.button_image_3 = PhotoImage(file=self.relative_to_assets("button_avai.png"))
-        self.button_3 = Button(
-            image=self.button_image_3,
+        self.button_img_avai = PhotoImage(file=self.relative_to_assets("button_avai.png"))
+        self.button_avai = Button(
+            image=self.button_img_avai,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -80,12 +77,12 @@ class Main_View:
             command=lambda: print("button_available clicked"),
             relief="flat"
         )
-        self.button_3.place(x=214.9, y=103.0, width=174.0, height=54.0)
+        self.button_avai.place(x=214.9, y=103.0, width=174.0, height=54.0)
 
         #Button all
-        self.button_image_4 = PhotoImage(file=self.relative_to_assets("button_all.png"))
-        self.button_4 = Button(
-            image=self.button_image_4,
+        self.button_img_all = PhotoImage(file=self.relative_to_assets("button_all.png"))
+        self.button_all = Button(
+            image=self.button_img_all,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -93,12 +90,12 @@ class Main_View:
             command=lambda: print("button_all clicked"),
             relief="flat"
         )
-        self.button_4.place(x=70.8, y=104.0, width=110.7, height=53.0)
+        self.button_all.place(x=70.8, y=104.0, width=110.7, height=53.0)
 
         #Button occupied
-        self.button_image_5 = PhotoImage(file=self.relative_to_assets("button_occupied.png"))
-        self.button_5 = Button(
-            image=self.button_image_5,
+        self.button_img_occupied = PhotoImage(file=self.relative_to_assets("button_occupied.png"))
+        self.button_occupied = Button(
+            image=self.button_img_occupied,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -106,12 +103,12 @@ class Main_View:
             command=lambda: print("button_occupied clicked"),
             relief="flat"
         )
-        self.button_5.place(x=422.0, y=103.0, width=174.3, height=55.0)
+        self.button_occupied.place(x=422.0, y=103.0, width=174.3, height=55.0)
 
         #Button logout
-        self.button_image_6 = PhotoImage(file=self.relative_to_assets("button_logout.png"))
-        self.button_6 = Button(
-            image=self.button_image_6,
+        self.button_img_logout = PhotoImage(file=self.relative_to_assets("button_logout.png"))
+        self.button_logout = Button(
+            image=self.button_img_logout,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -119,12 +116,12 @@ class Main_View:
             command=lambda: print("button_logout clicked"),
             relief="flat"
         )
-        self.button_6.place(x=39.0, y=573.0, width=113.0, height=52.0)
+        self.button_logout.place(x=39.0, y=573.0, width=113.0, height=52.0)
 
         #Button quit
-        self.button_image_7 = PhotoImage(file=self.relative_to_assets("button_quit.png"))
-        self.button_7 = Button(
-            image=self.button_image_7,
+        self.button_img_quit = PhotoImage(file=self.relative_to_assets("button_quit.png"))
+        self.button_quit = Button(
+            image=self.button_img_quit,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -132,12 +129,12 @@ class Main_View:
             command=lambda: print("button_quit clicked"),
             relief="flat"
         )
-        self.button_7.place(x=168.0, y=573.0, width=118.0, height=52.0)
+        self.button_quit.place(x=168.0, y=573.0, width=118.0, height=52.0)
 
         #Button booking
-        self.button_image_8 = PhotoImage(file=self.relative_to_assets("button_booking.png"))
-        self.button_8 = Button(
-            image=self.button_image_8,
+        self.button_book_2 = PhotoImage(file=self.relative_to_assets("button_booking.png"))
+        self.button_book = Button(
+            image=self.button_book_2,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#679487",
@@ -145,12 +142,12 @@ class Main_View:
             command=lambda: print("button_booking clicked"),
             relief="flat"
         )
-        self.button_8.place(x=903.0, y=569.0, width=156.0, height=55.0)
+        self.button_book.place(x=903.0, y=569.0, width=156.0, height=55.0)
 
         #Button find
-        self.button_image_9 = PhotoImage(file=self.relative_to_assets("button_find.png"))
-        self.button_9 = Button(
-            image=self.button_image_9,
+        self.button_img_find = PhotoImage(file=self.relative_to_assets("button_find.png"))
+        self.button_find = Button(
+            image=self.button_img_find,
             borderwidth=0,
             highlightthickness=0,
             activebackground="#D9D9D9",
@@ -158,7 +155,7 @@ class Main_View:
             command=lambda: print("button_timkiem clicked"),
             relief="flat"
         )
-        self.button_9.place(x=785.0, y=31.0, width=24.97568130493164, height=25.29183006286621)
+        self.button_find.place(x=785.0, y=31.0, width=24.97568130493164, height=25.29183006286621)
 
         self.window.mainloop()
 

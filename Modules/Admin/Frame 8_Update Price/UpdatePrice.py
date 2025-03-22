@@ -39,76 +39,76 @@ class Update_Price:
 
         # Buttons
         #Button Logout
-        self.btn_img_1 = PhotoImage(file=self.relative_to_assets("button_logout.png"))
-        self.button_1 = Button(image=self.btn_img_1,
+        self.btn_logout = PhotoImage(file=self.relative_to_assets("button_logout.png"))
+        self.button_logout = Button(image=self.btn_logout,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_logout clicked"), relief="flat")
-        self.button_1.place(x=6.0, y=584.0, width=119.5039, height=55.0097)
+        self.button_logout.place(x=6.0, y=584.0, width=119.5039, height=55.0097)
 
         #Button quit
-        self.btn_img_2 = PhotoImage(file=self.relative_to_assets("button_quit.png"))
-        self.button_2 = Button(image=self.btn_img_2,
+        self.btn_quit = PhotoImage(file=self.relative_to_assets("button_quit.png"))
+        self.button_quit = Button(image=self.btn_quit,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_quit clicked"), relief="flat")
-        self.button_2.place(x=137.208, y=584.8735, width=118.8716, height=53.1128)
+        self.button_quit.place(x=137.208, y=584.8735, width=118.8716, height=53.1128)
 
         #Button sales
-        self.btn_img_3 = PhotoImage(file=self.relative_to_assets("button_sales.png"))
-        self.button_3 = Button(image=self.btn_img_3,
+        self.btn_sales = PhotoImage(file=self.relative_to_assets("button_sales.png"))
+        self.button_sales = Button(image=self.btn_sales,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_sales clicked"), relief="flat")
-        self.button_3.place(x=25.292, y=345.2335, width=213.716, height=59.4358)
+        self.button_sales.place(x=25.292, y=345.2335, width=213.716, height=59.4358)
 
         #Button users
-        self.btn_img_4 = PhotoImage(file=self.relative_to_assets("button_users.png"))
-        self.button_4 = Button(image=self.btn_img_4,
+        self.btn_users = PhotoImage(file=self.relative_to_assets("button_users.png"))
+        self.button_users = Button(image=self.btn_users,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_users clicked"), relief="flat")
-        self.button_4.place(x=25.292, y=421.109, width=209.9222, height=58.8035)
+        self.button_users.place(x=25.292, y=421.109, width=209.9222, height=58.8035)
 
         #Button price
-        self.btn_img_5 = PhotoImage(file=self.relative_to_assets("button_price.png"))
-        self.button_5 = Button(image=self.btn_img_5,
+        self.btn_price = PhotoImage(file=self.relative_to_assets("button_price.png"))
+        self.button_price = Button(image=self.btn_price,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_price clicked"), relief="flat")
-        self.button_5.place(x=25.292, y=268.7258, width=213.716, height=60.7004)
+        self.button_price.place(x=25.292, y=268.7258, width=213.716, height=60.7004)
 
         #Button edit
-        self.btn_img_6 = PhotoImage(file=self.relative_to_assets("button_edit.png"))
-        self.button_6 = Button(image=self.btn_img_6,
+        self.btn_edit = PhotoImage(file=self.relative_to_assets("button_edit.png"))
+        self.button_edit = Button(image=self.btn_edit,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_edit clicked"), relief="flat")
-        self.button_6.place(x=25.292, y=188.4242, width=213.716, height=64.4942)
+        self.button_edit.place(x=25.292, y=188.4242, width=213.716, height=64.4942)
 
         #Button overview
-        self.btn_img_7 = PhotoImage(file=self.relative_to_assets("button_overview.png"))
-        self.button_7 = Button(image=self.btn_img_7,
+        self.btn_overview = PhotoImage(file=self.relative_to_assets("button_overview.png"))
+        self.button_overview = Button(image=self.btn_overview,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_overview clicked"), relief="flat")
-        self.button_7.place(x=25.292, y=116.9747, width=230.1556, height=60.0681)
+        self.button_overview.place(x=25.292, y=116.9747, width=230.1556, height=60.0681)
 
         #Button update
-        self.btn_img_8 = PhotoImage(file=self.relative_to_assets("button_update.png"))
-        self.button_8 = Button(image=self.btn_img_8,
+        self.btn_update = PhotoImage(file=self.relative_to_assets("button_update.png"))
+        self.button_update = Button(image=self.btn_update,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#51908D",
                                command=lambda: print("button_update clicked"), relief="flat")
-        self.button_8.place(x=622.1787, y=563.3755, width=92.1864, height=46.4923)
+        self.button_update.place(x=622.1787, y=563.3755, width=92.1864, height=46.4923)
 
         self.window.mainloop()
 

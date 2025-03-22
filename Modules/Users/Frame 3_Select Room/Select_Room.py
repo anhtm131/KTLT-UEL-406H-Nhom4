@@ -34,34 +34,34 @@ class Select_Room:
 
         # Buttons
         # Button Booking
-        self.btn_img_1 = PhotoImage(file=self.relative_to_assets("button_booking.png"))
-        self.button_1 = Button(image=self.btn_img_1, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
+        self.btn_img_book = PhotoImage(file=self.relative_to_assets("button_booking.png"))
+        self.button_book = Button(image=self.btn_img_book, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
                                command=lambda: print("button_booking clicked"), relief="flat")
-        self.button_1.place(x=43.0, y=524.0, width=124.0, height=48.0)
+        self.button_book.place(x=43.0, y=524.0, width=124.0, height=48.0)
 
         # Button Cart
-        self.btn_img_2 = PhotoImage(file=self.relative_to_assets("button_cart.png"))
-        self.button_2 = Button(image=self.btn_img_2, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
+        self.btn_img_cart = PhotoImage(file=self.relative_to_assets("button_cart.png"))
+        self.button_cart = Button(image=self.btn_img_cart, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
                                command=lambda: print("button_cart clicked"), relief="flat")
-        self.button_2.place(x=183.0, y=524.0, width=98.0, height=47.0)
+        self.button_cart.place(x=183.0, y=524.0, width=98.0, height=47.0)
 
         # Button Invoice
-        self.btn_img_3 = PhotoImage(file=self.relative_to_assets("button_invoice.png"))
-        self.button_3 = Button(image=self.btn_img_3, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
+        self.btn_img_invoice = PhotoImage(file=self.relative_to_assets("button_invoice.png"))
+        self.button_invoice = Button(image=self.btn_img_invoice, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
                                command=lambda: print("button_invoice clicked"), relief="flat")
-        self.button_3.place(x=791.0, y=524.0, width=124.0, height=47.0)
+        self.button_invoice.place(x=791.0, y=524.0, width=124.0, height=47.0)
 
         # Button Back
-        self.btn_img_4 = PhotoImage(file=self.relative_to_assets("button_back.png"))
-        self.button_4 = Button(image=self.btn_img_4, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
+        self.btn_img_back = PhotoImage(file=self.relative_to_assets("button_back.png"))
+        self.button_back = Button(image=self.btn_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
                                command=lambda: print("button_back clicked"), relief="flat")
-        self.button_4.place(x=668.0, y=524.0, width=109.0, height=47.0)
+        self.button_back.place(x=668.0, y=524.0, width=109.0, height=47.0)
 
         # Button Add
-        self.btn_img_5 = PhotoImage(file=self.relative_to_assets("button_add.png"))
-        self.button_5 = Button(image=self.btn_img_5, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
+        self.btn_img_add = PhotoImage(file=self.relative_to_assets("button_add.png"))
+        self.button_add = Button(image=self.btn_img_add, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
                                command=lambda: print("button_add clicked"), relief="flat")
-        self.button_5.place(x=710.0, y=92.667, width=52.667, height=23.667)
+        self.button_add.place(x=710.0, y=92.667, width=52.667, height=23.667)
 
         self.window.mainloop()
 

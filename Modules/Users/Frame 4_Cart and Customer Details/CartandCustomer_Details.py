@@ -30,61 +30,86 @@ class CartCustomerDetails:
         self.image_2 = PhotoImage(file=self.relative_to_assets("image_2.png"))
         self.canvas.create_image(254.0, 146.0, image=self.image_2)
 
-        # Entries
+        # Entries:
+        # Load entry images
         self.entry_images = {
             "entry_1": PhotoImage(file=self.relative_to_assets("entry_1.png")),
-            "entry_5": PhotoImage(file=self.relative_to_assets("entry_5.png"))}
-        entry_data = [
-            (636.6665, 197.3333, 232.0, 26.6667, "entry_1"),
-            (636.6665, 244.0, 232.0, 26.6667, "entry_1"),
-            (636.6665, 290.6667, 232.0, 26.6667, "entry_1"),
-            (636.6665, 337.3333, 232.0, 26.6667, "entry_1"),
-            (213.3335, 162.0, 151.3333, 21.3333, "entry_5"),
-            (213.3335, 125.3333, 151.3333, 21.3333, "entry_5")]
-
+            "entry_5": PhotoImage(file=self.relative_to_assets("entry_5.png"))
+        }
         self.entries = []
-        for x, y, width, height, img_key in entry_data:
-            self.canvas.create_image(x + width / 2, y + height / 2, image=self.entry_images[img_key])
-            entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-            entry.place(x=x, y=y, width=width, height=height)
-            self.entries.append(entry)
+
+        # Entry 1
+        self.canvas.create_image(636.6665 + 232.0 / 2, 197.3333 + 26.6667 / 2, image=self.entry_images["entry_1"])
+        self.entry_1 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_1.place(x=636.6665, y=197.3333, width=232.0, height=26.6667)
+        self.entries.append(self.entry_1)
+
+        # Entry 2
+        self.canvas.create_image(636.6665 + 232.0 / 2, 244.0 + 26.6667 / 2, image=self.entry_images["entry_1"])
+        self.entry_2 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_2.place(x=636.6665, y=244.0, width=232.0, height=26.6667)
+        self.entries.append(self.entry_2)
+
+        # Entry 3
+        self.canvas.create_image(636.6665 + 232.0 / 2, 290.6667 + 26.6667 / 2, image=self.entry_images["entry_1"])
+        self.entry_3 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_3.place(x=636.6665, y=290.6667, width=232.0, height=26.6667)
+        self.entries.append(self.entry_3)
+
+        # Entry 4
+        self.canvas.create_image(636.6665 + 232.0 / 2, 337.3333 + 26.6667 / 2, image=self.entry_images["entry_1"])
+        self.entry_4 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_4.place(x=636.6665, y=337.3333, width=232.0, height=26.6667)
+        self.entries.append(self.entry_4)
+
+        # Entry 5
+        self.canvas.create_image(213.3335 + 151.3333 / 2, 162.0 + 21.3333 / 2, image=self.entry_images["entry_5"])
+        self.entry_5 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_5.place(x=213.3335, y=162.0, width=151.3333, height=21.3333)
+        self.entries.append(self.entry_5)
+
+        # Entry 6
+        self.canvas.create_image(213.3335 + 151.3333 / 2, 125.3333 + 21.3333 / 2, image=self.entry_images["entry_5"])
+        self.entry_6 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_6.place(x=213.3335, y=125.3333, width=151.3333, height=21.3333)
+        self.entries.append(self.entry_6)
 
         # Buttons
         # Button Booking
-        self.btn_img_1 = PhotoImage(file=self.relative_to_assets("button_booking.png"))
-        self.button_1 = Button(image=self.btn_img_1, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
+        self.btn_img_booking = PhotoImage(file=self.relative_to_assets("button_booking.png"))
+        self.button_booking = Button(image=self.btn_img_booking, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
                                command=lambda: print("button_Booking clicked"), relief="flat")
-        self.button_1.place(x=42.9998, y=523.0, width=125.0, height=49.0)
+        self.button_booking.place(x=42.9998, y=523.0, width=125.0, height=49.0)
 
         #Button Cart
-        self.btn_img_2 = PhotoImage(file=self.relative_to_assets("button_cart.png"))
-        self.button_2 = Button(image=self.btn_img_2, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
+        self.btn_img_cart = PhotoImage(file=self.relative_to_assets("button_cart.png"))
+        self.button_cart = Button(image=self.btn_img_cart, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
                                command=lambda: print("button_Cart clicked"), relief="flat")
-        self.button_2.place(x=183.0, y=524.0, width=98.0, height=48.0)
+        self.button_cart.place(x=183.0, y=524.0, width=98.0, height=48.0)
 
         #Button Invoice
-        self.btn_img_3 = PhotoImage(file=self.relative_to_assets("button_invoice.png"))
-        self.button_3 = Button(image=self.btn_img_3, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
+        self.btn_img_invoice = PhotoImage(file=self.relative_to_assets("button_invoice.png"))
+        self.button_invoice = Button(image=self.btn_img_invoice, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
                                command=lambda: print("button_Invoice clicked"), relief="flat")
-        self.button_3.place(x=791.0, y=524.0, width=124.0, height=48.0)
+        self.button_invoice.place(x=791.0, y=524.0, width=124.0, height=48.0)
 
         #Button Back
-        self.btn_img_4 = PhotoImage(file=self.relative_to_assets("button_back.png"))
-        self.button_4 = Button(image=self.btn_img_4, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
+        self.btn_img_back = PhotoImage(file=self.relative_to_assets("button_back.png"))
+        self.button_back = Button(image=self.btn_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
                                command=lambda: print("button_Back clicked"), relief="flat")
-        self.button_4.place(x=668.0, y=523.0, width=110.0, height=49.0)
+        self.button_back.place(x=668.0, y=523.0, width=110.0, height=49.0)
 
         #Button Confirm
-        self.btn_img_5 = PhotoImage(file=self.relative_to_assets("button_confirm.png"))
-        self.button_5 = Button(image=self.btn_img_5, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
+        self.btn_img_confirm = PhotoImage(file=self.relative_to_assets("button_confirm.png"))
+        self.button_confirm = Button(image=self.btn_img_confirm, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
                                command=lambda: print("button_5 (Confirm) clicked"), relief="flat")
-        self.button_5.place(x=645.0, y=407.0, width=104.0, height=42.0)
+        self.button_confirm.place(x=645.0, y=407.0, width=104.0, height=42.0)
 
         #Button Delete
-        self.btn_img_6 = PhotoImage(file=self.relative_to_assets("button_delete.png"))
-        self.button_6 = Button(image=self.btn_img_6, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
+        self.btn_img_delete = PhotoImage(file=self.relative_to_assets("button_delete.png"))
+        self.button_delete = Button(image=self.btn_img_delete, borderwidth=0, highlightthickness=0, activebackground="#6C9587",
                                command=lambda: print("button_6 (Delete) clicked"), relief="flat")
-        self.button_6.place(x=390.6665, y=94.6667, width=60.0, height=23.7778)
+        self.button_delete.place(x=390.6665, y=94.6667, width=60.0, height=23.7778)
 
         # Static text
         self.canvas.create_text(

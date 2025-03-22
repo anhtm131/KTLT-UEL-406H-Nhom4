@@ -26,53 +26,68 @@ class Room_details:
         self.canvas.create_image(292.0, 275.0, image=self.background_img)
 
         #Entries
-        entry_image = PhotoImage(file=self.relative_to_assets("entry_1.png"))
-        entry_positions = [
-            (228.9375, 149.1875),
-            (228.9375, 204.71633911132812),
-            (228.9375, 262.625),
-            (228.9375, 319.7403564453125)]
-        for x, y in entry_positions:
-            self.canvas.create_image(385.0, y + 18, image=entry_image)
-            entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-            entry.place(x=x, y=y, width=312.125, height=33.7)
+        # Load entry image
+        self.entry_image = PhotoImage(file=self.relative_to_assets("entry_1.png"))
+
+        # Load entry image
+        self.entry_image = PhotoImage(file=self.relative_to_assets("entry_1.png"))
+
+        # Entry 1
+        self.canvas.create_image(385.0, 149.1875 + 18 + 2, image=self.entry_image)
+        self.entry_1 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_1.place(x=228.9375, y=149.1875 + 2, width=312.125, height=33.7)
+
+        # Entry 2
+        self.canvas.create_image(385.0, 204.71633911132812 + 18 + 2, image=self.entry_image)
+        self.entry_2 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_2.place(x=228.9375, y=204.71633911132812 + 2, width=312.125, height=33.7)
+
+        # Entry 3
+        self.canvas.create_image(385.0, 262.625 + 18 + 2, image=self.entry_image)
+        self.entry_3 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_3.place(x=228.9375, y=262.625 + 2, width=312.125, height=33.7)
+
+        # Entry 4
+        self.canvas.create_image(385.0, 319.7403564453125 + 18 + 2, image=self.entry_image)
+        self.entry_4 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_4.place(x=228.9375, y=319.7403564453125 + 2, width=312.125, height=33.7)
 
         # Buttons
         # Button available
-        self.btn_img_1 = PhotoImage(file=self.relative_to_assets("button_avai.png"))
-        self.button_1 = Button(image=self.btn_img_1,
+        self.btn_img_avai = PhotoImage(file=self.relative_to_assets("button_avai.png"))
+        self.button_avai = Button(image=self.btn_img_avai,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#6C947F",
                                command=lambda: print("button_available clicked"), relief="flat")
-        self.button_1.place(x=123.0, y=382.0, width=135.0, height=48.0)
+        self.button_avai.place(x=123.0, y=382.0, width=135.0, height=48.0)
 
         # Button Cleaning
-        self.btn_img_2 = PhotoImage(file=self.relative_to_assets("button_cleaning.png"))
-        self.button_2 = Button(image=self.btn_img_2,
+        self.btn_img_cleaning = PhotoImage(file=self.relative_to_assets("button_cleaning.png"))
+        self.button_cleaning = Button(image=self.btn_img_cleaning,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#6C947F",
                                command=lambda: print("button_cleaning clicked"), relief="flat")
-        self.button_2.place(x=339.0, y=382.0, width=135.0, height=47.0)
+        self.button_cleaning.place(x=339.0, y=382.0, width=135.0, height=47.0)
 
         # Button Checkout
-        self.btn_img_3 = PhotoImage(file=self.relative_to_assets("button_checkout.png"))
-        self.button_3 = Button(image=self.btn_img_3,
+        self.btn_img_checkout = PhotoImage(file=self.relative_to_assets("button_checkout.png"))
+        self.button_checkout = Button(image=self.btn_img_checkout,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#6C947F",
                                command=lambda: print("button_checkout clicked"), relief="flat")
-        self.button_3.place(x=342.0, y=453.0, width=135.0, height=47.0)
+        self.button_checkout.place(x=342.0, y=453.0, width=135.0, height=47.0)
 
         # Button Checkin
-        self.btn_img_4 = PhotoImage(file=self.relative_to_assets("button_checkin.png"))
-        self.button_4 = Button(image=self.btn_img_4,
+        self.btn_img_checkin = PhotoImage(file=self.relative_to_assets("button_checkin.png"))
+        self.button_checkin = Button(image=self.btn_img_checkin,
                                borderwidth=0,
                                highlightthickness=0,
                                activebackground="#6C947F",
                                command=lambda: print("button_checkin clicked"), relief="flat")
-        self.button_4.place(x=123.0, y=452.0, width=135.0, height=48.0)
+        self.button_checkin.place(x=123.0, y=452.0, width=135.0, height=48.0)
 
         self.window.mainloop()
 
