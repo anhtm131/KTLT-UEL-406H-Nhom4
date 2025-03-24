@@ -1,7 +1,7 @@
 from tkinter import *
 from pathlib import Path
-
-
+import Modules.Admin.Overview.Overview_process as Overview_process
+from Modules.Admin.main_process import main_process
 class Users_view:
     def __init__(self):
         self.window = Tk()
@@ -37,11 +37,11 @@ class Users_view:
         self.entry_4.place(x=428.1064, y=294.3044, width=164.9817, height=34.5297)
 
         self.button_img_logout = PhotoImage(file=self.relative_to_assets("logout.png", "Window_element"))
-        self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0,activebackground="#55908B", command=lambda: print("button_logout clicked"), relief="flat")
+        self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0,activebackground="#55908B", command=lambda: Overview_process.Overview_process.log_out_button(self.window), relief="flat")
         self.logout.place(x=7.0, y=586.0, width=117.0, height=51.0)
 
         self.button_img_quit = PhotoImage(file=self.relative_to_assets("quit.png", "Window_element"))
-        self.button_quit = Button(image=self.button_img_quit, borderwidth=0, highlightthickness=0,activebackground="#55908B", command=lambda: print("button_quit clicked"),relief="flat")
+        self.button_quit = Button(image=self.button_img_quit, borderwidth=0, highlightthickness=0,activebackground="#55908B", command=lambda: main_process.quit_application(self.window),relief="flat")
         self.button_quit.place(x=138.0, y=586.0, width=117.0, height=51.0)
 
         self.button_img_delete = PhotoImage(file=self.relative_to_assets("button_delete.png", "Frame"))
@@ -65,23 +65,23 @@ class Users_view:
         self.reload.place(x=1021.1572, y=130.2529, width=56.9066, height=41.0992)
 
         self.button_img_sales = PhotoImage(file=self.relative_to_assets("sales.png", "Window_element"))
-        self.sales = Button(image=self.button_img_sales, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("sales button clicked"), relief="flat")
+        self.sales = Button(image=self.button_img_sales, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: Overview_process.Overview_process.sales_button(self.window), relief="flat")
         self.sales.place(x=25.292, y=345.2335, width=213.716, height=59.4358)
 
         self.button_img_users = PhotoImage(file=self.relative_to_assets("user.png", "Window_element"))
-        self.users = Button(image=self.button_img_users, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("users button clicked"), relief="flat")
+        self.users = Button(image=self.button_img_users, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("users"), relief="flat")
         self.users.place(x=25.292, y=421.109, width=209.9222, height=58.8035)
 
         self.button_img_price = PhotoImage(file=self.relative_to_assets("price.png", "Window_element"))
-        self.price = Button(image=self.button_img_price, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("price button clicked"), relief="flat")
+        self.price = Button(image=self.button_img_price, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: Overview_process.Overview_process.price_button(self.window), relief="flat")
         self.price.place(x=25.292, y=268.7257, width=213.716, height=60.7004)
 
         self.button_img_edit = PhotoImage(file=self.relative_to_assets("edit.png", "Window_element"))
-        self.edit = Button(image=self.button_img_edit, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("edit button clicked"), relief="flat")
+        self.edit = Button(image=self.button_img_edit, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: Overview_process.Overview_process.edit_button(self.window), relief="flat")
         self.edit.place(x=25.292, y=188.4241, width=213.716, height=64.4942)
 
         self.button_img_overview = PhotoImage(file=self.relative_to_assets("overview.png", "Window_element"))
-        self.overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("overview button clicked"), relief="flat")
+        self.overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: Overview_process.Overview_process.overview_button(self.window), relief="flat")
         self.overview.place(x=25.292, y=116.9747, width=230.1556, height=60.0681)
 
         self.window.mainloop()
