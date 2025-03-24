@@ -31,9 +31,14 @@ class Rooms_view:
         self.entry_roomid = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_roomid.place(x=451.459, y=159.9709, width=170.7198, height=35.9377)
 
+        from tkinter.ttk import Combobox
 
-        self.entry_roomtype = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+
+        self.entry_roomtype = Combobox()
         self.entry_roomtype.place(x=451.459, y=239.64, width=170.7198, height=35.9377)
+        room_types = ["Deluxe", "Standard", "Suite", "Family"]
+        self.entry_roomtype['values'] = room_types
+        self.entry_roomtype.set("Chọn loại phòng")
 
 
         self.entry_price = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)

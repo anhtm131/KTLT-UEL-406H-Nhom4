@@ -20,7 +20,7 @@ class Edit_extend(Rooms_view):
 
     def load_room_data(self):
         try:
-            with open(r'D:\KTLT_DoAnCuoiKy_Final\Data\rooms.json', 'r', encoding='utf-8') as file:
+            with open(r'D:\KTLT_Final/Data\rooms.json', 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 return data
         except Exception as e:

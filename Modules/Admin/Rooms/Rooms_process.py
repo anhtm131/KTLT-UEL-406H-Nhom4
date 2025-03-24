@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from Modules.Admin.Overview import Overview_view
 from Modules.Admin.Price import Price_view
-#from Modules.Admin.Rooms import Rooms_view
+from Modules.Admin.Rooms import Rooms_view
 from Modules.Admin.Sales import Sales_view
 from Modules.Admin.Users import Users_view
 from Modules.Login import Login_view
