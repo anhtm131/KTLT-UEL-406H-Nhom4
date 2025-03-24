@@ -35,23 +35,19 @@ class Edit_extend(Rooms_view):
             print("Lỗi lưu data:", e)
 
     def create_treeview(self):
-        # Định nghĩa các cột
         columns = ("RoomID", "RoomType", "Price", "Status")
         self.tree = ttk.Treeview(self.window, columns=columns, show="headings")
 
-        # Tiêu đề các cột
         self.tree.heading("RoomID", text="Room ID")
         self.tree.heading("RoomType", text="Room Type")
         self.tree.heading("Price", text="Price")
         self.tree.heading("Status", text="Status")
 
-        # Kích thước cột
         self.tree.column("RoomID", width=5, anchor="center")
         self.tree.column("RoomType", width=40, anchor="center")
         self.tree.column("Price", width=40, anchor="center")
         self.tree.column("Status", width=50, anchor="center")
 
-        # Tọa độ
         self.tree.place(x=678, y=180, width=400, height=300)
 
         for room in self.rooms:
@@ -63,7 +59,6 @@ class Edit_extend(Rooms_view):
                 room["Status"]
             ))
 
-        # Gán sự kiện click vào bảng
         self.tree.bind("<ButtonRelease-1>", self.display_room_info)
 
     def display_room_info(self, event):
@@ -119,7 +114,7 @@ class Edit_extend(Rooms_view):
         for item in self.tree.get_children():
             self.tree.delete(item)
         for room in self.rooms:
-            price = str(room["Price"]).replace(",", "")  # Loại bỏ dấu phẩy
+            price = str(room["Price"]).replace(",", "")
             self.tree.insert("", tk.END, values=(
                 room["RoomID"],
                 room["RoomType"],

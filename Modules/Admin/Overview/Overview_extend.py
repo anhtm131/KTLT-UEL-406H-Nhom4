@@ -98,7 +98,7 @@ class Overview_extend(Overview_view):
         return colors.get(status, '#ECEFF1')
 
     def filter_rooms_by_status(self, status):
-        print(f"Filter trạng thái: {status}")  # Debug console
+        print(f"Filter trạng thái: {status}")
 
         if status == 'All':
             self.filtered_rooms = self.rooms.copy()
