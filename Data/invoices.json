@@ -8,16 +8,16 @@
         "RoomID": "P.101",
         "RoomType": "Standard",
         "Days": 3,
-        "Price": 1000000
+        "Price": 1000000,
+        "DayIn": "15/03/2025",
+        "DayOut": "18/03/2025"
       }
     ],
     "CustomerInfo": [
       {
         "Name": "Nguyễn Văn A",
         "CCCD": "012345678901",
-        "PhoneNumber": "0901234567",
-        "DayIn": "15/03/2025",
-        "DayOut": "18/03/2025"
+        "PhoneNumber": "0901234567"
       }
     ]
   },
@@ -30,16 +30,16 @@
         "RoomID": "P.201",
         "RoomType": "Deluxe",
         "Days": 4,
-        "Price": 5000000
+        "Price": 5000000,
+        "DayIn": "16/03/2025",
+        "DayOut": "20/03/2025"
       }
     ],
     "CustomerInfo": [
       {
         "Name": "Trần Thị B",
         "CCCD": "098765432109",
-        "PhoneNumber": "0987654321",
-        "DayIn": "16/03/2025",
-        "DayOut": "20/03/2025"
+        "PhoneNumber": "0987654321"
       }
     ]
   },
@@ -52,16 +52,16 @@
         "RoomID": "P.301",
         "RoomType": "President",
         "Days": 3,
-        "Price": 10000000
+        "Price": 10000000,
+        "DayIn": "18/03/2025",
+        "DayOut": "21/03/2025"
       }
     ],
     "CustomerInfo": [
       {
         "Name": "Lê Văn C",
         "CCCD": "123456789012",
-        "PhoneNumber": "0912345678",
-        "DayIn": "18/03/2025",
-        "DayOut": "21/03/2025"
+        "PhoneNumber": "0912345678"
       }
     ]
   }
