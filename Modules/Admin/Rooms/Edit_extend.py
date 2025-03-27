@@ -2,7 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 from Rooms_view import Rooms_view
-from Api.Admin_Api import Admin_Api  # dùng lớp Admin_Api
+#from Api.Main_Api import Main_Api
+from Api.Admin_Api import Admin_Api
 
 class Edit_extend(Rooms_view):
     def __init__(self):
@@ -12,9 +13,9 @@ class Edit_extend(Rooms_view):
         self.rooms = self.api.get_all_rooms_data()
         self.create_treeview()
 
-        self.button_create.config(command=self.create_room)
-        self.button_update.config(command=self.update_room)
-        self.button_delete.config(command=self.delete_room)
+        self.button_create.config(command=self.create_room_button_handle())
+        self.button_update.config(command=self.update_room_button_handle())
+        self.button_delete.config(command=self.delete_room_button_handle())
 
         self.window.mainloop()
 
@@ -66,7 +67,7 @@ class Edit_extend(Rooms_view):
             self.entry_status.delete(0, tk.END)
             self.entry_status.insert(0, values[3])
 
-    def update_room(self):
+    def update_room_button_handle(self):
         selected = self.tree.selection()
         if selected:
             values = self.tree.item(selected[0], "values")
@@ -85,7 +86,7 @@ class Edit_extend(Rooms_view):
                 print("Không có thông tin mới hoặc lỗi!")
             self.load_tree_data()
 
-    def create_room(self):
+    def create_room_button_handle(self):
         new_room = {
             "RoomID": self.entry_roomid.get(),
             "RoomType": self.entry_roomtype.get(),
@@ -102,7 +103,7 @@ class Edit_extend(Rooms_view):
             print("Thiếu thông tin phòng!")
         self.load_tree_data()
 
-    def delete_room(self):
+    def delete_room_button_handle(self):
         selected = self.tree.selection()
         if selected:
             values = self.tree.item(selected[0], "values")

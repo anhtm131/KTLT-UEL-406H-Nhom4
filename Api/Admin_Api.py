@@ -1,7 +1,7 @@
 import Api.Main_Api as main_api
 
 
-class Admin_Api(main_api.Api):
+class Admin_Api(main_api.Main_Api):
 
     def __init__(self):
         super().__init__()
