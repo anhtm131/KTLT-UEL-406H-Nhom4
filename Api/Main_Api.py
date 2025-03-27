@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 
-class Api:
+class Main_Api:
     def __init__(self):
         self.connect_mongodb()
     def connect_mongodb(self):
