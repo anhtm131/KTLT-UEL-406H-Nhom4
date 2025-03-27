@@ -78,8 +78,13 @@ class Admin_Api(main_api.Main_Api):
 
 
     def search_revenue(self, data):
-        from_date = datetime.datetime.strptime(data["From"], "%d/%m/%Y")
-        to_date = datetime.datetime.strptime(data["To"], "%d/%m/%Y")
+        if data["From"] == "" or data["To"] == "":
+            return -1 #Error: data is empty
+        try:
+            from_date = datetime.datetime.strptime(data["From"], "%d/%m/%Y")
+            to_date = datetime.datetime.strptime(data["To"], "%d/%m/%Y")
+        except ValueError:
+            return -2 #Erorr: Value error
         invoices_cursor = self.invoices_collection.find().sort("Invoice_Date", 1)
         filtered_invoices = []
         for invoice in invoices_cursor:
