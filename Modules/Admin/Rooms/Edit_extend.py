@@ -1,38 +1,24 @@
-import json
 import tkinter as tk
 from tkinter import ttk
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 from Rooms_view import Rooms_view
+from Api import Main_Api
+from Api.Main_Api import Api
 
 
 class Edit_extend(Rooms_view):
     def __init__(self):
         super().__init__()
+        self.api = Api()
 
-        self.rooms = self.load_room_data()
+        self.rooms = self.api.get_all_rooms_data()
         self.create_treeview()
 
-        self.button_create.config(command=lambda: self.create_room())
-        self.button_update.config(command=lambda: self.update_room())
-        self.button_delete.config(command=lambda: self.delete_room())
+        self.button_create.config(command=self.create_room)
+        self.button_update.config(command=self.update_room)
+        self.button_delete.config(command=self.delete_room)
 
         self.window.mainloop()
-
-    def load_room_data(self):
-        try:
-            with open(r'D:\KTLT_DoAnCuoiKy_Final\Data\rooms.json', 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                return data
-        except Exception as e:
-            print("Lỗi load data:", e)
-            return []
-
-    def save_room_data(self):
-        try:
-            with open(r'D:\KTLT_DoAnCuoiKy_Final\Data\rooms.json', 'w', encoding='utf-8') as file:
-                json.dump(self.rooms, file, ensure_ascii=False, indent=4)
-        except Exception as e:
-            print("Lỗi lưu data:", e)
 
     def create_treeview(self):
         columns = ("RoomID", "RoomType", "Price", "Status")
@@ -50,6 +36,13 @@ class Edit_extend(Rooms_view):
 
         self.tree.place(x=678, y=180, width=400, height=300)
 
+        self.load_tree_data()
+
+        self.tree.bind("<ButtonRelease-1>", self.display_room_info)
+
+    def load_tree_data(self):
+        self.tree.delete(*self.tree.get_children())
+        self.rooms = self.api.get_all_rooms_data()
         for room in self.rooms:
             price = str(room["Price"]).replace(",", "")
             self.tree.insert("", tk.END, values=(
@@ -58,8 +51,6 @@ class Edit_extend(Rooms_view):
                 price,
                 room["Status"]
             ))
-
-        self.tree.bind("<ButtonRelease-1>", self.display_room_info)
 
     def display_room_info(self, event):
         selected = self.tree.selection()
@@ -82,14 +73,19 @@ class Edit_extend(Rooms_view):
         selected = self.tree.selection()
         if selected:
             values = self.tree.item(selected[0], "values")
-            for room in self.rooms:
-                if room["RoomID"] == values[0]:
-                    room["RoomType"] = self.entry_roomtype.get()
-                    room["Price"] = self.entry_price.get().replace(",", "")
-                    room["Status"] = self.entry_status.get()
-                    break
-            self.save_room_data()
-            self.refresh_treeview()
+            room_id = values[0]
+
+            updated_data = {
+                "RoomType": self.entry_roomtype.get(),
+                "Price": self.entry_price.get().replace(",", ""),
+                "Status": self.entry_status.get()
+            }
+
+            self.api.rooms_collection.update_one(
+                {"RoomID": room_id},
+                {"$set": updated_data}
+            )
+            self.load_tree_data()
 
     def create_room(self):
         new_room = {
@@ -98,29 +94,18 @@ class Edit_extend(Rooms_view):
             "Price": self.entry_price.get().replace(",", ""),
             "Status": self.entry_status.get()
         }
-        self.rooms.append(new_room)
-        self.save_room_data()
-        self.refresh_treeview()
+        self.api.rooms_collection.insert_one(new_room)
+        self.load_tree_data()
 
     def delete_room(self):
         selected = self.tree.selection()
         if selected:
             values = self.tree.item(selected[0], "values")
-            self.rooms = [room for room in self.rooms if room["RoomID"] != values[0]]
-            self.save_room_data()
-            self.refresh_treeview()
+            room_id = values[0]
 
-    def refresh_treeview(self):
-        for item in self.tree.get_children():
-            self.tree.delete(item)
-        for room in self.rooms:
-            price = str(room["Price"]).replace(",", "")
-            self.tree.insert("", tk.END, values=(
-                room["RoomID"],
-                room["RoomType"],
-                price,
-                room["Status"]
-            ))
+            self.api.rooms_collection.delete_one({"RoomID": room_id})
+            self.load_tree_data()
+
 
 if __name__ == "__main__":
     Edit_extend()
