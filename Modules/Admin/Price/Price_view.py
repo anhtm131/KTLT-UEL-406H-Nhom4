@@ -56,7 +56,7 @@ class Price_view:
         self.button_update = Button(image=self.button_img_update, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("button_update clicked"), relief="flat")
         self.button_update.place(x=622.1787, y=563.3755, width=92.1864, height=46.4923)
 
-        self.window.mainloop()
+        #self.window.mainloop()
 
     def relative_to_assets(self, path: str, assets_type: str = "Price") -> Path:
         if assets_type == "Price":
