@@ -75,7 +75,7 @@ class Price_extend(Price_view):
             if values[0] == room_type:
                 self.tree.item(item, values=(room_type, new_price))
 
-        with open("rooms.json", "w", encoding="utf-8") as f:
+        with open(r'D:\KTLT_DoAnCuoiKy_Final\Data\rooms.json', 'w', encoding='utf-8') as f:
             json.dump(self.rooms, f, indent=4, ensure_ascii=False)
 
         messagebox.showinfo("Thành công", f"Đã cập nhật giá {new_price} cho loại phòng {room_type}")

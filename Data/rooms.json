@@ -2,25 +2,25 @@
     {
         "RoomID": "P.201",
         "RoomType": "President",
-        "Price": "999999",
+        "Price": "987654323456789",
         "Status": "Cleaning"
     },
     {
         "RoomID": "P.401",
         "RoomType": "Standard",
-        "Price": "10000000",
+        "Price": "23",
         "Status": "Occupied"
     },
     {
         "RoomID": "P.302",
         "RoomType": "Deluxe",
-        "Price": "997843",
+        "Price": "987",
         "Status": "Cleaning"
     },
     {
         "RoomID": "P.303",
         "RoomType": "Deluxe",
-        "Price": "10000000",
+        "Price": "987",
         "Status": "Booked"
     }
 ]
