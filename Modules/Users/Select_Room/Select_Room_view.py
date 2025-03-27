@@ -21,11 +21,6 @@ class SelectRoom:
         self.background_img = PhotoImage(file=self.relative_to_assets("background_select_room.png"))
         self.canvas.create_image(483.0, 300.0, image=self.background_img)
 
-
-        self.entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry.place(x=165.333, y=89.333, width=600.667, height=28.0)
-
-
         self.button_booking_img = PhotoImage(file=self.relative_to_assets("button_booking.png"))
         self.button_booking = Button(image=self.button_booking_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
                                       command=lambda: print("Booking button clicked"), relief="flat")
@@ -47,9 +42,8 @@ class SelectRoom:
         self.button_back.place(x=668.0, y=524.0, width=109.0, height=47.0)
 
         self.button_add_img = PhotoImage(file=self.relative_to_assets("button_add.png"))
-        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
-                                  command=lambda: print("Add button clicked"), relief="flat")
-        self.button_add.place(x=710.0, y=92.667, width=52.667, height=23.667)
+        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: print("Add button clicked"), relief="flat")
+        self.button_add.place(x=683, y=455, width=80.9, height=36.35)
 
         self.window.mainloop()
 

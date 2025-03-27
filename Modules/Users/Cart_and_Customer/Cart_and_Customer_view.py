@@ -22,17 +22,19 @@ class CartCustomerDetails:
 
 
         self.entry_name = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_name.place(x=636.6665, y=197.3333, width=232.0, height=26.6667)
+        self.entry_name.place(x=648.89, y=198.07, width=232.0, height=26.6667)
 
         self.entry_phone = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_phone.place(x=636.6665, y=244.0, width=232.0, height=26.6667)
+        self.entry_phone.place(x=648.89, y=250.42, width=232.0, height=26.6667)
 
         self.entry_cccd = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_cccd.place(x=636.6665, y=290.6667, width=232.0, height=26.6667)
+        self.entry_cccd.place(x=648.89, y=300.1, width=232.0, height=26.6667)
 
-        self.entry_time = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_time.place(x=636.6665, y=337.3333, width=232.0, height=26.6667)
+        self.entry_dayin = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_dayin.place(x=224.08, y=392, width=151.39, height=23.33)
 
+        self.entry_dayout = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_dayout.place(x=224.08, y=428.67, width=151.39, height=23.33)
 
         self.btn_img_booking = PhotoImage(file=self.relative_to_assets("button_booking.png"))
         self.button_booking = Button(image=self.btn_img_booking, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("Booking button clicked"),relief="flat")
@@ -52,11 +54,15 @@ class CartCustomerDetails:
 
         self.btn_img_confirm = PhotoImage(file=self.relative_to_assets("button_confirm.png"))
         self.button_confirm = Button(image=self.btn_img_confirm, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("Confirm button clicked"),relief="flat")
-        self.button_confirm.place(x=645.0, y=407.0, width=104.0, height=42.0)
+        self.button_confirm.place(x=670.0, y=407.0, width=104.0, height=42.0)
 
-        self.btn_img_delete = PhotoImage(file=self.relative_to_assets("button_delete.png"))
-        self.button_delete = Button(image=self.btn_img_delete, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("Delete button clicked"),relief="flat")
-        self.button_delete.place(x=390.6665, y=94.6667, width=60.0, height=23.7778)
+        self.btn_img_add = PhotoImage(file=self.relative_to_assets("button_add.png"))
+        self.button_add = Button(image=self.btn_img_add, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("add button clicked"),relief="flat")
+        self.button_add.place(x=234.75, y=470.67, width=52.68, height=23.67)
+
+        self.btn_img_remove = PhotoImage(file=self.relative_to_assets("button_remove.png"))
+        self.button_remove = Button(image=self.btn_img_remove, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("remove button clicked"),relief="flat")
+        self.button_remove.place(x=299.44, y=470.67, width=76.03, height=23.33)
 
         self.window.mainloop()
 
