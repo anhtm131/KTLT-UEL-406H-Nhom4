@@ -2,14 +2,12 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 from Rooms_view import Rooms_view
-from Api import Main_Api
-from Api.Main_Api import Api
-
+from Api.Admin_Api import Admin_Api  # dùng lớp Admin_Api
 
 class Edit_extend(Rooms_view):
     def __init__(self):
         super().__init__()
-        self.api = Api()
+        self.api = Admin_Api()
 
         self.rooms = self.api.get_all_rooms_data()
         self.create_treeview()
@@ -37,7 +35,6 @@ class Edit_extend(Rooms_view):
         self.tree.place(x=678, y=180, width=400, height=300)
 
         self.load_tree_data()
-
         self.tree.bind("<ButtonRelease-1>", self.display_room_info)
 
     def load_tree_data(self):
@@ -81,10 +78,11 @@ class Edit_extend(Rooms_view):
                 "Status": self.entry_status.get()
             }
 
-            self.api.rooms_collection.update_one(
-                {"RoomID": room_id},
-                {"$set": updated_data}
-            )
+            result = self.api.update_room(updated_data, room_id)
+            if result == 0:
+                print("Cập nhật thành công!")
+            else:
+                print("Không có thông tin mới hoặc lỗi!")
             self.load_tree_data()
 
     def create_room(self):
@@ -94,7 +92,14 @@ class Edit_extend(Rooms_view):
             "Price": self.entry_price.get().replace(",", ""),
             "Status": self.entry_status.get()
         }
-        self.api.rooms_collection.insert_one(new_room)
+
+        result = self.api.add_new_room(new_room)
+        if result == 0:
+            print("Tạo phòng thành công!")
+        elif result == -1:
+            print("Phòng đã tồn tại!")
+        elif result == -2:
+            print("Thiếu thông tin phòng!")
         self.load_tree_data()
 
     def delete_room(self):
@@ -102,10 +107,12 @@ class Edit_extend(Rooms_view):
         if selected:
             values = self.tree.item(selected[0], "values")
             room_id = values[0]
-
-            self.api.rooms_collection.delete_one({"RoomID": room_id})
+            result = self.api.remove_room(room_id)
+            if result == 0:
+                print("Xoá thành công!")
+            else:
+                print("Không tìm thấy phòng để xoá!")
             self.load_tree_data()
-
 
 if __name__ == "__main__":
     Edit_extend()
