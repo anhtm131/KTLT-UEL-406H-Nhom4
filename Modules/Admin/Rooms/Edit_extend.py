@@ -1,7 +1,7 @@
 import json
 import tkinter as tk
 from tkinter import ttk
-
+from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 from Rooms_view import Rooms_view
 
 
@@ -20,7 +20,7 @@ class Edit_extend(Rooms_view):
 
     def load_room_data(self):
         try:
-            with open(r'D:\KTLT_Final/Data\rooms.json', 'r', encoding='utf-8') as file:
+            with open(r'D:\KTLT_DoAnCuoiKy_Final\Data\rooms.json', 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 return data
         except Exception as e:
@@ -51,7 +51,7 @@ class Edit_extend(Rooms_view):
         self.tree.place(x=678, y=180, width=400, height=300)
 
         for room in self.rooms:
-            price = str(room["Price"]).replace(",", "")  # Loại bỏ dấu phẩy nếu có
+            price = str(room["Price"]).replace(",", "")
             self.tree.insert("", tk.END, values=(
                 room["RoomID"],
                 room["RoomType"],

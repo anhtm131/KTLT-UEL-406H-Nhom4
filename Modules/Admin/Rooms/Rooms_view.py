@@ -20,19 +20,13 @@ class Rooms_view:
         self.background_img = PhotoImage(file=self.relative_to_assets("background_rooms.png", "Frame"))
         self.canvas.create_image(546.0, 325.0, image=self.background_img)
 
-
         self.entry_find = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_find.place(x=677.1885, y=122.033, width=282.0039, height=39.0992)
-
-
-
-
 
         self.entry_roomid = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_roomid.place(x=451.459, y=159.9709, width=170.7198, height=35.9377)
 
         from tkinter.ttk import Combobox
-
 
         self.entry_roomtype = Combobox()
         self.entry_roomtype.place(x=451.459, y=239.64, width=170.7198, height=35.9377)

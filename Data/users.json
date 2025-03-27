@@ -1,18 +1,22 @@
 [
     {
         "Username": "group4",
-        "Passwork": "admin",
-        "Role": "Admin",
-
+        "Password": "admin123",
+        "Role": "Admin"
     },
     {
         "Username": "user1",
-        "Passwork": "123456",
+        "Password": "1234566",
         "Role": "User"
     },
     {
         "Username": "user2",
-        "Passwork": "123456",
+        "Password": "123456",
+        "Role": "User"
+    },
+    {
+        "Username": "user3",
+        "Password": "12345678",
         "Role": "User"
     }
 ]
