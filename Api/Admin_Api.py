@@ -1,7 +1,7 @@
 import Api.Main_Api as main_api
+import datetime
 
-
-class Admin_Api(main_api.Api):
+class Admin_Api(main_api.Main_Api):
 
     def __init__(self):
         super().__init__()
@@ -76,6 +76,24 @@ class Admin_Api(main_api.Api):
             self.users_collection.delete_one({'_id': _id})
             return 0 #remove sucessfully
 
+
+    def search_revenue(self, data):
+        from_date = datetime.datetime.strptime(data["From"], "%d/%m/%Y")
+        to_date = datetime.datetime.strptime(data["To"], "%d/%m/%Y")
+        invoices_cursor = self.invoices_collection.find().sort("Invoice_Date", 1)
+        filtered_invoices = []
+        for invoice in invoices_cursor:
+            inv_date = invoice["Invoice_Date"]
+            if from_date <= inv_date <= to_date:
+                filtered_invoices.append(invoice)
+        return filtered_invoices
+
+    def update_price(self,data):
+        room = self.rooms_collection.find_one({"RoomType" : data["RoomType"]}, {"Price" : 1})
+        if room["Price"] == data["Price"]:
+            return -1 #Error: No change was made
+        self.rooms_collection.update_many({"RoomType": data["RoomType"]},{"$set":{"Price":data["Price"]}}   )
+        return 0 #update successfully
 
 
 

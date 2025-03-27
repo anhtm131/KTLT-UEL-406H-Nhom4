@@ -1,7 +1,7 @@
 [
   {
     "InvoiceID": "INV001",
-    "Invoice_Date": "2025-03-15",
+    "Invoice_Date": "15/03/2025",
     "Total": 3000000,
     "Cart": [
       {
@@ -16,14 +16,14 @@
         "Name": "Nguyễn Văn A",
         "CCCD": "012345678901",
         "PhoneNumber": "0901234567",
-        "DayIn": "2025-03-15",
-        "DayOut": "2025-03-18"
+        "DayIn": "15/03/2025",
+        "DayOut": "18/03/2025"
       }
     ]
   },
   {
     "InvoiceID": "INV002",
-    "Invoice_Date": "2025-03-16",
+    "Invoice_Date": "16/03/2025",
     "Total": 20000000,
     "Cart": [
       {
@@ -38,14 +38,14 @@
         "Name": "Trần Thị B",
         "CCCD": "098765432109",
         "PhoneNumber": "0987654321",
-        "DayIn": "2025-03-16",
-        "DayOut": "2025-03-20"
+        "DayIn": "16/03/2025",
+        "DayOut": "20/03/2025"
       }
     ]
   },
   {
     "InvoiceID": "INV003",
-    "Invoice_Date": "2025-03-18",
+    "Invoice_Date": "18/03/2025",
     "Total": 30000000,
     "Cart": [
       {
@@ -60,8 +60,8 @@
         "Name": "Lê Văn C",
         "CCCD": "123456789012",
         "PhoneNumber": "0912345678",
-        "DayIn": "2025-03-18",
-        "DayOut": "2025-03-21"
+        "DayIn": "18/03/2025",
+        "DayOut": "21/03/2025"
       }
     ]
   }
