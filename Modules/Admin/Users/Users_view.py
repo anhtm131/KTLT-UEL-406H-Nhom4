@@ -1,7 +1,6 @@
 from tkinter import *
 from pathlib import Path
 
-
 class Users_view:
     def __init__(self):
         self.window = Tk()

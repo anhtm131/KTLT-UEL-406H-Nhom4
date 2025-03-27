@@ -1,11 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
-from Rooms_view import Rooms_view
-#from Api.Main_Api import Main_Api
-from Api.Admin_Api import Admin_Api
 
-class Edit_extend(Rooms_view):
+
+from Api.Admin_Api import Admin_Api
+from tkinter.ttk import Combobox
+
+from Modules.Admin.Rooms.Rooms_view import Rooms_view
+
+
+class Rooms_extend(Rooms_view):
     def __init__(self):
         super().__init__()
         self.api = Admin_Api()
@@ -13,9 +17,17 @@ class Edit_extend(Rooms_view):
         self.rooms = self.api.get_all_rooms_data()
         self.create_treeview()
 
-        self.button_create.config(command=self.create_room_button_handle())
-        self.button_update.config(command=self.update_room_button_handle())
-        self.button_delete.config(command=self.delete_room_button_handle())
+        self.entry_roomtype = Combobox()
+        self.entry_roomtype.place(x=451.459, y=239.64, width=170.7198, height=35.9377)
+        room_types = ["Standard", "Deluxe", "President"]
+        self.entry_roomtype['values'] = room_types
+
+        # Sửa lỗi: không được gọi hàm (), chỉ truyền tên hàm
+        self.button_create.config(command=self.create_room_button_handle)
+        self.button_update.config(command=self.update_room_button_handle)
+        self.button_delete.config(command=self.delete_room_button_handle)
+        self.button_find.config(command=self.search_room)
+        self.button_reset.config(command=self.reset_view)
 
         self.window.mainloop()
 
@@ -114,6 +126,27 @@ class Edit_extend(Rooms_view):
             else:
                 print("Không tìm thấy phòng để xoá!")
             self.load_tree_data()
+    def search_room(self):
+        keyword = self.entry_find.get().strip()
+        filtered_rooms = [room for room in self.rooms if keyword.lower() in str(room["RoomID"]).lower()]
+        self.tree.delete(*self.tree.get_children())
+        for room in filtered_rooms:
+            price = str(room["Price"]).replace(",", "")
+            self.tree.insert("", tk.END, values=(
+                room["RoomID"],
+                room["RoomType"],
+                price,
+                room["Status"]
+            ))
+
+    def reset_view(self):
+        self.entry_find.delete(0, tk.END)
+        self.entry_roomid.delete(0, tk.END)
+        self.entry_roomtype.set('')
+        self.entry_price.delete(0, tk.END)
+        self.entry_status.delete(0, tk.END)
+        self.load_tree_data()
+
 
 if __name__ == "__main__":
-    Edit_extend()
+    Rooms_extend()

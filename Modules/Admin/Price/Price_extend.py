@@ -1,8 +1,10 @@
 import json
 import tkinter as tk
 from tkinter import ttk, Frame
-from Modules.Admin.Price.Price_view import Price_view
 from tkinter import messagebox
+
+from Modules.Admin.Price.Price_view import Price_view
+
 
 class Price_extend(Price_view):
     def __init__(self):

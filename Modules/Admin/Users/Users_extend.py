@@ -1,11 +1,7 @@
 import json
 import tkinter as tk
 from tkinter import ttk
-import Modules.Admin.Overview.Overview_process as Overview_process
-from Modules.Admin.main_process import main_process
-
-from Users_view import Users_view
-
+from Modules.Admin.Users.Users_view import Users_view
 
 class Users_extend(Users_view):
     def __init__(self):
