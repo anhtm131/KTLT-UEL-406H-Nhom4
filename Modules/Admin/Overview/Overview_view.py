@@ -1,6 +1,6 @@
 from tkinter import *
 from pathlib import Path
-import Modules.Admin.Main_process as Main_process
+import Modules.Main_process as Main_process
 
 class Overview_view:
     def __init__(self):
@@ -86,6 +86,7 @@ class Overview_view:
             return self.assets_frame_path / Path(path)
         elif assets_type == "Window_element":
             return self.assets_WE_path / Path(path)
+
 
 if __name__ == "__main__":
     app = Overview_view()

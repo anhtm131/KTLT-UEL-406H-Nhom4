@@ -1,6 +1,6 @@
 from pathlib import Path
 from tkinter import *
-import Modules.Admin.Main_process as Main_process
+import Modules.Main_process as Main_process
 
 class Price_view:
     def __init__(self):

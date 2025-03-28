@@ -1,8 +1,8 @@
 from tkinter import *
 from pathlib import Path
+import Modules.Main_process as Main_process
 
-
-class SelectRoom:
+class Select_Room_view:
     def __init__(self):
         self.window = Tk()
         self.window.geometry("966x600")
@@ -21,24 +21,17 @@ class SelectRoom:
         self.background_img = PhotoImage(file=self.relative_to_assets("background_select_room.png"))
         self.canvas.create_image(483.0, 300.0, image=self.background_img)
 
-        self.button_booking_img = PhotoImage(file=self.relative_to_assets("button_booking.png"))
-        self.button_booking = Button(image=self.button_booking_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
-                                      command=lambda: print("Booking button clicked"), relief="flat")
-        self.button_booking.place(x=43.0, y=524.0, width=124.0, height=48.0)
 
         self.button_cart_img = PhotoImage(file=self.relative_to_assets("button_cart.png"))
         self.button_cart = Button(image=self.button_cart_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
-                                   command=lambda: print("Cart button clicked"), relief="flat")
+                                   command=lambda: Main_process.Main_process.cart_and_customer_button(self), relief="flat")
         self.button_cart.place(x=183.0, y=524.0, width=98.0, height=47.0)
 
-        self.button_invoice_img = PhotoImage(file=self.relative_to_assets("button_invoice.png"))
-        self.button_invoice = Button(image=self.button_invoice_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
-                                      command=lambda: print("Invoice button clicked"), relief="flat")
-        self.button_invoice.place(x=791.0, y=524.0, width=124.0, height=47.0)
+
 
         self.button_back_img = PhotoImage(file=self.relative_to_assets("button_back.png"))
         self.button_back = Button(image=self.button_back_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
-                                   command=lambda: print("Back button clicked"), relief="flat")
+                                   command=lambda: Main_process.Main_process.back_button(self), relief="flat")
         self.button_back.place(x=668.0, y=524.0, width=109.0, height=47.0)
 
         self.button_add_img = PhotoImage(file=self.relative_to_assets("button_add.png"))
@@ -52,4 +45,5 @@ class SelectRoom:
 
 
 if __name__ == "__main__":
-    SelectRoom()
+    app = Select_Room_view()
+    app.window.mainloop()

@@ -1,6 +1,6 @@
 from tkinter import *
 from pathlib import Path
-import Modules.Admin.Main_process as Main_process
+import Modules.Main_process as Main_process
 class Users_view:
     def __init__(self):
         self.window = Tk()
@@ -35,11 +35,11 @@ class Users_view:
         self.entry_4.place(x=428.1064, y=294.3044, width=164.9817, height=34.5297)
 
         self.button_img_logout = PhotoImage(file=self.relative_to_assets("logout.png", "Window_element"))
-        self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0,activebackground="#55908B", command=lambda: Main_process.Main_process.log_out_button(self), relief="flat")
+        self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.log_out_button(self), relief="flat")
         self.logout.place(x=7.0, y=586.0, width=117.0, height=51.0)
 
         self.button_img_quit = PhotoImage(file=self.relative_to_assets("quit.png", "Window_element"))
-        self.button_quit = Button(image=self.button_img_quit, borderwidth=0, highlightthickness=0,activebackground="#55908B", command=lambda: Main_process.Main_process.quit_button(self),relief="flat")
+        self.button_quit = Button(image=self.button_img_quit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.quit_button(self), relief="flat")
         self.button_quit.place(x=138.0, y=586.0, width=117.0, height=51.0)
 
         self.button_img_delete = PhotoImage(file=self.relative_to_assets("button_delete.png", "Frame"))
@@ -71,7 +71,7 @@ class Users_view:
         self.users.place(x=25.292, y=421.109, width=209.9222, height=58.8035)
 
         self.button_img_price = PhotoImage(file=self.relative_to_assets("price.png", "Window_element"))
-        self.price = Button(image=self.button_img_price, borderwidth=0, highlightthickness=0, activebackground="#51908D",command=lambda: Main_process.Main_process.price_button(self), relief="flat")
+        self.price = Button(image=self.button_img_price, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: Main_process.Main_process.price_button(self), relief="flat")
         self.price.place(x=25.292, y=268.7257, width=213.716, height=60.7004)
 
         self.button_img_edit = PhotoImage(file=self.relative_to_assets("edit.png", "Window_element"))

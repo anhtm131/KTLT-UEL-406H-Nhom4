@@ -1,8 +1,8 @@
 from tkinter import *
 from pathlib import Path
+import Modules.Main_process as Main_process
 
-
-class Invoice:
+class Invoice_view:
     def __init__(self):
         self.window = Tk()
         self.window.geometry("966x600")
@@ -24,23 +24,9 @@ class Invoice:
         self.entry_total.place(x=427.48, y=464.49, width=244.75, height=28.68)
 
 
-
-
         self.button_img_back = PhotoImage(file=self.relative_to_assets("button_back.png", "Frame"))
-        self.button_back = Button(image=self.button_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Back button clicked"), relief="flat")
+        self.button_back = Button(image=self.button_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Main_process.Main_process.back_button(self), relief="flat")
         self.button_back.place(x=671.0, y=527.0, width=110.0, height=47.0)
-
-        self.button_img_booking = PhotoImage(file=self.relative_to_assets("button_booking.png", "Frame"))
-        self.button_booking = Button(image=self.button_img_booking, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Booking button clicked"), relief="flat")
-        self.button_booking.place(x=46.0, y=527.0, width=125.0, height=48.0)
-
-        self.button_img_cart = PhotoImage(file=self.relative_to_assets("button_cart.png", "Frame"))
-        self.button_cart = Button(image=self.button_img_cart, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Cart button clicked"), relief="flat")
-        self.button_cart.place(x=186.0, y=526.0, width=98.0, height=49.0)
-
-        self.button_img_invoice = PhotoImage(file=self.relative_to_assets("button_invoice.png", "Frame"))
-        self.button_invoice = Button(image=self.button_img_invoice, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Invoice button clicked"), relief="flat")
-        self.button_invoice.place(x=795.0, y=527.0, width=124.0, height=47.0)
 
         self.window.mainloop()
 
@@ -50,4 +36,5 @@ class Invoice:
 
 
 if __name__ == "__main__":
-    Invoice()
+    app = Invoice_view()
+    app.window.mainloop()

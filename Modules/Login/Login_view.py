@@ -1,5 +1,4 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 from tkinter import messagebox
 from Api import Login_Api
 from Modules.Admin.Overview import Overview_view as Overview_admin
@@ -75,7 +74,7 @@ class Login_view:
             if a == "User":
                 messagebox.showinfo("Welcome", "Welcome User")
                 obj.window.destroy()
-                Main_User_view = Overview_user.MainView()
+                Main_User_view = Overview_user.Overview_view()
                 Main_User_view.window.mainloop()
 
 
