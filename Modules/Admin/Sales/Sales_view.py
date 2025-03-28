@@ -1,7 +1,12 @@
 from pathlib import Path
 from tkinter import *
-from tkinter import ttk
 import tkinter as tk
+import os
+from tkinter import ttk, messagebox
+from matplotlib import pyplot as plt
+from datetime import datetime
+
+
 import Modules.Main_process as Main_process
 from Api.Admin_Api import Admin_Api
 class Sales_view:
@@ -41,12 +46,12 @@ class Sales_view:
 
         self.button_img_visualize = PhotoImage(file=self.relative_to_assets("button_visualize.png", "Frame"))
         self.visualize = Button(image=self.button_img_visualize, borderwidth=0, highlightthickness=0, activebackground="#51908D",
-                                command=lambda: print("visualize button clicked"), relief="flat")
+                                command=lambda: self.visualize_sales_data(), relief="flat")
         self.visualize.place(x=892.8018, y=563, width=160.6031, height=41.0992)
 
         self.button_img_search = PhotoImage(file=self.relative_to_assets("button_search.png", "Frame"))
         self.search = Button(image=self.button_img_search, borderwidth=0, highlightthickness=0, activebackground="#51908D",
-                             command=lambda: print("search button clicked"), relief="flat")
+                             command=lambda: self.filter_by_date_range(), relief="flat")
         self.search.place(x=741.6836, y=563, width=134.679, height=41.0992)
 
         self.button_img_sales = PhotoImage(file=self.relative_to_assets("sales.png", "Window_element"))
@@ -98,6 +103,72 @@ class Sales_view:
                 invoice["Invoice_Date"],
                 invoice["Total"]
             ))
+    def filter_by_date_range(self):
+        from_date_str = self.entry_from.get()
+        to_date_str = self.entry_to.get()
+
+        try:
+            from_date = datetime.strptime(from_date_str, "%d/%m/%Y")
+            to_date = datetime.strptime(to_date_str, "%d/%m/%Y")
+
+            self.tree.delete(*self.tree.get_children())
+
+            for invoice in self.invoices:
+                invoice_date = datetime.strptime(invoice["Invoice_Date"], "%d/%m/%Y")
+                if from_date <= invoice_date <= to_date:
+                    self.tree.insert("", tk.END, values=(
+                        invoice["InvoiceID"],
+                        invoice["Invoice_Date"],
+                        invoice["Total"]
+                    ))
+        except ValueError:
+            messagebox.showerror("Error", "Date format error dd/mm/yyyy")
+
+    def visualize_sales_data(self):
+        dates = []
+        totals = []
+
+        for item in self.tree.get_children():
+            values = self.tree.item(item, "values")
+            dates.append(values[1])  # Invoice_Date
+            totals.append(int(values[2]))  # Total
+
+        if not dates:
+            messagebox.showinfo("Notification", "No data to visualize.")
+            return
+
+        plt.figure(figsize=(10, 5))
+        plt.gcf().canvas.manager.set_window_title("Sales Report")
+
+        plt.plot(dates, totals, marker='o', linestyle='-', color='green')
+        plt.xticks(rotation=45)
+        plt.xlabel("Invoice Date")
+        plt.ylabel("Total (VND)")
+        plt.title("Sales by Invoice Date")
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
+
+    def filter_by_date_range(self):
+        from_date_str = self.entry_from.get()
+        to_date_str = self.entry_to.get()
+
+        try:
+            from_date = datetime.strptime(from_date_str, "%d/%m/%Y")
+            to_date = datetime.strptime(to_date_str, "%d/%m/%Y")
+
+            self.tree.delete(*self.tree.get_children())
+
+            for invoice in self.invoices:
+                invoice_date = datetime.strptime(invoice["Invoice_Date"], "%d/%m/%Y")
+                if from_date <= invoice_date <= to_date:
+                    self.tree.insert("", tk.END, values=(
+                        invoice["InvoiceID"],
+                        invoice["Invoice_Date"],
+                        invoice["Total"]
+                    ))
+        except ValueError:
+            messagebox.showerror("Error", "Date format error dd/mm/yyyy")
 
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":
