@@ -12,13 +12,7 @@ class Overview_view:
         self.window.configure(bg="#FFFFFF")
         self.window.resizable(False, False)
 
-        self.api = Main_Api()
-        self.rooms = self.load_room_data()
-        self.room_frames = []
 
-        self.filtered_rooms = self.rooms.copy()
-        self.filter_rooms_by_status("All")
-        self.create_room_frames()
 
         self.canvas = Canvas(self.window, bg="#FFFFFF", height=650, width=1092, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.place(x=0, y=0)
@@ -47,23 +41,23 @@ class Overview_view:
         self.button_quit.place(x=138.0, y=586.0, width=117.0, height=51.0)
 
         self.button_img_cleaning = PhotoImage(file=self.relative_to_assets("button_cleaning.png", "Frame"))
-        self.button_cleaning = Button(image=self.button_img_cleaning, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda: print("button_cleaning clicked"), relief="flat")
+        self.button_cleaning = Button(image=self.button_img_cleaning, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda:  self.filter_rooms_by_status("Cleaning"), relief="flat")
         self.button_cleaning.place(x=916.0, y=102.0, width=151.0, height=46.0)
 
         self.button_img_booking = PhotoImage(file=self.relative_to_assets("button_booked.png", "Frame"))
-        self.button_booking = Button(image=self.button_img_booking, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda: print("button_booked clicked"), relief="flat")
+        self.button_booking = Button(image=self.button_img_booking, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda:  self.filter_rooms_by_status("Booked"), relief="flat")
         self.button_booking.place(x=742.0, y=102.0, width=153.0, height=48.0)
 
         self.button_img_occupied = PhotoImage(file=self.relative_to_assets("button_occupied.png", "Frame"))
-        self.button_occupied = Button(image=self.button_img_occupied, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda: print("button_occupied clicked"), relief="flat")
+        self.button_occupied = Button(image=self.button_img_occupied, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda:  self.filter_rooms_by_status("Occupied"), relief="flat")
         self.button_occupied.place(x=572.0, y=102.0, width=156.0, height=47.0)
 
         self.button_img_avai = PhotoImage(file=self.relative_to_assets("button_avai.png", "Frame"))
-        self.button_avai = Button(image=self.button_img_avai, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda: print("hihi"), relief="flat")
+        self.button_avai = Button(image=self.button_img_avai, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda:  self.filter_rooms_by_status("Available"), relief="flat")
         self.button_avai.place(x=405.0, y=102.0, width=154.0, height=46.0)
 
         self.button_img_all = PhotoImage(file=self.relative_to_assets("button_all.png", "Frame"))
-        self.button_all = Button(image=self.button_img_all, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda: print("button_all clicked"), relief="flat")
+        self.button_all = Button(image=self.button_img_all, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda: self.filter_rooms_by_status("All"), relief="flat")
         self.button_all.place(x=284.0, y=99.0, width=109.0, height=49.0)
 
 
@@ -89,9 +83,16 @@ class Overview_view:
         self.button_overview.place(x=25.29, y=116.97, width=230.15, height=60.06)
 
         self.button_img_find = PhotoImage(file=self.relative_to_assets("button_find.png", "Frame"))
-        self.button_find = Button(image=self.button_img_find, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print("button_find clicked"), relief="flat")
+        self.button_find = Button(image=self.button_img_find, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Overview_extend.search_room(self), relief="flat")
         self.button_find.place(x=780.88, y=31.08, width=24.97, height=25.29)
+        self.api = Main_Api()
+        self.rooms = self.load_room_data()
+        self.room_frames = []
 
+        self.filtered_rooms = self.rooms.copy()
+        self.filter_rooms_by_status("All")
+        self.create_room_frames()
+        self.window.mainloop()
     def relative_to_assets(self, path: str, assets_type="Frame"):
         if assets_type == "Frame":
             return self.assets_frame_path / Path(path)
@@ -103,9 +104,6 @@ class Overview_view:
             frame.destroy()
         self.room_frames.clear()
 
-        if hasattr(self, "container_frame"):
-            self.container_frame.destroy()
-
         frame_container = tk.Frame(self.window, bg="#346B4E", bd=3, relief="ridge")
         frame_container.place(x=290, y=160, width=780, height=480)
 
@@ -115,6 +113,8 @@ class Overview_view:
 
         self.container_frame = tk.Frame(canvas, bg="#346B4E")
         canvas.create_window((0, 0), window=self.container_frame, anchor="nw")
+        canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(int(-1 * (e.delta / 120)), "units"))
+        canvas.bind_all("<Shift-MouseWheel>", lambda e: canvas.xview_scroll(int(-1 * (e.delta / 120)), "units"))
 
         self.container_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 
@@ -180,6 +180,13 @@ class Overview_view:
             'Cleaning': '#FFF9C4'
         }
         return colors.get(status, '#ECEFF1')
+    def search_room(self):
+        query = self.entry_find.get().strip().lower()
+        self.filtered_rooms = [
+            room for room in self.rooms
+            if query in str(room['RoomID']).lower()
+        ]
+        self.create_room_frames()
 if __name__ == "__main__":
-    app = Overview_view()
-    app.window.mainloop()
+    Overview_view()
+
