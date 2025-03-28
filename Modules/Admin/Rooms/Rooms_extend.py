@@ -25,12 +25,12 @@ class Rooms_extend():
     def create_room_button_handle(obj):
         new_room = {
             "RoomID": obj.entry_roomid.get(),
-            "RoomType": obj.entry_roomtype.get(),
+            "RoomType": obj.combo_roomtype.get(),
             "Price": obj.entry_price.get().replace(",", ""),
             "Status": obj.entry_status.get()
         }
 
-        result = obj.api.add_new_room(new_room)
+        result = obj.admin_api.add_new_room(new_room)
         if result == 0:
             print("Tạo phòng thành công!")
         elif result == -1:
