@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from tkinter import messagebox
 class Rooms_extend():
 
     @staticmethod
@@ -17,9 +17,11 @@ class Rooms_extend():
 
             result = obj.admin_api.update_room(updated_data, room_id)
             if result == 0:
-                print("Cập nhật thành công!")
-            else:
-                print("Không có thông tin mới hoặc lỗi!")
+                messagebox.showinfo("Congratulation","Update successfully")
+            elif result ==-1:
+                messagebox.showerror("Error","Can not find room in database")
+            elif result == -2:
+                messagebox.showerror("Error", "No new information was update")
             obj.load_tree_data()
     @staticmethod
     def create_room_button_handle(obj):
@@ -32,11 +34,9 @@ class Rooms_extend():
 
         result = obj.admin_api.add_new_room(new_room)
         if result == 0:
-            print("Tạo phòng thành công!")
+            messagebox.showinfo("Congratulation", "Create successfully")
         elif result == -1:
-            print("Phòng đã tồn tại!")
-        elif result == -2:
-            print("Thiếu thông tin phòng!")
+            messagebox.showerror("Error","Room is exist")
         obj.load_tree_data()
     @staticmethod
     def delete_room_button_handle(obj):
@@ -68,10 +68,12 @@ class Rooms_extend():
         obj.entry_find.delete(0, tk.END)
         obj.entry_roomid.delete(0, tk.END)
         obj.combo_roomtype.set('')
+        obj.entry_price.config(state="normal")
         obj.entry_price.delete(0, tk.END)
+        obj.entry_price.config(state="readonly")
+        obj.entry_status.config(state="normal")
         obj.entry_status.delete(0, tk.END)
+        obj.entry_status.config(state="readonly")
         obj.load_tree_data()
 
 
-if __name__ == "__main__":
-    Rooms_extend()

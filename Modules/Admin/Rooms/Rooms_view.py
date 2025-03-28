@@ -33,8 +33,9 @@ class Rooms_view:
         room_types = ["President", "Standard", "Deluxe"]
         self.combo_roomtype = Combobox(self.window, values=room_types, state="readonly")
         self.combo_roomtype.place(x=451.46, y=240, width=170.7198, height=35.9377)
+        self.combo_roomtype.bind("<<ComboboxSelected>>", self.on_roomtype_selected)
 
-        self.entry_price = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_price = Entry(self.window, state="readonly")
         self.entry_price.place(x=451.459, y=319.9417, width=170.7198, height=35.9377)
 
         self.entry_status = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
@@ -88,8 +89,10 @@ class Rooms_view:
         self.button_overview = Button(image=self.btn_overview, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Main_process.Main_process.overview_button(self), relief="flat")
         self.button_overview.place(x=25.2915, y=116.9747, width=230.1556, height=60.0681)
 
-
         self.create_treeview()
+
+
+
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":
             return self.assets_path / Path(path)
@@ -113,6 +116,8 @@ class Rooms_view:
 
         self.load_tree_data()
         self.tree.bind("<ButtonRelease-1>", self.display_room_info)
+
+
     def load_tree_data(self):
         self.tree.delete(*self.tree.get_children())
         self.rooms = self.admin_api.get_all_rooms_data()
@@ -135,12 +140,30 @@ class Rooms_view:
 
             self.combo_roomtype.set(values[1])
 
-
+            self.entry_price.config(state="normal")
             self.entry_price.delete(0, tk.END)
             self.entry_price.insert(0, values[2])
+            self.entry_price.config(state="readonly")
 
+            self.entry_status.config(state="normal")
             self.entry_status.delete(0, tk.END)
             self.entry_status.insert(0, values[3])
+            self.entry_status.config(state="readonly")
+
+    def on_roomtype_selected(self, event=None):
+        selected_room_type = self.combo_roomtype.get()
+
+        room_types_info = self.admin_api.get_room_types()
+        price_found = ""
+        for room_type in room_types_info:
+            if room_type["RoomType"] == selected_room_type:
+                price_found = room_type["Price"]
+                break
+        self.entry_price.config(state="normal")
+        self.entry_price.delete(0, tk.END)
+        self.entry_price.insert(0, price_found)
+        self.entry_price.config(state="readonly")
+
 
 if __name__ == "__main__":
     app= Rooms_view()

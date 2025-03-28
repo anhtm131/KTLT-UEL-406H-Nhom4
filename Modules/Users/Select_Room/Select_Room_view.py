@@ -38,7 +38,7 @@ class Select_Room_view:
         self.button_back.place(x=668.0, y=524.0, width=109.0, height=47.0)
 
         self.button_add_img = PhotoImage(file=self.relative_to_assets("button_add.png"))
-        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: Select_Room_Extend.add_selected_room(self), relief="flat")
+        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: Select_Room_Extend.add_selected_rooms(self), relief="flat")
         self.button_add.place(x=683, y=455, width=80.9, height=36.35)
 
         self.rooms = self.load_room_data()

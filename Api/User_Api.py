@@ -6,27 +6,6 @@ class User_Api(main_api.Main_Api):
     def __init__(self):
         super().__init__()
         self.connect_mongodb()
-
-    def display_room_detail(self, data,new_status):
-        room_id = data["RoomID"]
-        room = self.rooms_collection.find_one({"RoomID": room_id}, {"Status": 1})
-        result = {"RoomStatus": room["Status"]}
-        if room["Status"].lower() in ["occupied", "booked"]:
-            invoice = self.invoices_collection.find_one(
-                {"Cart.RoomID": room_id},
-                {"Invoice_Date": 1, "Cart": 1, "Customer Information": 1},
-                sort=[("Invoice_Date", -1)])
-            cart_item = None
-            for item in invoice["Cart"]:
-                if item["RoomID"] == room_id:
-                    cart_item = item
-                    break
-            result["Customer Information"] = invoice["Customer Information"]
-            result["Time"] = {cart_item["DayIn"] + " - " + cart_item["DayOut"]}
-        else:
-            return result ==[] #no in4 display
-        self.rooms_collection.update_one({"RoomID": room_id}, {"$set": {"Status": new_status}})
-        return result
     def get_last_invoice_id(self):
             invoices = self.invoices_collection.find().sort([('Invoice_ID', -1)])
             last_invoice_id = invoices[0]['Invoice_ID']
@@ -67,7 +46,6 @@ class User_Api(main_api.Main_Api):
         for room in rooms:
             rooms_data.append(room)
         return rooms_data
-
 
 
 

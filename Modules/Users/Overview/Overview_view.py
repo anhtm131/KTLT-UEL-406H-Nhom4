@@ -149,16 +149,21 @@ class Overview_view:
     def show_detail_window(self, room):
         detail_win = tk.Toplevel(self.window)
         detail_win.title(f"Chi tiết phòng {room['RoomID']}")
-        detail_win.geometry("300x250")
+        window_width = 300
+        window_height = 250
+        detail_win.update_idletasks()
+        screen_width = detail_win.winfo_screenwidth()
+        screen_height = detail_win.winfo_screenheight()
+        x = int((screen_width / 2) - (window_width / 2))
+        y = int((screen_height / 2) - (window_height / 2))
+        detail_win.geometry(f"{window_width}x{window_height}+{x}+{y}")
         detail_win.config(bg="#FFFFFF")
         tk.Label(detail_win, text=f"Room ID: {room['RoomID']}", font=('Arial', 12, 'bold'), bg="#FFFFFF").pack(pady=10)
         tk.Label(detail_win, text=f"Room Type: {room['RoomType']}", font=('Arial', 12), bg="#FFFFFF").pack(pady=5)
         tk.Label(detail_win, text=f"Price: {room['Price']} VND", font=('Arial', 12), fg='darkgreen', bg="#FFFFFF").pack(
             pady=5)
-
         status_label = tk.Label(detail_win, text=f"Current Status: {room['Status']}", font=('Arial', 12), bg="#FFFFFF")
         status_label.pack(pady=5)
-
         status_frame = tk.Frame(detail_win, bg="#FFFFFF")
         status_frame.pack(pady=10)
         statuses = ["Available", "Occupied", "Booked", "Cleaning"]
@@ -166,34 +171,31 @@ class Overview_view:
                                "Occupied": "Available"}
         current_status = room["Status"]
         allowed_status = allowed_transitions.get(current_status, None)
-
         status_buttons = []
         for st in statuses:
             state = "normal" if st == allowed_status else "disabled"
             btn = tk.Button(status_frame, text=st, font=('Arial', 10), state=state,
-                            command=lambda s=st: self.update_status_detail(room, s, status_label, status_buttons))
+                            command=lambda s=st: self.update_status_detail(room, s, status_label, status_buttons,
+                                                                           detail_win))
             btn.pack(side="left", padx=5)
             status_buttons.append((btn, st))
-
         tk.Button(detail_win, text="Close", command=detail_win.destroy, font=("Arial", 12)).pack(pady=10)
 
-    def update_status_detail(self, room, new_status, status_label, status_buttons):
+    def update_status_detail(self, room, new_status, status_label, status_buttons, detail_win):
         data = {"RoomID": room["RoomID"], "Status": new_status}
         result = self.user_api.update_new_status(data)
         if result == 0:
-            messagebox.showinfo("Thông báo", f"Status của phòng {room['RoomID']} đã được cập nhật thành {new_status}.")
             room["Status"] = new_status
             status_label.config(text=f"Current Status: {new_status}")
-            allowed_transitions = {"Available": "Cleaning", "Cleaning": "Available", "Booked": "Occupied",
-                                   "Occupied": "Available"}
-            new_allowed = allowed_transitions.get(new_status, None)
             for btn, st in status_buttons:
-                btn.config(state="normal" if st == new_allowed else "disabled")
+                btn.config(state="disabled")
             self.rooms = self.load_room_data()
             self.sort_rooms()
             self.create_room_frames()
+            messagebox.showinfo("Notification", f"Status of  {room['RoomID']} was updated as {new_status}.")
+            detail_win.destroy()
         else:
-            messagebox.showerror("Lỗi", "Cập nhật không thành công hoặc không có thay đổi!")
+            messagebox.showerror("Error", "Nothing change!")
 
     def load_room_data(self):
         return [

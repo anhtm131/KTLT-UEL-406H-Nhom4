@@ -11,14 +11,14 @@ class Admin_Api(main_api.Main_Api):
         room = self.rooms_collection.find_one({'RoomID':data["RoomID"]})
         if room :
             return -1 #Error: room already exist
-        if len(data) != 4:
-            return -2 #Error: information isn't complete
+        if data["Status"] == "":
+            data["Status"] = "Available"
         self.rooms_collection.insert_one(data)
         return 0 #create successfully
 
     def update_room(self, data, room_id):
         room = self.rooms_collection.find_one({'RoomID': room_id})
-        if not room:
+        if room == None:
             return -1  # Error: can not find RoomID in database
         else:
             updated_fields = {} #create update field
@@ -34,7 +34,7 @@ class Admin_Api(main_api.Main_Api):
                 self.rooms_collection.update_one({'_id': _id}, {'$set': updated_fields})
                 return 0 #update successfully
             else:
-                return -1 #Error: no new information was updated
+                return -2 #Error: no new information was updated
 
     def remove_room(self, room_id):
         room = self.rooms_collection.find_one({'RoomID' : room_id})
