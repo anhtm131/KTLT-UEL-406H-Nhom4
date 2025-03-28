@@ -45,7 +45,7 @@ class SelectRoom:
         self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: print("Add button clicked"), relief="flat")
         self.button_add.place(x=683, y=455, width=80.9, height=36.35)
 
-        self.window.mainloop()
+
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)

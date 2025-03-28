@@ -25,14 +25,14 @@ class Users_view:
 
 
         self.entry_2 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_2.place(x=637.9863, y=130.2529, width=314.251, height=39.0992)
+        self.entry_2.place(x=637.9863, y=130.2529, width=314.251, height=39.0992) #find
 
         self.entry_3 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_3.place(x=428.1064, y=227.8868, width=164.9817, height=34.5297)
+        self.entry_3.place(x=428.1064, y=227.8868, width=164.9817, height=34.5297) #pass
 
 
         self.entry_4 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_4.place(x=428.1064, y=294.3044, width=164.9817, height=34.5297)
+        self.entry_4.place(x=428.1064, y=294.3044, width=164.9817, height=34.5297)  #role
 
         self.button_img_logout = PhotoImage(file=self.relative_to_assets("logout.png", "Window_element"))
         self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0,activebackground="#55908B", command=lambda: print("button_logout clicked"), relief="flat")

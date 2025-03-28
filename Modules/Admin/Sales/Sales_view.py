@@ -63,7 +63,7 @@ class Sales_view:
         self.overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print(""), relief="flat")
         self.overview.place(x=25.292, y=112.5486, width=230.1556, height=60.0681)
 
-        self.window.mainloop()
+        #self.window.mainloop()
 
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":

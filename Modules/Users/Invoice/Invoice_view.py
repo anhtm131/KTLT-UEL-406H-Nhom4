@@ -42,7 +42,7 @@ class Invoice:
         self.button_invoice = Button(image=self.button_img_invoice, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Invoice button clicked"), relief="flat")
         self.button_invoice.place(x=795.0, y=527.0, width=124.0, height=47.0)
 
-        self.window.mainloop()
+        #self.window.mainloop()
 
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":

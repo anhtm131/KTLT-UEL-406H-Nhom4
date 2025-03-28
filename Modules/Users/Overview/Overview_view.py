@@ -2,7 +2,7 @@ from tkinter import *
 from pathlib import Path
 
 
-class MainView:
+class Overview_view:
     def __init__(self):
         self.window = Tk()
         self.window.geometry("1095x650")
@@ -63,11 +63,78 @@ class MainView:
         self.find_btn = Button(image=self.find_btn_img, borderwidth=0, highlightthickness=0, activebackground="#D9D9D9", bg="#D9D9D9", command=lambda: print("Find button clicked"), relief="flat")
         self.find_btn.place(x=785.0, y=31.0, width=25.0, height=25.3)
 
-        self.window.mainloop()
+        #self.window.mainloop()
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
 
+    def create_room_frames(self):
+        for frame in self.room_frames:
+            frame.destroy()
+        self.room_frames.clear()
 
+        rooms = self.filtered_rooms
+        x = 285
+        y = 170
+        rooms_every_row = 3
+        room_width = 250
+        room_height = 150
+        spacing_x = 20
+        spacing_y = 25
+
+        for index, room in enumerate(rooms):
+            frame = tk.Frame(
+                self.window,
+                width=room_width,
+                height=room_height,
+                bg=self.get_status_color(room['Status']),
+                bd=3,
+                relief='ridge',
+                highlightbackground="#ccc", highlightthickness=2
+            )
+            frame.place(x=x, y=y)
+            frame.pack_propagate(False)
+
+            room_id = tk.Label(
+                frame, text=f"Phòng {room['RoomID']}",
+                bg=self.get_status_color(room['Status']),
+                fg='black',
+                font=('Arial', 14, 'bold'),
+                anchor="center"
+            )
+            room_id.pack(fill="x", pady=(10, 5))
+
+            room_type = tk.Label(
+                frame, text=f"Loại: {room['RoomType']}",
+                bg=self.get_status_color(room['Status']),
+                fg='black',
+                font=('Arial', 11)
+            )
+            room_type.pack(fill="x", pady=(0, 5))
+
+            price = tk.Label(
+                frame, text=f"Giá: {room['Price']} VND",
+                bg=self.get_status_color(room['Status']),
+                fg='darkgreen',
+                font=('Arial', 11, 'bold')
+            )
+            price.pack(fill="x", pady=(0, 5))
+            status = tk.Label(
+                frame, text=f"Trạng thái: {room['Status']}",
+                bg=self.get_status_color(room['Status']),
+                fg='black',
+                font=('Arial', 11)
+            )
+            status.pack(fill="x", pady=(0, 10))
+
+            self.room_frames.append(frame)
+            if (index + 1) % rooms_every_row == 0:
+                x = 285
+                y += room_height + spacing_y
+            else:
+                x += room_width + spacing_x
+    def load_room_data(self):
+        with open(r'D:\KTLT_DoAnCuoiKy_Final\Data\rooms.json', 'r', encoding='utf-8') as file:
+            return json.load(file)
 if __name__ == "__main__":
-    MainView()
+    Overview_view()

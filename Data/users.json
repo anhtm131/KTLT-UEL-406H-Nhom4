@@ -1,10 +1,5 @@
 [
     {
-        "Username": "group4",
-        "Password": "admin",
-        "Role": "Admin"
-    },
-    {
         "Username": "user1",
         "Password": "123456",
         "Role": "User"
@@ -15,8 +10,13 @@
         "Role": "User"
     },
     {
+        "Username": "group4",
+        "Password": "admin",
+        "Role": "Admin"
+    },
+    {
         "Username": "user3",
-        "Password": "12345678",
+        "Password": "1234567",
         "Role": "User"
     }
 ]
