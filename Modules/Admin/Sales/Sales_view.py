@@ -1,7 +1,9 @@
 from pathlib import Path
 from tkinter import *
+from tkinter import ttk
+import tkinter as tk
 import Modules.Main_process as Main_process
-
+from Api.Admin_Api import Admin_Api
 class Sales_view:
     def __init__(self):
         self.window = Tk()
@@ -9,7 +11,7 @@ class Sales_view:
         self.window.title("Report Information")
         self.window.configure(bg="#FFFFFF")
         self.window.resizable(False, False)
-
+        self.admin_api = Admin_Api()
         self.canvas = Canvas(self.window, bg="#FFFFFF", height=650, width=1092, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.place(x=0, y=0)
 
@@ -71,8 +73,31 @@ class Sales_view:
         self.overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#51908D",
                                command=lambda: Main_process.Main_process.overview_button(self), relief="flat")
         self.overview.place(x=25.292, y=112.5486, width=230.1556, height=60.0681)
+        self.create_treeview()
+    def create_treeview(self):
+        columns = ("InvoiceID", "Invoice_Date", "Total")
+        self.tree = ttk.Treeview(self.window, columns=columns, show="headings")
 
-        #self.window.mainloop()
+        self.tree.heading("InvoiceID", text="Invoice ID")
+        self.tree.heading("Invoice_Date", text="Invoice Date")
+        self.tree.heading("Total", text="Total")
+
+        self.tree.column("InvoiceID", width=100, anchor="center")
+        self.tree.column("Invoice_Date", width=120, anchor="center")
+        self.tree.column("Total", width=100, anchor="center")
+
+        self.tree.place(x=300, y=180, width=753, height=300)
+
+        self.load_tree_data()
+    def load_tree_data(self):
+        self.tree.delete(*self.tree.get_children())
+        self.invoices = self.admin_api.get_all_invoices_data()
+        for invoice in self.invoices:
+            self.tree.insert("", tk.END, values=(
+                invoice["InvoiceID"],
+                invoice["Invoice_Date"],
+                invoice["Total"]
+            ))
 
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":

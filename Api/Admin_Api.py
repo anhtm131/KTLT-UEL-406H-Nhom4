@@ -49,7 +49,7 @@ class Admin_Api(main_api.Main_Api):
         if user:
             return -1 #Error: User already exist in database
         else:
-            self.users_collection.update_one(data)
+            self.users_collection.insert_one(data)
             return 0 #add successfully
     def update_user(self,data):
         user = self.users_collection.find_one({'Username': data['Username']})
