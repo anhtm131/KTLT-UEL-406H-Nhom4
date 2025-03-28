@@ -8,7 +8,6 @@ from Api.User_Api import User_Api
 from Modules.Users.Select_Room.Select_Room_view import Select_Room_view
 from Modules.Users.Select_Room.Selected_Room_extend import Selected_Room_extend
 
-
 class Cart_and_Customer_view:
     def __init__(self):
         self.window = Tk()
@@ -123,8 +122,6 @@ class Cart_and_Customer_view:
             "Price": room["Price"],
             "Status": room["Status"]
         } for room in room_info]
-
-
 
     def load_cart_data(self, day_in=None, day_out=None):
             api = Api.User_Api()

@@ -28,13 +28,10 @@ class Select_Room_view:
         self.background_img = PhotoImage(file=self.relative_to_assets("background_select_room.png"))
         self.canvas.create_image(483.0, 300.0, image=self.background_img)
 
-
         self.button_cart_img = PhotoImage(file=self.relative_to_assets("button_cart.png"))
         self.button_cart = Button(image=self.button_cart_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
                                    command=lambda: Main_process.Main_process.cart_and_customer_button(self), relief="flat")
         self.button_cart.place(x=183.0, y=524.0, width=98.0, height=47.0)
-
-
 
         self.button_back_img = PhotoImage(file=self.relative_to_assets("button_back.png"))
         self.button_back = Button(image=self.button_back_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",
@@ -106,6 +103,17 @@ class Select_Room_view:
                 row.get("RoomType", ""),
                 row.get("Price", ""),
                 row.get("Status", ""),
+            ))
+    def refresh_treeview(self):
+        self.tree.delete(*self.tree.get_children())
+
+        for item in self.cart_data:
+            self.tree.insert("", tk.END, values=(
+                item["RoomID"],
+                item["RoomType"],
+                item["Days"],
+                item["Price"],
+
             ))
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
