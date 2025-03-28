@@ -1,6 +1,8 @@
 from tkinter import *
 from pathlib import Path
 from tkinter import ttk
+from tkinter.ttk import Combobox
+
 from Modules.Admin.Users.Users_extend import Users_extend
 import Modules.Main_process as Main_process
 import tkinter as tk
@@ -34,8 +36,8 @@ class Users_view:
         self.entry_3 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_3.place(x=428.1064, y=227.8868, width=164.9817, height=34.5297) #pass
 
-
-        self.entry_4 = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        Roles = ["User", "Admin"]
+        self.entry_4 = Combobox(self.window, values=Roles, state="readonly")
         self.entry_4.place(x=428.1064, y=294.3044, width=164.9817, height=34.5297)  #role
 
         self.button_img_logout = PhotoImage(file=self.relative_to_assets("logout.png", "Window_element"))
@@ -63,7 +65,7 @@ class Users_view:
         self.find.place(x=958.5605, y=130.2529, width=56.9066, height=41.0992)
 
         self.button_img_reload = PhotoImage(file=self.relative_to_assets("button_reload.png", "Frame"))
-        self.reload = Button(image=self.button_img_reload, borderwidth=0, highlightthickness=0, activebackground="#51908D", relief="flat")
+        self.reload = Button(image=self.button_img_reload, borderwidth=0, highlightthickness=0, activebackground="#51908D",command=lambda: Users_extend.reset_view(self), relief="flat")
         self.reload.place(x=1021.1572, y=130.2529, width=56.9066, height=41.0992)
 
         self.button_img_sales = PhotoImage(file=self.relative_to_assets("sales.png", "Window_element"))
@@ -118,8 +120,10 @@ class Users_view:
             self.entry_3.delete(0, tk.END)
             self.entry_3.insert(0, values[1])
 
+            self.entry_4.config(state="normal")
             self.entry_4.delete(0, tk.END)
             self.entry_4.insert(0, values[2])
+            self.entry_4.config(state="readonly")
     def load_tree_data(self):
         self.tree.delete(*self.tree.get_children())
         self.users = self.admin_api.get_all_users_data()
