@@ -1,5 +1,13 @@
 from tkinter import *
 from pathlib import Path
+from tkinter import *
+from tkinter import messagebox
+
+from Modules.Admin.Overview.Overview_extend import Overview_extend
+from Modules.Admin.Price.Price_extend import Price_extend
+from Modules.Admin.Rooms.Rooms_extend import Rooms_extend
+from Modules.Admin.Users.Users_extend import Users_extend
+from Modules.Login import Login_view
 class Sales_view:
     def __init__(self):
         self.window = Tk()
@@ -71,5 +79,35 @@ class Sales_view:
         elif assets_type == "Window_element":
             return self.assets_WE_path / Path(path)
 
-if __name__ == "__main__":
-    Sales_view()
+    @staticmethod
+    def overview_button(obj):
+        obj.destroy()
+        Overview_extend()
+
+    @staticmethod
+    def edit_button(obj):
+        obj.window.destroy()
+        Rooms_extend()
+
+    @staticmethod
+    def price_button(obj):
+        obj.window.destroy()
+        Price_extend()
+
+
+    @staticmethod
+    def users_button(obj):
+        obj.window.destroy()
+        Users_extend()
+
+    @staticmethod
+    def log_out_button(obj):
+        if messagebox.askyesno("Xác nhận", "Bạn có chắc chắn muốn thoát không?"):
+            obj.window.destroy()
+            Login_view.Login_view()
+        else:
+            pass
+    @staticmethod
+    def quit_button(obj):
+        if messagebox.askyesno("Xác nhận", "Bạn có chắc chắn muốn thoát không?"):
+            obj.window.destroy()

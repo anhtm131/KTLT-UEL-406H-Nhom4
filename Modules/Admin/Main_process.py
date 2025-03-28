@@ -1,46 +1,49 @@
-from tkinter import *
+from Modules.Admin.Price.Price_view import Price_view
+from Modules.Admin.Rooms.Rooms_view import Rooms_view
+from Modules.Admin.Sales.Sales_view import Sales_view
+from Modules.Admin.Users.Users_view import Users_view
+from Modules.Admin.Overview.Overview_view import Overview_view
 from tkinter import messagebox
 
-from Modules.Admin.Overview.Overview_extend import Overview_extend
-from Modules.Admin.Price.Price_extend import Price_extend
-from Modules.Admin.Rooms.Rooms_extend import Rooms_extend
-from Modules.Admin.Sales.Sales_extend import Sales_extend
-from Modules.Login import Login_view
+from Modules.Login.Login_view import Login_view
 
-class Users_process:
+
+class Main_process:
     @staticmethod
     def overview_button(obj):
-        obj.destroy()
-        Overview_extend()
+        obj.window.destroy()
+        Overview_view()
 
     @staticmethod
     def edit_button(obj):
         obj.window.destroy()
-        Rooms_extend()
+        Rooms_view()
 
     @staticmethod
     def price_button(obj):
         obj.window.destroy()
-        Price_extend()
+        Price_view()
 
     @staticmethod
     def sales_button(obj):
         obj.window.destroy()
-        Sales_extend()
+        Sales_view()
 
-    '''@staticmethod
+    @staticmethod
     def users_button(obj):
         obj.window.destroy()
-        Users_extend()'''
+        Users_view()
 
     @staticmethod
     def log_out_button(obj):
         if messagebox.askyesno("Xác nhận", "Bạn có chắc chắn muốn thoát không?"):
             obj.window.destroy()
-            Login_view.Login_view()
+            Login_view()
         else:
             pass
+
     @staticmethod
     def quit_button(obj):
         if messagebox.askyesno("Xác nhận", "Bạn có chắc chắn muốn thoát không?"):
             obj.window.destroy()
+
