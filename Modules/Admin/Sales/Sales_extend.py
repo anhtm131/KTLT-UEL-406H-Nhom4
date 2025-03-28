@@ -7,47 +7,7 @@ from datetime import datetime
 from Modules.Admin.Sales.Sales_view import Sales_view
 from Api.Main_Api import Main_Api
 
-class Sales_extend(Sales_view):
-    def __init__(self):
-        super().__init__()
-        self.invoices = self.load_invoice_data()
-        self.create_treeview()
-
-        self.search.config(command=self.filter_by_date_range)
-        self.visualize.config(command=self.visualize_sales_data)
-
-        self.window.mainloop()
-
-    def load_invoice_data(self):
-        try:
-            with open(r'D:\KTLT_DoAnCuoiKy_Final\Data\invoices.json', 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                return data
-        except Exception as e:
-            print("Lỗi load data:", e)
-            return []
-
-
-    def create_treeview(self):
-        columns = ("InvoiceID", "Invoice_Date", "Total")
-        self.tree = ttk.Treeview(self.window, columns=columns, show="headings")
-
-        self.tree.heading("InvoiceID", text="Invoice ID")
-        self.tree.heading("Invoice_Date", text="Invoice Date")
-        self.tree.heading("Total", text="Total")
-
-        self.tree.column("InvoiceID", width=100, anchor="center")
-        self.tree.column("Invoice_Date", width=120, anchor="center")
-        self.tree.column("Total", width=100, anchor="center")
-
-        self.tree.place(x=300, y=180, width=753, height=300)
-
-        for invoice in self.invoices:
-            self.tree.insert("", tk.END, values=(
-                invoice["InvoiceID"],
-                invoice["Invoice_Date"],
-                invoice["Total"]
-            ))
+class Sales_extend():
 
     def filter_by_date_range(self):
         from_date_str = self.entry_from.get()

@@ -24,7 +24,7 @@ class User_Api(main_api.Main_Api):
             result["Customer Information"] = invoice["Customer Information"]
             result["Time"] = {cart_item["DayIn"] + " - " + cart_item["DayOut"]}
         else:
-            return -1
+            return result ==[] #no in4 display
         self.rooms_collection.update_one({"RoomID": room_id}, {"$set": {"Status": new_status}})
         return result
     def get_last_invoice_id(self):
@@ -37,15 +37,31 @@ class User_Api(main_api.Main_Api):
         number = id[3:]
         new_id = int(number) + 1
         self.new_invoice_id = f"INV{new_id:03}"
-    def create_invoice(self,cart,customer_in4):
-        pass
+
+    def create_invoice(self, customer_information, cart):
+        self.create_new_invoice_id()
+        invoice_date = datetime.datetime.now().strftime("%d/%m/%Y")
+        total = sum(item["Price"] * item["Days"] for item in cart)
+        invoice = {
+            "InvoiceID": self.new_invoice_id,
+            "Invoice_Date": invoice_date,
+            "Total": total,
+            "Cart": cart,
+            "Customer Information": customer_information
+        }
+        self.invoices_collection.insert_one(invoice)
 
     def update_new_status(self,data):
         self.rooms_collection.update({"RoomID": data["RoomID"]}, {"$set": {"Status": data["Status"]}})
 
     def get_all_rooms_avai_data(self):
-        rooms = self.rooms_collection.find({"Status": "Available"})
+        rooms = self.rooms_collection.find({"Status": "Available"}).sort("RoomID", 1)
         rooms_data = []
         for room in rooms:
             rooms_data.append(room)
         return rooms_data
+
+
+
+
+

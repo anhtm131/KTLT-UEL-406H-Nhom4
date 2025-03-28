@@ -1,7 +1,9 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Button, PhotoImage, ttk
 from tkinter.ttk import Combobox
-
+from Api.Admin_Api import Admin_Api
+import tkinter as tk
+from Modules.Admin.Rooms.Rooms_extend import Rooms_extend
 import Modules.Main_process as Main_process
 class Rooms_view:
     def __init__(self):
@@ -12,6 +14,7 @@ class Rooms_view:
         self.window.resizable(False, False)
         self.canvas = Canvas(self.window, bg="#FFFFFF", height=650, width=1092, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.place(x=0, y=0)
+        self.admin_api = Admin_Api()
 
         OUTPUT_PATH = Path(__file__).parent
         self.assets_path = OUTPUT_PATH.parent.parent.parent / "Images" / "Admin" / "Rooms"
@@ -46,23 +49,23 @@ class Rooms_view:
         self.button_quit.place(x=138.0, y=586.0, width=117.0, height=51.0)
 
         self.btn_find = PhotoImage(file=self.relative_to_assets("button_find.png", "Frame"))
-        self.button_find = Button(image=self.btn_find, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Find clicked"), relief="flat")
+        self.button_find = Button(image=self.btn_find, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Rooms_extend.search_room(self), relief="flat")
         self.button_find.place(x=966.1484, y=122.033, width=56.9066, height=41.0992)
 
         self.btn_reset = PhotoImage(file=self.relative_to_assets("button_reset.png", "Frame"))
-        self.button_reset = Button(image=self.btn_reset, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Reset clicked"), relief="flat")
+        self.button_reset = Button(image=self.btn_reset, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Rooms_extend.reset_view(self), relief="flat")
         self.button_reset.place(x=1028.7451, y=122.033, width=56.9066, height=41.0992)
 
         self.btn_update = PhotoImage(file=self.relative_to_assets("button_update.png", "Frame"))
-        self.button_update = Button(image=self.btn_update, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Update clicked"), relief="flat")
+        self.button_update = Button(image=self.btn_update, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Rooms_extend.update_room_button_handle(self), relief="flat")
         self.button_update.place(x=308.5605, y=474.6403, width=88.5214, height=47.4222)
 
         self.btn_delete = PhotoImage(file=self.relative_to_assets("button_delete.png", "Frame"))
-        self.button_delete = Button(image=self.btn_delete, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Delete clicked"), relief="flat")
+        self.button_delete = Button(image=self.btn_delete, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Rooms_extend.delete_room_button_handle(self), relief="flat")
         self.button_delete.place(x=529.2314, y=474.6403, width=88.5214, height=47.4222)
 
         self.btn_create = PhotoImage(file=self.relative_to_assets("button_create.png", "Frame"))
-        self.button_create = Button(image=self.btn_create, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Create clicked"), relief="flat")
+        self.button_create = Button(image=self.btn_create, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Rooms_extend.create_room_button_handle(self), relief="flat")
         self.button_create.place(x=419.2119, y=474.6403, width=88.5214, height=47.4222)
 
         self.btn_sales = PhotoImage(file=self.relative_to_assets("sales.png", "Window_element"))
@@ -86,12 +89,58 @@ class Rooms_view:
         self.button_overview.place(x=25.2915, y=116.9747, width=230.1556, height=60.0681)
 
 
-
+        self.create_treeview()
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":
             return self.assets_path / Path(path)
         elif assets_type == "Window_element":
             return self.assets_WE_path / Path(path)
+    def create_treeview(self):
+        columns = ("RoomID", "RoomType", "Price", "Status")
+        self.tree = ttk.Treeview(self.window, columns=columns, show="headings")
+
+        self.tree.heading("RoomID", text="Room ID")
+        self.tree.heading("RoomType", text="Room Type")
+        self.tree.heading("Price", text="Price")
+        self.tree.heading("Status", text="Status")
+
+        self.tree.column("RoomID", width=5, anchor="center")
+        self.tree.column("RoomType", width=40, anchor="center")
+        self.tree.column("Price", width=40, anchor="center")
+        self.tree.column("Status", width=50, anchor="center")
+
+        self.tree.place(x=678, y=180, width=400, height=300)
+
+        self.load_tree_data()
+        self.tree.bind("<ButtonRelease-1>", self.display_room_info)
+    def load_tree_data(self):
+        self.tree.delete(*self.tree.get_children())
+        self.rooms = self.admin_api.get_all_rooms_data()
+        for room in self.rooms:
+            price = str(room["Price"]).replace(",", "")
+            self.tree.insert("", tk.END, values=(
+                room["RoomID"],
+                room["RoomType"],
+                price,
+                room["Status"]
+            ))
+    def display_room_info(self,event):
+        selected = self.tree.selection()
+        if selected:
+            values = self.tree.item(selected[0], "values")
+
+            self.entry_roomid.delete(0, tk.END)
+            self.entry_roomid.insert(0, values[0])
+
+
+            self.combo_roomtype.set(values[1])
+
+
+            self.entry_price.delete(0, tk.END)
+            self.entry_price.insert(0, values[2])
+
+            self.entry_status.delete(0, tk.END)
+            self.entry_status.insert(0, values[3])
 
 if __name__ == "__main__":
     app= Rooms_view()
