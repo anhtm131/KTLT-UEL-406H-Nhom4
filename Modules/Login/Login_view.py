@@ -33,13 +33,13 @@ class Login_view:
 
 
         self.canvas.create_image(558.7, 315.2, image=self.entry_image)
-        self.entry_username = Entry(bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-        self.entry_username.place(x=464.6, y=301.8, width=188.1, height=25.0)
+        self.entry_password = Entry(bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+        self.entry_password.place(x=464.6, y=301.8, width=188.1, height=25.0)
 
 
         self.canvas.create_image(558.7, 263.7, image=self.entry_image)
-        self.entry_password = Entry(bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-        self.entry_password.place(x=464.6, y=250.2, width=188.1, height=25.0)
+        self.entry_username = Entry(bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+        self.entry_username.place(x=464.6, y=250.2, width=188.1, height=25.0)
 
         self.button_login_img = PhotoImage(file=self.relative_to_assets("button_login.png"))
         self.login_button = Button(
@@ -47,17 +47,9 @@ class Login_view:
             borderwidth=0,
             highlightthickness=0,
             activebackground="#3D6C49",
-            command=lambda: print("button_login clicked"),
             relief="flat"
         )
         self.login_button.place(x=518.0, y=348.0, width=81.0, height=41.0)
 
-
-        self.window.mainloop()
-
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
-
-
-if __name__ == "__main__":
-    Login_view()
