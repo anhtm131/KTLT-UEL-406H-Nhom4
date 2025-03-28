@@ -17,14 +17,14 @@ class Invoice:
         self.assets_frame_path = OUTPUT_PATH.parent.parent.parent / "Images" / "Users" / "Invoice"
 
         self.window.iconphoto(False, PhotoImage(file=self.relative_to_assets("icon.png", "Frame")))
-        self.background_img = PhotoImage(file=self.relative_to_assets("background_invoice.png", "Frame"))
+        self.background_img = PhotoImage(file=self.relative_to_assets("background_invoices.png", "Frame"))
         self.canvas.create_image(483.0, 300.0, image=self.background_img)
 
-        self.entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry.place(x=404.6665, y=300.0, width=244.6667, height=26.6667)
+        self.entry_total = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
+        self.entry_total.place(x=427.48, y=464.49, width=244.75, height=28.68)
 
 
-        self.canvas.create_text(278.6665, 300.0, anchor="nw", text="Total Cost:", fill="#FFFFFF", font=("PTSerif Caption", 20 * -1))
+
 
         self.button_img_back = PhotoImage(file=self.relative_to_assets("button_back.png", "Frame"))
         self.button_back = Button(image=self.button_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Back button clicked"), relief="flat")

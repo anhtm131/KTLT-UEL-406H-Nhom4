@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 
-class Api:
+class Main_Api:
     def __init__(self):
         self.connect_mongodb()
     def connect_mongodb(self):
@@ -52,3 +52,10 @@ class Api:
         for user in users:
             users_data.append(user)
         return users_data
+
+    def get_room_types(self):
+        rooms = self.rooms_collection.find({}, {"_id": 0, "RoomType": 1, "Price": 1})
+        room_types = {room["RoomType"]: room["Price"] for room in rooms}
+        return [{"RoomType": rt, "Price": price} for rt, price in room_types.items()]
+
+
