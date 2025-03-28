@@ -4,7 +4,11 @@ import Modules.Main_process as Main_process
 import tkinter as tk
 import tkinter.ttk as ttk
 from Api.User_Api import User_Api
-from Modules.Users.Select_Room.Selected_Room_extend import Select_Room_Extend
+from Modules.Users.Select_Room import Selected_Room_extend
+from datetime import datetime, timedelta
+
+
+#from Modules.Users.Select_Room.Selected_Room_extend import Selected_Room_extend
 class Select_Room_view:
     def __init__(self):
         self.window = Tk()
@@ -38,12 +42,11 @@ class Select_Room_view:
         self.button_back.place(x=668.0, y=524.0, width=109.0, height=47.0)
 
         self.button_add_img = PhotoImage(file=self.relative_to_assets("button_add.png"))
-        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: Select_Room_Extend.add_selected_rooms(self), relief="flat")
+        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: Selected_Room_extend.Selected_Room_extend.add_selected_room(self.tree), relief="flat")
         self.button_add.place(x=683, y=455, width=80.9, height=36.35)
 
         self.rooms = self.load_room_data()
         self.create_treeview()
-
 
     def load_room_data(self):
         return [
@@ -56,13 +59,21 @@ class Select_Room_view:
             for room in self.user_api.get_all_rooms_avai_data()
         ]
 
+    def reload_treeview(self):
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+        for room in self.rooms:
+            self.tree.insert("", tk.END, values=(
+                room["RoomID"],
+                room["RoomType"],
+                room["Price"],
+                room["Status"]
+            ))
     def create_treeview(self):
         columns = ("RoomID", "RoomType", "Price", "Status")
-
         self.rooms_rows = self.rooms
         tree_height = min(max(len(self.rooms_rows), 1), 10)
         frame_height = tree_height * 40 + 30
-
         frame = tk.Frame(self.window, width=1100, height=frame_height, bg="white", bd=2, relief="ridge")
         frame.place(x=50, y=90)
 
@@ -98,7 +109,6 @@ class Select_Room_view:
             ))
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
-
 
 if __name__ == "__main__":
     app = Select_Room_view()

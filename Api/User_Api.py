@@ -7,8 +7,8 @@ class User_Api(main_api.Main_Api):
         super().__init__()
         self.connect_mongodb()
     def get_last_invoice_id(self):
-            invoices = self.invoices_collection.find().sort([('Invoice_ID', -1)])
-            last_invoice_id = invoices[0]['Invoice_ID']
+            invoices = self.invoices_collection.find().sort([('InvoiceID', -1)])
+            last_invoice_id = invoices[0]['InvoiceID']
             return last_invoice_id
     def create_new_invoice_id(self):
         last_invoice_id = self.get_last_invoice_id()
@@ -17,7 +17,7 @@ class User_Api(main_api.Main_Api):
         new_id = int(number) + 1
         self.new_invoice_id = f"INV{new_id:03}"
 
-    def create_invoice(self, customer_information, cart):
+    def create_invoice(self, cart):
         self.create_new_invoice_id()
         invoice_date = datetime.datetime.now().strftime("%d/%m/%Y")
         total = sum(item["Price"] * item["Days"] for item in cart)
@@ -26,10 +26,8 @@ class User_Api(main_api.Main_Api):
             "Invoice_Date": invoice_date,
             "Total": total,
             "Cart": cart,
-            "Customer Information": customer_information
         }
         self.invoices_collection.insert_one(invoice)
-
     def update_new_status(self, data):
         result = self.rooms_collection.update_one(
             {"RoomID": data["RoomID"]},

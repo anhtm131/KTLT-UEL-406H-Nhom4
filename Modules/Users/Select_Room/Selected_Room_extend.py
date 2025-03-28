@@ -1,21 +1,24 @@
-class Select_Room_Extend:
-    @staticmethod
-    def add_selected_rooms(select_room_view_instance):
-        selected = select_room_view_instance.tree.selection()
-        if not selected:
-            return []
-        cart_items = []
-        for item in selected:
-            values = select_room_view_instance.tree.item(item, "values")
-            item_dict = {
-                "RoomID": values[0],
-                "RoomType": values[1],
-                "Price": values[2],
-                "Day in": "",
-                "Day out": ""
-            }
-            cart_items.append(item_dict)
+class Selected_Room_extend:
+    selected_rooms = []
 
-        for item in selected:
-            select_room_view_instance.tree.delete(item)
-        return cart_items
+    @classmethod
+    def add_selected_room(cls, tree):
+        selected_item = tree.selection()
+        if not selected_item:
+            return None
+
+        room_data = tree.item(selected_item[0], "values")
+        room_info = {
+            "RoomID": room_data[0],
+            "RoomType": room_data[1],
+            "Price": room_data[2],
+            "Status": room_data[3]
+        }
+
+        cls.selected_rooms.append(room_info)
+        tree.delete(selected_item[0])
+        return room_info
+
+    @classmethod
+    def get_selected_rooms(cls):
+        return cls.selected_rooms
