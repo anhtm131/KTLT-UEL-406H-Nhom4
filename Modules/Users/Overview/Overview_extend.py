@@ -1,8 +1,8 @@
-from Modules.Users.Overview import Overview_view
+from Modules.Users.Overview.Overview_view import Overview_view
 import tkinter as tk
 import json
 
-class Overview_extend1(Overview_view):
+class Overview_extend(Overview_view):
     def __init__(self):
         super().__init__()
 
@@ -111,4 +111,4 @@ class Overview_extend1(Overview_view):
         pass
 if __name__ == "__main__":
     app = Overview_extend()
-    app.run()
+    app.window.mainloop()

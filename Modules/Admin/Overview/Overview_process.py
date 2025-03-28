@@ -1,7 +1,5 @@
 from tkinter import *
 from tkinter import messagebox
-
-#from Modules.Admin.Overview.Overview_extend import Overview_extend
 from Modules.Admin.Price.Price_extend import Price_extend
 from Modules.Admin.Rooms.Rooms_extend import Rooms_extend
 from Modules.Admin.Sales.Sales_extend import Sales_extend
@@ -16,7 +14,7 @@ class Overview_process:
 
     @staticmethod
     def edit_button(obj):
-        obj.destroy()
+        obj.window.destroy()
         Rooms_extend()
 
     @staticmethod

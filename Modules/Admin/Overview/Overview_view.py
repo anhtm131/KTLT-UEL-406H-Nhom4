@@ -1,6 +1,6 @@
 from tkinter import *
 from pathlib import Path
-
+from Modules.Admin.Overview.Overview_process import Overview_process
 class Overview_view:
     def __init__(self):
         self.window = Tk()
@@ -64,7 +64,7 @@ class Overview_view:
         self.button_price.place(x=25.29, y=268.72, width=213.71, height=60.70)
 
         self.button_img_edit = PhotoImage(file=self.relative_to_assets("edit.png", "Window_element"))
-        self.button_edit = Button(image=self.button_img_edit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print("") , relief="flat")
+        self.button_edit = Button(image=self.button_img_edit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Overview_process.edit_button(self) , relief="flat")
         self.button_edit.place(x=25.29, y=188.42, width=213.71, height=64.49)
 
         self.button_img_overview = PhotoImage(file=self.relative_to_assets("button_overview.png", "Frame"))
@@ -75,7 +75,6 @@ class Overview_view:
         self.button_find = Button(image=self.button_img_find, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print("button_find clicked"), relief="flat")
         self.button_find.place(x=780.88, y=31.08, width=24.97, height=25.29)
 
-        #self.window.mainloop()
 
     def relative_to_assets(self, path: str, assets_type = str("Frame")):
         if assets_type == "Frame":
@@ -85,5 +84,3 @@ class Overview_view:
 
     def run(self):
         self.window.mainloop()
-if __name__ == "__main__":
-    Overview_view()

@@ -117,4 +117,4 @@ class Overview_extend(Overview_view):
 
 if __name__ == "__main__":
     app = Overview_extend()
-    app.run()
+    app.window.mainloop()
