@@ -1,14 +1,10 @@
 from tkinter import *
 from pathlib import Path
 import Modules.Main_process as Main_process
-from Modules.Users.Select_Room.Selected_Room_extend import Select_Room_Extend
-import json
-import os
 import tkinter as tk
 import tkinter.ttk as ttk
-from Api.Main_Api import Main_Api
-#from Modules.Users.Cart_and_Customer.Cart_and_Customer_view import CartCustomerDetails
-
+from Api.User_Api import User_Api
+from Modules.Users.Select_Room.Selected_Room_extend import Select_Room_Extend
 class Select_Room_view:
     def __init__(self):
         self.window = Tk()
@@ -19,7 +15,7 @@ class Select_Room_view:
 
         self.canvas = Canvas(self.window, bg="#FFFFFF", height=600, width=966, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.place(x=0, y=0)
-
+        self.user_api = User_Api()
         OUTPUT_PATH = Path(__file__).parent
         self.assets_path = OUTPUT_PATH.parent.parent.parent / "Images" / "Users" / "Select_Room"
 
@@ -42,12 +38,12 @@ class Select_Room_view:
         self.button_back.place(x=668.0, y=524.0, width=109.0, height=47.0)
 
         self.button_add_img = PhotoImage(file=self.relative_to_assets("button_add.png"))
-        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: print("Add button clicked"), relief="flat")
+        self.button_add = Button(image=self.button_add_img, borderwidth=0, highlightthickness=0, activebackground="#6C947F",command=lambda: Select_Room_Extend.add_selected_room(self), relief="flat")
         self.button_add.place(x=683, y=455, width=80.9, height=36.35)
 
         self.rooms = self.load_room_data()
         self.create_treeview()
-        #self.window.mainloop()
+
 
     def load_room_data(self):
         return [
@@ -57,7 +53,7 @@ class Select_Room_view:
                 "Price": room.get("Price"),
                 "Status": room.get("Status")
             }
-            for room in Main_Api().get_all_rooms_data()
+            for room in self.user_api.get_all_rooms_avai_data()
         ]
 
     def create_treeview(self):
