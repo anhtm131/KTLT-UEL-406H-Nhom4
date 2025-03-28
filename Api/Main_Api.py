@@ -17,14 +17,14 @@ class Main_Api:
         self.invoices_collection = self.db['invoices']
 
     def get_all_rooms_data(self):
-        rooms = self.rooms_collection.find()
+        rooms = self.rooms_collection.find().sort("RoomID", 1)
         rooms_data = []
         for room in rooms:
             rooms_data.append(room)
         return rooms_data
 
     def get_all_invoices_data(self):
-        invoices = self.invoices_collection.find()
+        invoices = self.invoices_collection.find().sort("InvoiceID", 1)
         invoices_data = []
         for invoice in invoices:
             for customer in invoice['Customer Information']:

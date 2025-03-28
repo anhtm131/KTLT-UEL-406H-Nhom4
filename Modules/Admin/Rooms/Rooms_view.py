@@ -61,7 +61,7 @@ class Rooms_view:
         self.button_update.place(x=308.5605, y=474.6403, width=88.5214, height=47.4222)
 
         self.btn_delete = PhotoImage(file=self.relative_to_assets("button_delete.png", "Frame"))
-        self.button_delete = Button(image=self.btn_delete, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Rooms_extend.delete_room_button_handle(), relief="flat")
+        self.button_delete = Button(image=self.btn_delete, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Rooms_extend.delete_room_button_handle(self), relief="flat")
         self.button_delete.place(x=529.2314, y=474.6403, width=88.5214, height=47.4222)
 
         self.btn_create = PhotoImage(file=self.relative_to_assets("button_create.png", "Frame"))

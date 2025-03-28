@@ -15,7 +15,7 @@ class Rooms_extend():
                 "Status": obj.entry_status.get()
             }
 
-            result = obj.api.update_room(updated_data, room_id)
+            result = obj.admin_api.update_room(updated_data, room_id)
             if result == 0:
                 print("Cập nhật thành công!")
             else:
@@ -44,7 +44,7 @@ class Rooms_extend():
         if selected:
             values = obj.tree.item(selected[0], "values")
             room_id = values[0]
-            result = obj.api.remove_room(room_id)
+            result = obj.admin_api.remove_room(room_id)
             if result == 0:
                 print("Xoá thành công!")
             else:
