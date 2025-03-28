@@ -23,11 +23,11 @@ class Admin_Api(main_api.Main_Api):
         else:
             updated_fields = {} #create update field
             _id = room['_id'] # documentID
-            if 'RoomType' in data != room['RoomType']:
+            if 'RoomType' in data and data['RoomType'] != room['RoomType']:
                 updated_fields['RoomType'] = data['RoomType']
-            if 'Price' in data != room['Price']:
+            if 'Price' in data and data['Price'] != room['Price']:
                 updated_fields['Price'] = data['Price']
-            if 'Status' in data != room['Status']:
+            if 'Status' in data and data['Status'] != room['Status']:
                 updated_fields['Status'] = data['Status']
 
             if updated_fields:
@@ -58,7 +58,7 @@ class Admin_Api(main_api.Main_Api):
         else:
             _id = user['_id']
             updated_fields = {}
-            if 'Password' in data != user['Password']:
+            if 'Password' in data and 'Password' != user['Password']:
                 updated_fields['Password'] = data['Password']
             if 'Role' in data != user['Role']:
                 updated_fields['Role'] = data['Role']
@@ -66,7 +66,7 @@ class Admin_Api(main_api.Main_Api):
                 self.users_collection.update_one({'_id': _id}, {'$set': updated_fields})
                 return 0 #update successfully
             else:
-                return -1 #Error: no new information was updated
+                return -2 #Error: no new information was updated
     def remove_user(self,data):
         user = self.users_collection.find_one({'Username' : data['Username']})
         if not user:

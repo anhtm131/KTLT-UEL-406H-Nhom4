@@ -143,7 +143,7 @@ class Sales_view:
         plt.plot(dates, totals, marker='o', linestyle='-', color='green')
         plt.xticks(rotation=45)
         plt.xlabel("Invoice Date")
-        plt.ylabel("Total (VND)")
+        plt.ylabel("Total (Milion VND)")
         plt.title("Sales by Invoice Date")
         plt.grid(True)
         plt.tight_layout()

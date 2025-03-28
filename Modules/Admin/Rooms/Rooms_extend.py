@@ -6,10 +6,9 @@ class Rooms_extend():
     def update_room_button_handle(obj):
         selected = obj.tree.selection()
         if selected:
-            values = obj.tree.item(selected[0], "values")
-            room_id = values[0]
-
+            room_id = obj.entry_roomid.get()
             updated_data = {
+                "RoomID" : room_id,
                 "RoomType": obj.combo_roomtype.get(),
                 "Price": obj.entry_price.get().replace(",", ""),
                 "Status": obj.entry_status.get()
@@ -42,13 +41,12 @@ class Rooms_extend():
     def delete_room_button_handle(obj):
         selected = obj.tree.selection()
         if selected:
-            values = obj.tree.item(selected[0], "values")
-            room_id = values[0]
+            room_id = obj.entry_roomid.get()
             result = obj.admin_api.remove_room(room_id)
             if result == 0:
-                print("Xoá thành công!")
+                messagebox.showinfo("Congratulation", "Delete successfully")
             else:
-                print("Không tìm thấy phòng để xoá!")
+                messagebox.showerror("Error","Can not find room to delete")
             obj.load_tree_data()
     @staticmethod
     def search_room(obj):
