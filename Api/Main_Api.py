@@ -59,3 +59,4 @@ class Main_Api:
         return [{"RoomType": rt, "Price": price} for rt, price in room_types.items()]
 
 
+

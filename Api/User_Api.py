@@ -55,7 +55,7 @@ class User_Api(main_api.Main_Api):
         self.rooms_collection.update({"RoomID": data["RoomID"]}, {"$set": {"Status": data["Status"]}})
 
     def get_all_rooms_avai_data(self):
-        rooms = self.rooms_collection.find({"Status": "Available"})
+        rooms = self.rooms_collection.find({"Status": "Available"}).sort("RoomID", 1)
         rooms_data = []
         for room in rooms:
             rooms_data.append(room)

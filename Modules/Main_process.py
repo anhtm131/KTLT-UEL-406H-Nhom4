@@ -6,7 +6,6 @@ import Modules.Admin.Overview.Overview_view as mao
 import Modules.Users.Overview.Overview_view as muo
 from Modules.Users.Cart_and_Customer.Cart_and_Customer_view import Cart_and_Customer_view
 from Modules.Users.Invoice.Invoice_view import Invoice_view
-from Modules.Users.Rooms_Details.Room_details_view import Room_detail_view
 from Modules.Users.Select_Room.Select_Room_view import Select_Room_view
 from tkinter import messagebox
 import Modules.Login.Login_view as lgv
@@ -42,11 +41,6 @@ class Main_process:
     def booking_button(obj):
         obj.window.destroy()
         Select_Room_view()
-
-    @staticmethod
-    def roomdetail_button(obj):
-        obj.window.destroy()
-        Room_detail_view()
 
     @staticmethod
     def cart_and_customer_button(obj):
