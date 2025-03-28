@@ -20,7 +20,7 @@ class Price_view:
         self.canvas.create_image(546.0, 325.0, image=self.background_img)
 
         self.entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry.place(x=490.0293, y=509.6303, width=512, height=39.0992)
+        self.entry.place(x=490.0293, y=512.6303, width=512, height=39.0992)
 
         self.button_img_logout = PhotoImage(file=self.relative_to_assets("logout.png", "Window_element"))
         self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print(""), relief="flat")

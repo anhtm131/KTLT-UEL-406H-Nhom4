@@ -55,7 +55,6 @@ class Overview_view:
         self.button_img_sales = PhotoImage(file=self.relative_to_assets("sales.png", "Window_element"))
         self.button_sales = Button(image=self.button_img_sales, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print(""), relief="flat")
         self.button_sales.place(x=25.29, y=345.23, width=213.71, height=59.43)
-
         self.button_img_users = PhotoImage(file=self.relative_to_assets("user.png", "Window_element"))
         self.button_users = Button(image=self.button_img_users, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print(""), relief="flat")
         self.button_users.place(x=25.29, y=421.10, width=209.92, height=58.80)
