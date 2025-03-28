@@ -1,7 +1,9 @@
 from tkinter import *
 from pathlib import Path
+import tkinter as tk
 import Modules.Main_process as Main_process
-
+import tkinter.ttk as ttk
+from Api.User_Api import User_Api
 class Cart_and_Customer_view:
     def __init__(self):
         self.window = Tk()
@@ -21,28 +23,15 @@ class Cart_and_Customer_view:
         self.canvas.create_image(484.0, 300.0, image=self.background_img)
 
 
-        self.entry_name = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_name.place(x=648.89, y=198.07, width=232.0, height=26.6667)
 
-        self.entry_phone = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_phone.place(x=648.89, y=250.42, width=232.0, height=26.6667)
 
-        self.entry_cccd = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
-        self.entry_cccd.place(x=648.89, y=300.1, width=232.0, height=26.6667)
+
 
         self.entry_dayin = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_dayin.place(x=224.08, y=392, width=151.39, height=23.33)
 
         self.entry_dayout = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_dayout.place(x=224.08, y=428.67, width=151.39, height=23.33)
-
-        self.btn_img_booking = PhotoImage(file=self.relative_to_assets("button_booking.png"))
-        self.button_booking = Button(image=self.btn_img_booking, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda:Main_process.Main_process.Select_Room_button(self),relief="flat")
-        self.button_booking.place(x=42.9998, y=523.0, width=125.0, height=49.0)
-
-        self.btn_img_cart = PhotoImage(file=self.relative_to_assets("button_cart.png"))
-        self.button_cart = Button(image=self.btn_img_cart, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("Cart button clicked"), relief="flat")
-        self.button_cart.place(x=183.0, y=524.0, width=98.0, height=48.0)
 
         self.btn_img_invoice = PhotoImage(file=self.relative_to_assets("button_invoice.png"))
         self.button_invoice = Button(image=self.btn_img_invoice, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: Main_process.Main_process.invoices_button(self))
@@ -52,24 +41,117 @@ class Cart_and_Customer_view:
         self.button_back = Button(image=self.btn_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda:Main_process.Main_process.back_button(self),relief="flat")
         self.button_back.place(x=668.0, y=523.0, width=110.0, height=49.0)
 
-        self.btn_img_confirm = PhotoImage(file=self.relative_to_assets("button_confirm.png"))
-        self.button_confirm = Button(image=self.btn_img_confirm, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("Confirm button clicked"),relief="flat")
-        self.button_confirm.place(x=670.0, y=407.0, width=104.0, height=42.0)
-
         self.btn_img_add = PhotoImage(file=self.relative_to_assets("button_add.png"))
-        self.button_add = Button(image=self.btn_img_add, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("add button clicked"),relief="flat")
+        self.button_add = Button(image=self.btn_img_add, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: self.update_selected_room_dates(),relief="flat")
         self.button_add.place(x=234.75, y=470.67, width=52.68, height=23.67)
 
         self.btn_img_remove = PhotoImage(file=self.relative_to_assets("button_remove.png"))
-        self.button_remove = Button(image=self.btn_img_remove, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("remove button clicked"),relief="flat")
+        self.button_remove = Button(image=self.btn_img_remove, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: self.remove_selected_room(),relief="flat")
         self.button_remove.place(x=299.44, y=470.67, width=76.03, height=23.33)
 
-        #self.window.mainloop()
+        self.selected_rooms = []
+        self.api = User_Api()
+        self.rooms = self.load_room_data()
+        self.create_selected_rooms_table()
+        self.update_selected_rooms_table()
+        self.window.mainloop()
+
+    def create_selected_rooms_table(self):
+        columns = ("RoomID", "RoomType", "Price", "Day in", "Day out")
+
+        self.tree = ttk.Treeview(self.window, columns=columns, show="headings", height=5)
+        self.tree.heading("RoomID", text="Room ID")
+        self.tree.heading("RoomType", text="Room Type")
+        self.tree.heading("Price", text="Price")
+        self.tree.heading("Day in", text="Day in")
+        self.tree.heading("Day out", text="Day out")
+
+        self.tree.column("RoomID", width=100, anchor="center")
+        self.tree.column("RoomType", width=100, anchor="center")
+        self.tree.column("Price", width=100, anchor="center")
+        self.tree.column("Day in", width=100, anchor="center")
+        self.tree.column("Day out", width=100, anchor="center")
+
+        self.tree.place(x=18, y=128)
+
+        # Bắt sự kiện click chuột vào dòng trong Treeview
+        self.tree.bind("<ButtonRelease-1>", self.on_treeview_click)
+
+    def on_treeview_click(self, event):
+        """Lưu RoomID của dòng đang chọn khi click vào Treeview."""
+        selected_item = self.tree.selection()
+        if selected_item:
+            values = self.tree.item(selected_item[0], "values")
+            self.selected_room_id = values[0]  # RoomID nằm ở cột đầu tiên
+            print(f"Đã chọn RoomID: {self.selected_room_id}")
+
+    def get_entry_data(self):
+        """Lấy dữ liệu từ Entry fields"""
+        day_in = self.entry_dayin.get().strip()
+        day_out = self.entry_dayout.get().strip()
+
+        if not day_in or not day_out:
+            print("Vui lòng nhập đầy đủ ngày vào và ngày ra!")
+            return None, None
+
+        return day_in, day_out
+
+    def update_selected_room_dates(self):
+        """Chỉ cập nhật ngày vào/ra của dòng được chọn trong Treeview"""
+        if not self.selected_room_id:
+            print("Vui lòng chọn một phòng trước khi cập nhật!")
+            return
+
+        day_in, day_out = self.get_entry_data()
+        if day_in is None or day_out is None:
+            return  # Không làm gì nếu thiếu dữ liệu
+
+        # Tìm dòng có RoomID trùng khớp và cập nhật
+        for item in self.tree.get_children():
+            values = self.tree.item(item, "values")
+            if values[0] == self.selected_room_id:  # So sánh RoomID
+                self.tree.item(item, values=(values[0], values[1], values[2], day_in, day_out))
+                print(f"Cập nhật RoomID {self.selected_room_id}: Day in {day_in}, Day out {day_out}")
+                break
+    def update_selected_rooms_table(self):
+        """Cập nhật toàn bộ dữ liệu phòng vào Treeview"""
+        print("Updating Cart with rooms:")
+
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+
+        for room in self.rooms:
+            self.tree.insert("", tk.END, values=(
+                room["RoomID"],
+                room["RoomType"],
+                room["Price"],
+                "",  # Chưa có Day in
+                ""   # Chưa có Day out
+            ))
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
+    def load_room_data(self):
+        return [
+            {
+                "RoomID": room.get("RoomID"),
+                "RoomType": room.get("RoomType"),
+                "Price": room.get("Price"),
+                "Day in":room.get("Day in"),
+                "Day out": room.get("Day out")
+            }
+            for room in User_Api().get_all_rooms_avai_data()
+        ]
 
+    def get_entry_data(self):
+        day_in = self.entry_dayin.get().strip()
+        day_out = self.entry_dayout.get().strip()
+        return day_in, day_out
 
+    def remove_selected_room(self):
+        selected_item = self.tree.selection()
+        for item in selected_item:
+            self.tree.delete(item)
 if __name__ == "__main__":
     app = Cart_and_Customer_view()
     app.window.mainloop()
