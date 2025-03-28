@@ -73,60 +73,39 @@ class Cart_and_Customer_view:
         self.tree.column("Day out", width=100, anchor="center")
 
         self.tree.place(x=18, y=128)
-
-        # Bắt sự kiện click chuột vào dòng trong Treeview
         self.tree.bind("<ButtonRelease-1>", self.on_treeview_click)
 
     def on_treeview_click(self, event):
-        """Lưu RoomID của dòng đang chọn khi click vào Treeview."""
         selected_item = self.tree.selection()
         if selected_item:
             values = self.tree.item(selected_item[0], "values")
-            self.selected_room_id = values[0]  # RoomID nằm ở cột đầu tiên
-            print(f"Đã chọn RoomID: {self.selected_room_id}")
+            self.selected_room_id = values[0]
 
     def get_entry_data(self):
-        """Lấy dữ liệu từ Entry fields"""
         day_in = self.entry_dayin.get().strip()
         day_out = self.entry_dayout.get().strip()
-
-        if not day_in or not day_out:
-            print("Vui lòng nhập đầy đủ ngày vào và ngày ra!")
-            return None, None
-
         return day_in, day_out
 
     def update_selected_room_dates(self):
-        """Chỉ cập nhật ngày vào/ra của dòng được chọn trong Treeview"""
-        if not self.selected_room_id:
-            print("Vui lòng chọn một phòng trước khi cập nhật!")
-            return
-
         day_in, day_out = self.get_entry_data()
         if day_in is None or day_out is None:
-            return  # Không làm gì nếu thiếu dữ liệu
+            return
 
-        # Tìm dòng có RoomID trùng khớp và cập nhật
         for item in self.tree.get_children():
             values = self.tree.item(item, "values")
-            if values[0] == self.selected_room_id:  # So sánh RoomID
+            if values[0] == self.selected_room_id:
                 self.tree.item(item, values=(values[0], values[1], values[2], day_in, day_out))
-                print(f"Cập nhật RoomID {self.selected_room_id}: Day in {day_in}, Day out {day_out}")
                 break
     def update_selected_rooms_table(self):
-        """Cập nhật toàn bộ dữ liệu phòng vào Treeview"""
-        print("Updating Cart with rooms:")
-
         for item in self.tree.get_children():
             self.tree.delete(item)
-
         for room in self.rooms:
             self.tree.insert("", tk.END, values=(
                 room["RoomID"],
                 room["RoomType"],
                 room["Price"],
-                "",  # Chưa có Day in
-                ""   # Chưa có Day out
+                "",
+                ""
             ))
 
     def relative_to_assets(self, path: str) -> Path:
