@@ -1,6 +1,7 @@
 from tkinter import *
 from pathlib import Path
-from M
+import Modules.Admin.Main_process as Main_process
+
 class Overview_view:
     def __init__(self):
         self.window = Tk()
@@ -8,6 +9,7 @@ class Overview_view:
         self.window.title("Details")
         self.window.configure(bg="#FFFFFF")
         self.window.resizable(False, False)
+
         self.canvas = Canvas(self.window, bg="#FFFFFF", height=650, width=1092, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.place(x=0, y=0)
 
@@ -19,17 +21,19 @@ class Overview_view:
         self.background_img = PhotoImage(file=self.relative_to_assets("background_overview.png", "Frame"))
         self.canvas.create_image(546.0, 325.0, image=self.background_img)
 
+
         self.entry_image_1 = PhotoImage(file=self.relative_to_assets("entry.png", "Frame"))
         self.canvas.create_image(606.68, 43.62, image=self.entry_image_1)
         self.entry_find = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_find.place(x=410.99, y=22, width=391.39, height=42.26)
 
+
         self.button_img_logout = PhotoImage(file=self.relative_to_assets("logout.png", "Window_element"))
-        self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: self.log_out_button(self), relief="flat")
+        self.logout = Button(image=self.button_img_logout, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.log_out_button(self), relief="flat")
         self.logout.place(x=7.0, y=586.0, width=117.0, height=51.0)
 
         self.button_img_quit = PhotoImage(file=self.relative_to_assets("quit.png", "Window_element"))
-        self.button_quit = Button(image=self.button_img_quit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: self.quit_button(self), relief="flat")
+        self.button_quit = Button(image=self.button_img_quit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.quit_button(self), relief="flat")
         self.button_quit.place(x=138.0, y=586.0, width=117.0, height=51.0)
 
         self.button_img_cleaning = PhotoImage(file=self.relative_to_assets("button_cleaning.png", "Frame"))
@@ -52,37 +56,37 @@ class Overview_view:
         self.button_all = Button(image=self.button_img_all, borderwidth=0, highlightthickness=0, activebackground="#346B4E", command=lambda: print("button_all clicked"), relief="flat")
         self.button_all.place(x=284.0, y=99.0, width=109.0, height=49.0)
 
+
         self.button_img_sales = PhotoImage(file=self.relative_to_assets("sales.png", "Window_element"))
-        self.button_sales = Button(image=self.button_img_sales, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: self.sales_button(self), relief="flat")
+        self.button_sales = Button(image=self.button_img_sales, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.sales_button(self), relief="flat")
         self.button_sales.place(x=25.29, y=345.23, width=213.71, height=59.43)
+
         self.button_img_users = PhotoImage(file=self.relative_to_assets("user.png", "Window_element"))
-        self.button_users = Button(image=self.button_img_users, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda:self.users_button(self), relief="flat")
+        self.button_users = Button(image=self.button_img_users, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.users_button(self), relief="flat")
         self.button_users.place(x=25.29, y=421.10, width=209.92, height=58.80)
 
         self.button_img_price = PhotoImage(file=self.relative_to_assets("price.png", "Window_element"))
-        self.button_price = Button(image=self.button_img_price, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: self.price_button(self), relief="flat")
+        self.button_price = Button(image=self.button_img_price, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.price_button(self), relief="flat")
         self.button_price.place(x=25.29, y=268.72, width=213.71, height=60.70)
 
         self.button_img_edit = PhotoImage(file=self.relative_to_assets("edit.png", "Window_element"))
-        self.button_edit = Button(image=self.button_img_edit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: self.edit_button(self) , relief="flat")
+        self.button_edit = Button(image=self.button_img_edit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.edit_button(self), relief="flat")
         self.button_edit.place(x=25.29, y=188.42, width=213.71, height=64.49)
 
         self.button_img_overview = PhotoImage(file=self.relative_to_assets("button_overview.png", "Frame"))
-        self.button_overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print("button_overview clicked"), relief="flat")
+        self.button_overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#55908B", relief="flat")
         self.button_overview.place(x=25.29, y=116.97, width=230.15, height=60.06)
 
         self.button_img_find = PhotoImage(file=self.relative_to_assets("button_find.png", "Frame"))
         self.button_find = Button(image=self.button_img_find, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: print("button_find clicked"), relief="flat")
         self.button_find.place(x=780.88, y=31.08, width=24.97, height=25.29)
 
-
-    def relative_to_assets(self, path: str, assets_type = str("Frame")):
+    def relative_to_assets(self, path: str, assets_type="Frame"):
         if assets_type == "Frame":
             return self.assets_frame_path / Path(path)
         elif assets_type == "Window_element":
             return self.assets_WE_path / Path(path)
 
-
-
 if __name__ == "__main__":
-    Overview_view()
+    app = Overview_view()
+    app.window.mainloop()

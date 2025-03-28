@@ -114,5 +114,4 @@ class Overview_extend(Overview_view):
             if query in str(room['RoomID']).lower()
         ]
         self.create_room_frames()
-if __name__ == "__main__":
-    Overview_view()
+

@@ -1,46 +1,45 @@
-from tkinter import *
+
 from tkinter import messagebox
 
-from Modules.Admin.Overview.Overview_extend import Overview_extend
-from Modules.Admin.Price.Price_extend import Price_extend
-from Modules.Admin.Rooms.Rooms_extend import Rooms_extend
-from Modules.Admin.Sales.Sales_extend import Sales_extend
-from Modules.Login import Login_view
+from Modules.Login.Login_view import Login_view
 
-class Users_process:
-    @staticmethod
-    def overview_button(obj):
-        obj.destroy()
-        Overview_extend()
 
+class Main_process:
     @staticmethod
-    def edit_button(obj):
+    def booking_button(obj):
         obj.window.destroy()
-        Rooms_extend()
+        Overview_view()
 
     @staticmethod
-    def price_button(obj):
+    def roomdetail_button(obj):
         obj.window.destroy()
-        Price_extend()
+        Rooms_view()
+
+    @staticmethod
+    def cart_and_customer_button(obj):
+        obj.window.destroy()
+        Price_view()
 
     @staticmethod
     def sales_button(obj):
         obj.window.destroy()
-        Sales_extend()
+        Sales_view()
 
-    '''@staticmethod
+    @staticmethod
     def users_button(obj):
         obj.window.destroy()
-        Users_extend()'''
+        Users_view()
 
     @staticmethod
     def log_out_button(obj):
         if messagebox.askyesno("Xác nhận", "Bạn có chắc chắn muốn thoát không?"):
             obj.window.destroy()
-            Login_view.Login_view()
+            Login_view()
         else:
             pass
+
     @staticmethod
     def quit_button(obj):
         if messagebox.askyesno("Xác nhận", "Bạn có chắc chắn muốn thoát không?"):
             obj.window.destroy()
+
