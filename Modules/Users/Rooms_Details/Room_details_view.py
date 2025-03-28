@@ -1,8 +1,6 @@
 from tkinter import *
 from pathlib import Path
-
-
-class RoomDetails:
+class Room_detail_view:
     def __init__(self):
         self.window = Tk()
         self.window.geometry("584x550")
@@ -60,4 +58,5 @@ class RoomDetails:
 
 
 if __name__ == "__main__":
-    RoomDetails()
+    app = Room_detail_view()
+    app.window.mainloop()

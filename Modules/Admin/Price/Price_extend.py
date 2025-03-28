@@ -2,7 +2,6 @@ import json
 import tkinter as tk
 from tkinter import ttk, Frame
 from tkinter import messagebox
-
 from Modules.Admin.Price.Price_view import Price_view
 
 

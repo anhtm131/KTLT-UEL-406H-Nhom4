@@ -97,7 +97,7 @@ class Admin_Api(main_api.Main_Api):
         room = self.rooms_collection.find_one({"RoomType" : data["RoomType"]}, {"Price" : 1})
         if room["Price"] == data["Price"]:
             return -1 #Error: No change was made
-        self.rooms_collection.update_many({"RoomType": data["RoomType"]},{"$set":{"Price":data["Price"]}}   )
+        self.rooms_collection.update_many({"RoomType": data["RoomType"]},{"$set":{"Price":data["Price"]}})
         return 0 #update successfully
 
 

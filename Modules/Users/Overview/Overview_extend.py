@@ -1,10 +1,9 @@
 
+from Modules.Users.Overview import Overview_view
 import tkinter as tk
 import json
-from Modules.Users.Overview.Overview_view import Overview_view
+class Overview_extend1(Overview_view):
 
-
-class Overview_extend(Overview_view):
     def __init__(self):
         super().__init__()
 
@@ -12,19 +11,19 @@ class Overview_extend(Overview_view):
         self.filtered_rooms = self.rooms.copy()
         self.room_frames = []
 
-        self.all_btn.config(command=lambda: self.filter_rooms_by_status("All"))
-        self.available_btn.config(command=lambda: self.filter_rooms_by_status("Available"))
-        self.occupied_btn.config(command=lambda: self.filter_rooms_by_status("Occupied"))
-        self.book_btn.config(command=lambda: self.filter_rooms_by_status("Booked"))
-        self.cleaning_btn.config(command=lambda: self.filter_rooms_by_status("Cleaning"))
-        self.find_btn.config(command=lambda: self.search_room())
+        self.button_all.config(command=lambda: self.filter_rooms_by_status("All"))
+        self.button_avai.config(command=lambda: self.filter_rooms_by_status("Available"))
+        self.button_occupied.config(command=lambda: self.filter_rooms_by_status("Occupied"))
+        self.button_booking.config(command=lambda: self.filter_rooms_by_status("Booked"))
+        self.button_cleaning.config(command=lambda: self.filter_rooms_by_status("Cleaning"))
 
         self.filter_rooms_by_status("All")
-        self.window.mainloop()
+
     def create_room_frames(self):
         for frame in self.room_frames:
             frame.destroy()
         self.room_frames.clear()
+
 
         if hasattr(self, "container_frame"):
             self.container_frame.destroy()
@@ -119,5 +118,3 @@ class Overview_extend(Overview_view):
             'Cleaning': '#FFF9C4'
         }
         return colors.get(status, '#ECEFF1')
-if __name__ == "__main__":
-    Overview_extend()

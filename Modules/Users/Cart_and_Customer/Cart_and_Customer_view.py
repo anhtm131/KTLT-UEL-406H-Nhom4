@@ -1,8 +1,8 @@
 from tkinter import *
 from pathlib import Path
+import Modules.Main_process as Main_process
 
-
-class CartCustomerDetails:
+class Cart_and_Customer_view:
     def __init__(self):
         self.window = Tk()
         self.window.geometry("966x600")
@@ -37,7 +37,7 @@ class CartCustomerDetails:
         self.entry_dayout.place(x=224.08, y=428.67, width=151.39, height=23.33)
 
         self.btn_img_booking = PhotoImage(file=self.relative_to_assets("button_booking.png"))
-        self.button_booking = Button(image=self.btn_img_booking, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("Booking button clicked"),relief="flat")
+        self.button_booking = Button(image=self.btn_img_booking, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda:Main_process.Main_process.Select_Room_button(self),relief="flat")
         self.button_booking.place(x=42.9998, y=523.0, width=125.0, height=49.0)
 
         self.btn_img_cart = PhotoImage(file=self.relative_to_assets("button_cart.png"))
@@ -45,11 +45,11 @@ class CartCustomerDetails:
         self.button_cart.place(x=183.0, y=524.0, width=98.0, height=48.0)
 
         self.btn_img_invoice = PhotoImage(file=self.relative_to_assets("button_invoice.png"))
-        self.button_invoice = Button(image=self.btn_img_invoice, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("Invoice button clicked"),relief="flat")
+        self.button_invoice = Button(image=self.btn_img_invoice, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: Main_process.Main_process.invoices_button(self))
         self.button_invoice.place(x=791.0, y=524.0, width=124.0, height=48.0)
 
         self.btn_img_back = PhotoImage(file=self.relative_to_assets("button_back.png"))
-        self.button_back = Button(image=self.btn_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: print("Back button clicked"),relief="flat")
+        self.button_back = Button(image=self.btn_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda:Main_process.Main_process.back_button(self),relief="flat")
         self.button_back.place(x=668.0, y=523.0, width=110.0, height=49.0)
 
         self.btn_img_confirm = PhotoImage(file=self.relative_to_assets("button_confirm.png"))
@@ -71,4 +71,5 @@ class CartCustomerDetails:
 
 
 if __name__ == "__main__":
-    CartCustomerDetails()
+    app = Cart_and_Customer_view()
+    app.window.mainloop()
