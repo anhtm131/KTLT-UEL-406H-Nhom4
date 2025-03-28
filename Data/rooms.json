@@ -1,26 +1,38 @@
 [
     {
-        "RoomID": "P.201",
+        "RoomID": "P.101",
         "RoomType": "President",
-        "Price": "987654323456789",
+        "Price": "999999",
         "Status": "Cleaning"
     },
     {
-        "RoomID": "P.401",
+        "RoomID": "P.102",
         "RoomType": "Standard",
-        "Price": "23",
+        "Price": "100000",
         "Status": "Occupied"
     },
     {
-        "RoomID": "P.302",
+        "RoomID": "P.103",
         "RoomType": "Deluxe",
-        "Price": "987",
+        "Price": "1000000",
         "Status": "Cleaning"
     },
     {
-        "RoomID": "P.303",
+        "RoomID": "P.201",
         "RoomType": "Deluxe",
-        "Price": "987",
+        "Price": "1000000",
+        "Status": "Booked"
+    },
+    {
+        "RoomID": "P.202",
+        "RoomType": "Deluxe",
+        "Price": "1000000",
+        "Status": "Cleaning"
+    },
+    {
+        "RoomID": "P.203",
+        "RoomType": "Deluxe",
+        "Price": "1000000",
         "Status": "Booked"
     }
 ]

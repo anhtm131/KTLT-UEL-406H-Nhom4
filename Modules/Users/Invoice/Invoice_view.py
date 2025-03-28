@@ -28,7 +28,7 @@ class Invoice_view:
         self.button_back = Button(image=self.button_img_back, borderwidth=0, highlightthickness=0, activebackground="#6C9587", command=lambda: Main_process.Main_process.back_button(self), relief="flat")
         self.button_back.place(x=671.0, y=527.0, width=110.0, height=47.0)
 
-        self.window.mainloop()
+
 
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":

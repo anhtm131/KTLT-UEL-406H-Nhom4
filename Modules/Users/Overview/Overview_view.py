@@ -3,8 +3,6 @@ from pathlib import Path
 
 import Modules.Main_process as Main_process
 
-
-
 class Overview_view:
     def __init__(self):
         self.window = Tk()
@@ -66,10 +64,11 @@ class Overview_view:
         self.find_btn = Button(image=self.find_btn_img, borderwidth=0, highlightthickness=0, activebackground="#D9D9D9", bg="#D9D9D9", command=lambda: print("Find button clicked"), relief="flat")
         self.find_btn.place(x=785.0, y=31.0, width=25.0, height=25.3)
 
-        self.window.mainloop()
+        #self.window.mainloop()
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
+
 
 if __name__ == "__main__":
     app = Overview_view()

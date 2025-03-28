@@ -71,6 +71,7 @@ class Overview_view:
 
         self.button_img_edit = PhotoImage(file=self.relative_to_assets("edit.png", "Window_element"))
         self.button_edit = Button(image=self.button_img_edit, borderwidth=0, highlightthickness=0, activebackground="#55908B", command=lambda: Main_process.Main_process.edit_button(self), relief="flat")
+
         self.button_edit.place(x=25.29, y=188.42, width=213.71, height=64.49)
 
         self.button_img_overview = PhotoImage(file=self.relative_to_assets("button_overview.png", "Frame"))
