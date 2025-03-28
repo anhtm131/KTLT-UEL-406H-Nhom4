@@ -2,6 +2,7 @@ from pathlib import Path
 from tkinter import *
 import Modules.Main_process as Main_process
 
+
 class Price_view:
     def __init__(self):
         self.window = Tk()
@@ -61,8 +62,10 @@ class Price_view:
 
 
         self.button_img_overview = PhotoImage(file=self.relative_to_assets("overview.png", "Window_element"))
+
         self.button_overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#51908D",
                                       command=lambda: Main_process.Main_process.overview_button(self), relief="flat")
+
         self.button_overview.place(x=25.292, y=116.9747, width=230.1556, height=60.0681)
 
         self.button_img_update = PhotoImage(file=self.relative_to_assets("button_update.png", "Price"))

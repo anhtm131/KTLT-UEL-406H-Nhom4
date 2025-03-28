@@ -64,7 +64,7 @@ class Cart_and_Customer_view:
         self.button_remove = Button(image=self.btn_img_remove, borderwidth=0, highlightthickness=0,activebackground="#6C9587", command=lambda: print("remove button clicked"),relief="flat")
         self.button_remove.place(x=299.44, y=470.67, width=76.03, height=23.33)
 
-        self.window.mainloop()
+        #self.window.mainloop()
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)

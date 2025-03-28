@@ -2,6 +2,7 @@ from Modules.Admin.Overview.Overview_view import Overview_view
 from Api.Admin_Api import Admin_Api
 import tkinter as tk
 
+
 class Overview_extend(Overview_view):
     def __init__(self):
         super().__init__()
@@ -25,70 +26,79 @@ class Overview_extend(Overview_view):
             frame.destroy()
         self.room_frames.clear()
 
-        rooms = self.filtered_rooms
-        x = 285
-        y = 170
-        rooms_every_row = 3
-        room_width = 250
-        room_height = 150
-        spacing_x = 20
-        spacing_y = 25
+        if hasattr(self, "container_frame"):
+            self.container_frame.destroy()
 
-        for index, room in enumerate(rooms):
+        frame_container = tk.Frame(self.window, bg="#346B4E", bd=3, relief="ridge")
+        frame_container.place(x=290, y=160, width=780, height=480)
+
+        canvas = tk.Canvas(frame_container, bg="#346B4E")
+        v_scrollbar = tk.Scrollbar(frame_container, orient="vertical", command=canvas.yview)
+        h_scrollbar = tk.Scrollbar(frame_container, orient="horizontal", command=canvas.xview)
+
+        self.container_frame = tk.Frame(canvas, bg="#346B4E")
+        canvas.create_window((0, 0), window=self.container_frame, anchor="nw")
+
+        self.container_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
+        canvas.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        canvas.pack(side="top", fill="both", expand=True)
+        v_scrollbar.pack(side="right", fill="y")
+        h_scrollbar.pack(side="bottom", fill="x")
+
+        rooms_per_row = 4
+        room_width, room_height = 200, 130
+        spacing_x, spacing_y = 20, 25
+
+        for index, room in enumerate(self.filtered_rooms):
             frame = tk.Frame(
-                self.window,
-                width=room_width,
-                height=room_height,
-                bg=self.get_status_color(room['Status']),
-                bd=3,
-                relief='ridge',
-                highlightbackground="#ccc", highlightthickness=2
+                self.container_frame,
+                width=room_width, height=room_height,
+                bg=self.get_status_color(room['Status']), bd=3, relief="ridge"
             )
-            frame.place(x=x, y=y)
+            frame.grid(row=index // rooms_per_row, column=index % rooms_per_row, padx=10, pady=10)
             frame.pack_propagate(False)
 
-            room_id = tk.Label(
-                frame, text=f"Phòng {room['RoomID']}",
-                bg=self.get_status_color(room['Status']),
-                fg='black',
-                font=('Arial', 14, 'bold'),
-                anchor="center"
-            )
-            room_id.pack(fill="x", pady=(10, 5))
+            tk.Label(frame, text=f"RoomID {room['RoomID']}",
+                     bg=self.get_status_color(room['Status']), fg='black',
+                     font=('Arial', 14, 'bold')).pack(fill="x", pady=(10, 5))
 
-            room_type = tk.Label(
-                frame, text=f"Loại: {room['RoomType']}",
-                bg=self.get_status_color(room['Status']),
-                fg='black',
-                font=('Arial', 11)
-            )
-            room_type.pack(fill="x", pady=(0, 5))
+            tk.Label(frame, text=f"RoomType: {room['RoomType']}",
+                     bg=self.get_status_color(room['Status']), fg='black',
+                     font=('Arial', 11)).pack(fill="x")
 
-            price = tk.Label(
-                frame, text=f"Giá: {room['Price']} VND",
-                bg=self.get_status_color(room['Status']),
-                fg='darkgreen',
-                font=('Arial', 11, 'bold')
-            )
-            price.pack(fill="x", pady=(0, 5))
+            tk.Label(frame, text=f"Price: {room['Price']} VND",
+                     bg=self.get_status_color(room['Status']), fg='darkgreen',
+                     font=('Arial', 11, 'bold')).pack(fill="x")
 
-            status = tk.Label(
-                frame, text=f"Trạng thái: {room['Status']}",
-                bg=self.get_status_color(room['Status']),
-                fg='black',
-                font=('Arial', 11)
-            )
-            status.pack(fill="x", pady=(0, 10))
+            tk.Label(frame, text=f"Status: {room['Status']}",
+                     bg=self.get_status_color(room['Status']), fg='black',
+                     font=('Arial', 11)).pack(fill="x", pady=(0, 10))
 
             self.room_frames.append(frame)
-            if (index + 1) % rooms_every_row == 0:
-                x = 285
-                y += room_height + spacing_y
-            else:
-                x += room_width + spacing_x
+
+        canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(-1 * (e.delta // 120), "units"))
+        canvas.bind_all("<Shift-MouseWheel>", lambda e: canvas.xview_scroll(-1 * (e.delta // 120), "units"))
 
     def load_room_data(self):
-        return self.api.get_all_rooms_data()
+        return [
+            {"RoomID": "P.101", "RoomType": "President", "Price": "10000000", "Status": "Cleaning"},
+            {"RoomID": "P.102", "RoomType": "Standard", "Price": "1000000", "Status": "Occupied"},
+            {"RoomID": "P.103", "RoomType": "Deluxe", "Price": "987", "Status": "Cleaning"},
+            {"RoomID": "P.104", "RoomType": "Deluxe", "Price": "987", "Status": "Cleaning"},
+            {"RoomID": "P.201", "RoomType": "President", "Price": "10000000", "Status": "Booked"},
+            {"RoomID": "P.202", "RoomType": "Deluxe", "Price": "987", "Status": "Cleaning"},
+            {"RoomID": "P.203", "RoomType": "President", "Price": "10000000", "Status": "Booked"},
+            {"RoomID": "P.204", "RoomType": "Deluxe", "Price": "987", "Status": "Cleaning"},
+            {"RoomID": "P.301", "RoomType": "Deluxe", "Price": "987", "Status": "Booked"},
+            {"RoomID": "P.302", "RoomType": "Standard", "Price": "1000000", "Status": "Cleaning"},
+            {"RoomID": "P.303", "RoomType": "Deluxe", "Price": "987", "Status": "Booked"},
+            {"RoomID": "P.304", "RoomType": "Deluxe", "Price": "987", "Status": "Cleaning"},
+            {"RoomID": "P.401", "RoomType": "Deluxe", "Price": "987", "Status": "Booked"},
+            {"RoomID": "P.402", "RoomType": "Standard", "Price": "1000000", "Status": "Cleaning"},
+            {"RoomID": "P.403", "RoomType": "Deluxe", "Price": "987", "Status": "Booked"},
+            {"RoomID": "P.404", "RoomType": "Deluxe", "Price": "987", "Status": "Cleaning"}
+        ]
 
     def get_status_color(self, status):
         colors = {
@@ -114,4 +124,9 @@ class Overview_extend(Overview_view):
             if query in str(room['RoomID']).lower()
         ]
         self.create_room_frames()
+
+
+if __name__ == "__main__":
+    app = Overview_extend()
+    app.run()
 
