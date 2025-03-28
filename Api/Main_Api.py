@@ -27,24 +27,24 @@ class Main_Api:
         invoices = self.invoices_collection.find()
         invoices_data = []
         for invoice in invoices:
-            for item in invoice['Cart']:
-                for CIF in invoice["CustomerInfo"]:
+            for customer in invoice['Customer Information']:
+                for item in invoice['Cart']:
                     sub_invoice_data = {}
-                    sub_invoice_data["Invoice_ID"] = invoice["Invoice_ID"]
+                    sub_invoice_data["InvoiceID"] = invoice["InvoiceID"]
                     sub_invoice_data["Invoice_Date"] = invoice["Invoice_Date"]
                     sub_invoice_data["Total"] = invoice["Total"]
-                    # append item to sub_invoice_data
                     sub_invoice_data["RoomID"] = item["RoomID"]
                     sub_invoice_data["RoomType"] = item["RoomType"]
                     sub_invoice_data["Days"] = item["Days"]
                     sub_invoice_data["Price"] = item["Price"]
-                    sub_invoice_data["Name"] = CIF["Name"]
-                    sub_invoice_data["CCCD"] = CIF["CCCD"]
-                    sub_invoice_data["PhoneNumber"] = CIF["PhoneNumber"]
-                    sub_invoice_data["DayIn"] = CIF["DayIn"]
-                    sub_invoice_data["DayOut"] = CIF["DayOut"]
+                    sub_invoice_data["Name"] = customer["Name"]
+                    sub_invoice_data["CCCD"] = customer["CCCD"]
+                    sub_invoice_data["PhoneNumber"] = customer["PhoneNumber"]
+                    sub_invoice_data["DayIn"] = item["DayIn"]
+                    sub_invoice_data["DayOut"] = item["DayOut"]
                     invoices_data.append(sub_invoice_data)
         return invoices_data
+
 
     def get_all_users_data(self):
         users = self.users_collection.find()

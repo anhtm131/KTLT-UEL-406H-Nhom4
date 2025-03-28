@@ -1,7 +1,6 @@
 from tkinter import *
 from pathlib import Path
 
-
 class Users_view:
     def __init__(self):
         self.window = Tk()
@@ -9,7 +8,6 @@ class Users_view:
         self.window.title("Update Login Information")
         self.window.configure(bg="#FFFFFF")
         self.window.resizable(False, False)
-
         self.canvas = Canvas(self.window, bg="#FFFFFF", height=650, width=1092, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.place(x=0, y=0)
 
@@ -84,7 +82,7 @@ class Users_view:
         self.overview = Button(image=self.button_img_overview, borderwidth=0, highlightthickness=0, activebackground="#51908D", command=lambda: print("overview button clicked"), relief="flat")
         self.overview.place(x=25.292, y=116.9747, width=230.1556, height=60.0681)
 
-        self.window.mainloop()
+        #self.window.mainloop()
 
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         if assets_type == "Frame":
