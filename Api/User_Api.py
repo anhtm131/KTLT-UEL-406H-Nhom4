@@ -51,8 +51,15 @@ class User_Api(main_api.Main_Api):
         }
         self.invoices_collection.insert_one(invoice)
 
-    def update_new_status(self,data):
-        self.rooms_collection.update({"RoomID": data["RoomID"]}, {"$set": {"Status": data["Status"]}})
+    def update_new_status(self, data):
+        result = self.rooms_collection.update_one(
+            {"RoomID": data["RoomID"]},
+            {"$set": {"Status": data["Status"]}}
+        )
+        if result.modified_count > 0:
+            return 0
+        else:
+            return -1
 
     def get_all_rooms_avai_data(self):
         rooms = self.rooms_collection.find({"Status": "Available"}).sort("RoomID", 1)

@@ -6,6 +6,7 @@ from tkinter import messagebox
 import Modules.Main_process as Main_process
 from Api.Main_Api import Main_Api
 from Modules.Users.Overview.Overview_extend import Overview_extend
+from Api.User_Api import User_Api
 
 class Overview_view:
     def __init__(self):
@@ -14,7 +15,7 @@ class Overview_view:
         self.window.title("Home")
         self.window.configure(bg="#FFFFFF")
         self.window.resizable(False, False)
-
+        self.user_api = User_Api()
         self.canvas = Canvas(self.window, bg="#FFFFFF", height=650, width=1095, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.place(x=0, y=0)
 
@@ -116,38 +117,83 @@ class Overview_view:
 
         rooms_per_row = 4
         room_width, room_height = 200, 130
-        spacing_x, spacing_y = 20, 25
 
         for index, room in enumerate(self.filtered_rooms):
-            frame = tk.Frame(
-                self.container_frame,
-                width=room_width, height=room_height,
-                bg=self.get_status_color(room['Status']), bd=3, relief="ridge"
-            )
+            frame = tk.Frame(self.container_frame, width=room_width, height=room_height,
+                             bg=self.get_status_color(room['Status']), bd=3, relief="ridge")
             frame.grid(row=index // rooms_per_row, column=index % rooms_per_row, padx=10, pady=10)
             frame.pack_propagate(False)
 
-
+            frame.bind("<Button-1>", lambda event, r=room: self.show_detail_window(r))
             frame.bind("<Button-3>", lambda event, r=room: messagebox.showinfo("Trạng thái phòng",
                                                                                f"Phòng {r['RoomID']} - Trạng thái: {r['Status']}"))
 
-            tk.Label(frame, text=f"Phòng {room['RoomID']}",
-                     bg=self.get_status_color(room['Status']), fg='black',
-                     font=('Arial', 14, 'bold')).pack(fill="x", pady=(10, 5))
+            label1 = tk.Label(frame, text=f"Phòng {room['RoomID']}",
+                              bg=self.get_status_color(room['Status']), fg='black', font=('Arial', 14, 'bold'))
+            label1.pack(fill="x", pady=(10, 5))
+            label2 = tk.Label(frame, text=f"Loại phòng: {room['RoomType']}",
+                              bg=self.get_status_color(room['Status']), fg='black', font=('Arial', 11))
+            label2.pack(fill="x")
+            label3 = tk.Label(frame, text=f"Giá: {room['Price']} VND",
+                              bg=self.get_status_color(room['Status']), fg='darkgreen', font=('Arial', 11, 'bold'))
+            label3.pack(fill="x")
+            label4 = tk.Label(frame, text=f"Trạng thái: {room['Status']}",
+                              bg=self.get_status_color(room['Status']), fg='black', font=('Arial', 11))
+            label4.pack(fill="x", pady=(0, 10))
 
-            tk.Label(frame, text=f"Loại phòng: {room['RoomType']}",
-                     bg=self.get_status_color(room['Status']), fg='black',
-                     font=('Arial', 11)).pack(fill="x")
-
-            tk.Label(frame, text=f"Giá: {room['Price']} VND",
-                     bg=self.get_status_color(room['Status']), fg='darkgreen',
-                     font=('Arial', 11, 'bold')).pack(fill="x")
-
-            tk.Label(frame, text=f"Trạng thái: {room['Status']}",
-                     bg=self.get_status_color(room['Status']), fg='black',
-                     font=('Arial', 11)).pack(fill="x", pady=(0, 10))
+            for widget in frame.winfo_children():
+                widget.bind("<Button-1>", lambda event, r=room: self.show_detail_window(r))
 
             self.room_frames.append(frame)
+
+    def show_detail_window(self, room):
+        detail_win = tk.Toplevel(self.window)
+        detail_win.title(f"Chi tiết phòng {room['RoomID']}")
+        detail_win.geometry("300x250")
+        detail_win.config(bg="#FFFFFF")
+        tk.Label(detail_win, text=f"Room ID: {room['RoomID']}", font=('Arial', 12, 'bold'), bg="#FFFFFF").pack(pady=10)
+        tk.Label(detail_win, text=f"Room Type: {room['RoomType']}", font=('Arial', 12), bg="#FFFFFF").pack(pady=5)
+        tk.Label(detail_win, text=f"Price: {room['Price']} VND", font=('Arial', 12), fg='darkgreen', bg="#FFFFFF").pack(
+            pady=5)
+
+        status_label = tk.Label(detail_win, text=f"Current Status: {room['Status']}", font=('Arial', 12), bg="#FFFFFF")
+        status_label.pack(pady=5)
+
+        status_frame = tk.Frame(detail_win, bg="#FFFFFF")
+        status_frame.pack(pady=10)
+        statuses = ["Available", "Occupied", "Booked", "Cleaning"]
+        allowed_transitions = {"Available": "Cleaning", "Cleaning": "Available", "Booked": "Occupied",
+                               "Occupied": "Available"}
+        current_status = room["Status"]
+        allowed_status = allowed_transitions.get(current_status, None)
+
+        status_buttons = []
+        for st in statuses:
+            state = "normal" if st == allowed_status else "disabled"
+            btn = tk.Button(status_frame, text=st, font=('Arial', 10), state=state,
+                            command=lambda s=st: self.update_status_detail(room, s, status_label, status_buttons))
+            btn.pack(side="left", padx=5)
+            status_buttons.append((btn, st))
+
+        tk.Button(detail_win, text="Close", command=detail_win.destroy, font=("Arial", 12)).pack(pady=10)
+
+    def update_status_detail(self, room, new_status, status_label, status_buttons):
+        data = {"RoomID": room["RoomID"], "Status": new_status}
+        result = self.user_api.update_new_status(data)
+        if result == 0:
+            messagebox.showinfo("Thông báo", f"Status của phòng {room['RoomID']} đã được cập nhật thành {new_status}.")
+            room["Status"] = new_status
+            status_label.config(text=f"Current Status: {new_status}")
+            allowed_transitions = {"Available": "Cleaning", "Cleaning": "Available", "Booked": "Occupied",
+                                   "Occupied": "Available"}
+            new_allowed = allowed_transitions.get(new_status, None)
+            for btn, st in status_buttons:
+                btn.config(state="normal" if st == new_allowed else "disabled")
+            self.rooms = self.load_room_data()
+            self.sort_rooms()
+            self.create_room_frames()
+        else:
+            messagebox.showerror("Lỗi", "Cập nhật không thành công hoặc không có thay đổi!")
 
     def load_room_data(self):
         return [
