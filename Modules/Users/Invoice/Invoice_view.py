@@ -3,11 +3,9 @@ from pathlib import Path
 import Modules.Main_process as Main_process
 import tkinter as tk
 from tkinter import ttk
-import customtkinter as ctk
 import Api.User_Api as api
 from Modules.Users.Select_Room.Selected_Room_extend import Selected_Room_extend
-from datetime import datetime, timedelta
-import Api.Main_Api as Main_Api
+from datetime import datetime
 
 class Invoice_view:
     def __init__(self, day_in=None, day_out=None):
@@ -36,11 +34,11 @@ class Invoice_view:
                                   activebackground="#6C9587",
                                   command=lambda: Main_process.Main_process.back_button(self), relief="flat")
         self.button_back.place(x=671.0, y=527.0, width=110.0, height=47.0)
-
+        self.cart_data = {}
         self.user_api = api.User_Api()
         self.rooms = self.load_room_data()
-        self.create_treeview()
         self.update_total()
+        self.create_treeview()
         self.window.mainloop()
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         return self.assets_frame_path / Path(path) if assets_type == "Frame" else Path(path)
@@ -60,12 +58,21 @@ class Invoice_view:
         else:
             total_days = 1
         cart_data = [
-            {"RoomID": room["RoomID"], "Price": int(room["Price"]), "Days": total_days}
+            {
+                "RoomID": room["RoomID"],
+                "RoomType": room["RoomType"],
+                "Price": int(room["Price"]),
+                "Days": total_days
+            }
             for room in self.rooms
         ]
         try:
             if cart_data:
                 self.user_api.create_invoice(cart_data)
+                self.cart_data = cart_data
+                for room in cart_data:
+                    room["Status"] = "Booked"
+                    self.user_api.update_new_status(room)
             all_invoices = self.user_api.get_all_invoices_data()
             last_invoice = all_invoices[-1] if all_invoices else None
             if last_invoice and "Total" in last_invoice:
@@ -81,7 +88,7 @@ class Invoice_view:
         room_info = selected_manager.get_selected_rooms()
         return room_info
     def create_treeview(self):
-        columns = ("RoomID", "RoomType", "Price", "Status")
+        columns = ("RoomID", "RoomType", "Price", "Days")
         frame = tk.Frame(self.window, width=100, height=900, bg="white", bd=2, relief="ridge")
         frame.place(x=170, y=90)
         style = ttk.Style()
@@ -93,24 +100,15 @@ class Invoice_view:
             self.tree.column(col, width=150, anchor="center")
         self.tree.pack(fill="both", expand=True)
         self.load_data_into_treeview()
+
     def load_data_into_treeview(self):
         for item in self.tree.get_children():
             self.tree.delete(item)
-        for room in self.rooms:
-            self.tree.insert("", "end", values=(room["RoomID"], room["RoomType"], room["Price"], room["Status"]))
+        for room in self.cart_data:
+            self.tree.insert("", "end", values=(
+                room["RoomID"], room["RoomType"], room["Price"], room["Days"]
+            ))
 
-    def update_room_status_to_booked(self, room_id):
-        try:
-            print(f"Đang gọi update_room_status_to_booked")
-            update_status = self.user_api.update_status(room_id, "Booked")
-            if update_status:
-                print(f"Room {room_id} has been successfully booked.")
-                self.rooms = self.get_all_rooms_data()
-                self.reload_treeview()
-            else:
-                print(f"Failed to update room {room_id} status.")
-        except Exception as e:
-            print(f"{e}")
 
 
 if __name__ == "__main__":
