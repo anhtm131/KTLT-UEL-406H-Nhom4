@@ -102,22 +102,15 @@ class Invoice_view:
     def update_room_status_to_booked(self, room_id):
         try:
             update_status = self.user_api.update_status(room_id, "Booked")
-
             if update_status:
                 print(f"Room {room_id} has been successfully booked.")
-
-                # Kiểm tra dữ liệu sau khi cập nhật
                 updated_room = self.user_api.get_room_by_id(room_id)
                 print(f"Updated Room Data: {updated_room}")
-
-                # Cập nhật danh sách phòng trên giao diện
                 self.rooms = self.get_all_rooms_data()
                 self.reload_treeview()
             else:
                 print(f"Failed to update room {room_id} status.")
         except Exception as e:
             print(f"Error updating room status: {e}")
-
-
 if __name__ == "__main__":
     Invoice_view()
