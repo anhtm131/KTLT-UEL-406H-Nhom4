@@ -222,7 +222,6 @@ class Overview_view:
             'Cleaning': '#FFF9C4'
         }
         return colors.get(status, '#ECEFF1')
-
 if __name__ == "__main__":
     Overview_view()
 

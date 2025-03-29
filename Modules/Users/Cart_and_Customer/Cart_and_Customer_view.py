@@ -109,20 +109,17 @@ class Cart_and_Customer_view:
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
-
     def load_room_data(self):
         selected_manager = Selected_Room_extend()
         room_info = selected_manager.get_selected_rooms()
         if not room_info:
             return []
-
         return [{
             "RoomID": room["RoomID"],
             "RoomType": room["RoomType"],
             "Price": room["Price"],
             "Status": room["Status"]
         } for room in room_info]
-
     def load_cart_data(self, day_in=None, day_out=None):
             api = Api.User_Api()
             rooms = Selected_Room_extend().get_selected_rooms()

@@ -7,4 +7,3 @@ class Overview_extend:
             if query in str(room['RoomID']).lower()
         ]
         obj.create_room_frames()
-

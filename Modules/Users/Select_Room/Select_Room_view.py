@@ -6,9 +6,6 @@ import tkinter.ttk as ttk
 from Api.User_Api import User_Api
 from Modules.Users.Select_Room import Selected_Room_extend
 from datetime import datetime, timedelta
-
-
-#from Modules.Users.Select_Room.Selected_Room_extend import Selected_Room_extend
 class Select_Room_view:
     def __init__(self):
         self.window = Tk()
