@@ -4,6 +4,10 @@ import tkinter as tk
 import Modules.Main_process as Main_process
 import tkinter.ttk as ttk
 from Api.User_Api import User_Api
+#from Modules.Users.Select_Room.Selected_Room_extend import Selected_Room_extend
+from Modules.Users.Select_Room.Select_Room_view import Select_Room_view
+from Modules.Users.Select_Room.Selected_Room_extend import Selected_Room_extend
+
 class Cart_and_Customer_view:
     def __init__(self):
         self.window = Tk()
@@ -21,11 +25,6 @@ class Cart_and_Customer_view:
 
         self.background_img = PhotoImage(file=self.relative_to_assets("background_cart_and_customer.png"))
         self.canvas.create_image(484.0, 300.0, image=self.background_img)
-
-
-
-
-
 
         self.entry_dayin = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
         self.entry_dayin.place(x=224.08, y=392, width=151.39, height=23.33)
@@ -51,9 +50,9 @@ class Cart_and_Customer_view:
 
         self.selected_rooms = []
         self.api = User_Api()
-        self.rooms = self.load_room_data()
         self.create_selected_rooms_table()
         self.update_selected_rooms_table()
+
         self.window.mainloop()
 
     def create_selected_rooms_table(self):
@@ -74,7 +73,7 @@ class Cart_and_Customer_view:
 
         self.tree.place(x=18, y=128)
         self.tree.bind("<ButtonRelease-1>", self.on_treeview_click)
-
+        self.rooms = self.load_room_data()
     def on_treeview_click(self, event):
         selected_item = self.tree.selection()
         if selected_item:
@@ -111,22 +110,35 @@ class Cart_and_Customer_view:
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
     def load_room_data(self):
-        return [
-            {
-                "RoomID": room.get("RoomID"),
-                "RoomType": room.get("RoomType"),
-                "Price": room.get("Price"),
-                "Day in":room.get("Day in"),
-                "Day out": room.get("Day out")
-            }
-            for room in User_Api().get_all_rooms_avai_data()
-        ]
-
-    def get_entry_data(self):
+        selected_manager = Selected_Room_extend()
+        room_info = selected_manager.get_selected_rooms()
+        if not room_info:
+            return []
+        return [{
+            "RoomID": room["RoomID"],
+            "RoomType": room["RoomType"],
+            "Price": room["Price"],
+            "Status": room["Status"]
+        } for room in room_info]
+    def load_cart_data(self, day_in=None, day_out=None):
+            api = Api.User_Api()
+            rooms = Selected_Room_extend().get_selected_rooms()
+            days = (day_out_date - day_in_date).days
+            cart = [{
+                "RoomID": room["RoomID"],
+                "RoomType": room["RoomType"],
+                "Days": days,
+                "Price": float(room["Price"]) if room["Price"] else 0.0,
+                "DayIn": day_in,
+                "DayOut": day_out
+            } for room in rooms]
+            return cart
+    def update_cart_data(self):
         day_in = self.entry_dayin.get().strip()
         day_out = self.entry_dayout.get().strip()
-        return day_in, day_out
-
+        self.cart_data = self.load_cart_data(day_in, day_out)
+        self.refresh_treeview()
+        return self.cart_data
     def remove_selected_room(self):
         selected_item = self.tree.selection()
         for item in selected_item:
