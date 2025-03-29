@@ -4,7 +4,7 @@ import Modules.Main_process as Main_process
 import tkinter as tk
 from tkinter import ttk
 import customtkinter as ctk
-import Api.User_Api as Api
+import Api.User_Api as api
 from Modules.Users.Select_Room.Selected_Room_extend import Selected_Room_extend
 from datetime import datetime, timedelta
 import Api.Main_Api as Main_Api
@@ -36,6 +36,8 @@ class Invoice_view:
                                   activebackground="#6C9587",
                                   command=lambda: Main_process.Main_process.back_button(self), relief="flat")
         self.button_back.place(x=671.0, y=527.0, width=110.0, height=47.0)
+
+        self.user_api = api.User_Api()
         self.rooms = self.load_room_data()
         self.create_treeview()
         self.update_total()
@@ -44,20 +46,43 @@ class Invoice_view:
         return self.assets_frame_path / Path(path) if assets_type == "Frame" else Path(path)
     def update_total(self):
         self.entry_total.delete(0, END)
-        self.entry_total.insert(0, "1000000")
+        if hasattr(self, "day_in") and hasattr(self, "day_out") and self.day_in and self.day_out:
+            try:
+                checkin_date = datetime.strptime(self.day_in, "%d/%m/%Y")
+                checkout_date = datetime.strptime(self.day_out, "%d/%m/%Y")
+                total_days = (checkout_date - checkin_date).days
+                if total_days < 1:
+                    total_days = 1
+            except Exception as e:
+                print("Lỗi khi tính số ngày:", e)
+                total_days = 1
+        else:
+            total_days = 1
+        cart_data = []
+        for room in self.rooms:
+            cart_data.append({
+                "RoomID": room["RoomID"],
+                "Price": int(room["Price"]),
+                "Days": total_days
+            })
+        try:
+            if cart_data:
+                self.user_api.create_invoice(cart_data)
+            last_invoice_id = self.user_api.get_last_invoice_id()
+            last_invoice = self.user_api.invoices_collection.find_one({"InvoiceID": last_invoice_id})
+            if last_invoice and "Total" in last_invoice:
+                total_cost = last_invoice["Total"]
+            else:
+                total_cost = 0
+
+            self.entry_total.insert(0, str(total_cost))
+        except Exception as e:
+            print("Lỗi khi cập nhật tổng tiền:", e)
+            self.entry_total.insert(0, "Lỗi")
     def load_room_data(self):
         selected_manager = Selected_Room_extend()
         room_info = selected_manager.get_selected_rooms()
-        if not isinstance(room_info, list):
-            print("Lỗi: get_selected_rooms() không trả về danh sách!", room_info)
-            return []
-        if not room_info:
-            print("Cảnh báo: Không có phòng nào được chọn!")
-            return []
-        if all(isinstance(room, dict) for room in room_info):
-            return room_info
-        print("Lỗi: Dữ liệu phòng không đúng định dạng:", room_info)
-        return []
+        return room_info
     def create_treeview(self):
         columns = ("RoomID", "RoomType", "Price", "Status")
         frame = tk.Frame(self.window, width=100, height=900, bg="white", bd=2, relief="ridge")

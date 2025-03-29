@@ -20,7 +20,7 @@ class User_Api(main_api.Main_Api):
     def create_invoice(self, cart):
         self.create_new_invoice_id()
         invoice_date = datetime.datetime.now().strftime("%d/%m/%Y")
-        total = sum(item["Price"] * item["Days"] for item in cart)
+        total = sum(int(item["Price"]) * int(item["Days"]) for item in cart)
         invoice = {
             "InvoiceID": self.new_invoice_id,
             "Invoice_Date": invoice_date,
