@@ -1,0 +1,71 @@
+[
+  {
+    "InvoiceID": "INV001",
+    "Invoice_Date": "15/03/2025",
+    "Total": 6000000,
+    "Cart": [
+      {
+        "RoomID": "101",
+        "RoomType": "Standard",
+        "Days": 3,
+        "Price": 1000000,
+        "DayIn": "15/03/2025",
+        "DayOut": "18/03/2025"
+      },
+      {
+        "RoomID": "102",
+        "RoomType": "Standard",
+        "Days": 3,
+        "Price": 1000000,
+        "DayIn": "15/03/2025",
+        "DayOut": "18/03/2025"
+      }
+    ]
+  },
+  {
+    "InvoiceID": "INV002",
+    "Invoice_Date": "16/03/2025",
+    "Total": 40000000,
+    "Cart": [
+      {
+        "RoomID": "201",
+        "RoomType": "Deluxe",
+        "Days": 4,
+        "Price": 5000000,
+        "DayIn": "16/03/2025",
+        "DayOut": "20/03/2025"
+      },
+      {
+        "RoomID": "202",
+        "RoomType": "Deluxe",
+        "Days": 4,
+        "Price": 5000000,
+        "DayIn": "16/03/2025",
+        "DayOut": "20/03/2025"
+      }
+    ]
+  },
+  {
+    "InvoiceID": "INV003",
+    "Invoice_Date": "18/03/2025",
+    "Total": 45000000,
+    "Cart": [
+      {
+        "RoomID": "301",
+        "RoomType": "President",
+        "Days": 3,
+        "Price": 10000000,
+        "DayIn": "18/03/2025",
+        "DayOut": "21/03/2025"
+      },
+      {
+        "RoomID": "302",
+        "RoomType": "Deluxe",
+        "Days": 3,
+        "Price": 5000000,
+        "DayIn": "18/03/2025",
+        "DayOut": "21/03/2025"
+      }
+    ]
+  }
+]
