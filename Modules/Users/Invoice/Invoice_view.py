@@ -44,6 +44,7 @@ class Invoice_view:
         self.window.mainloop()
     def relative_to_assets(self, path: str, assets_type: str = "Frame") -> Path:
         return self.assets_frame_path / Path(path) if assets_type == "Frame" else Path(path)
+
     def update_total(self):
         self.entry_total.delete(0, END)
         if hasattr(self, "day_in") and hasattr(self, "day_out") and self.day_in and self.day_out:
@@ -54,31 +55,27 @@ class Invoice_view:
                 if total_days < 1:
                     total_days = 1
             except Exception as e:
-                print("Lỗi khi tính số ngày:", e)
+                print("Lỗi tính số ngày:", e)
                 total_days = 1
         else:
             total_days = 1
-        cart_data = []
-        for room in self.rooms:
-            cart_data.append({
-                "RoomID": room["RoomID"],
-                "Price": int(room["Price"]),
-                "Days": total_days
-            })
+        cart_data = [
+            {"RoomID": room["RoomID"], "Price": int(room["Price"]), "Days": total_days}
+            for room in self.rooms
+        ]
         try:
             if cart_data:
                 self.user_api.create_invoice(cart_data)
-            last_invoice_id = self.user_api.get_last_invoice_id()
-            last_invoice = self.user_api.invoices_collection.find_one({"InvoiceID": last_invoice_id})
+            all_invoices = self.user_api.get_all_invoices_data()
+            last_invoice = all_invoices[-1] if all_invoices else None
             if last_invoice and "Total" in last_invoice:
                 total_cost = last_invoice["Total"]
             else:
                 total_cost = 0
-
             self.entry_total.insert(0, str(total_cost))
         except Exception as e:
-            print("Lỗi khi cập nhật tổng tiền:", e)
-            self.entry_total.insert(0, "Lỗi")
+            print(e)
+            self.entry_total.insert(0, "0")
     def load_room_data(self):
         selected_manager = Selected_Room_extend()
         room_info = selected_manager.get_selected_rooms()
@@ -101,5 +98,26 @@ class Invoice_view:
             self.tree.delete(item)
         for room in self.rooms:
             self.tree.insert("", "end", values=(room["RoomID"], room["RoomType"], room["Price"], room["Status"]))
+
+    def update_room_status_to_booked(self, room_id):
+        try:
+            update_status = self.user_api.update_status(room_id, "Booked")
+
+            if update_status:
+                print(f"Room {room_id} has been successfully booked.")
+
+                # Kiểm tra dữ liệu sau khi cập nhật
+                updated_room = self.user_api.get_room_by_id(room_id)
+                print(f"Updated Room Data: {updated_room}")
+
+                # Cập nhật danh sách phòng trên giao diện
+                self.rooms = self.get_all_rooms_data()
+                self.reload_treeview()
+            else:
+                print(f"Failed to update room {room_id} status.")
+        except Exception as e:
+            print(f"Error updating room status: {e}")
+
+
 if __name__ == "__main__":
     Invoice_view()
