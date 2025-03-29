@@ -208,7 +208,6 @@ class Overview_view:
             for room in Main_Api().get_all_rooms_data()
         ]
     def filter_rooms_by_status(self, status):
-        print(f"Filter trạng thái: {status}")
         if status == 'All':
             self.filtered_rooms = self.rooms.copy()
         else:
